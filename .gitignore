@@ -1,0 +1,11 @@
+# App
+ai/data/
+/ignore-*
+
+# IDE
+.idea/
+.vscode/
+*.code-workspace
+
+# Mac
+*.DS_Store

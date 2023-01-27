@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  # ui:
+  #   build: ./ui
+  #   ports:
+  #     - "8081:8081"
+  #   networks:
+  #     - medi-net
+  #   volumes:
+  #     - $PWD/app:/app
+  ai:
+    build: ./ai #this won't work for docker-swarm
+    ports:
+      - "8083:8083"
+    networks:
+      - medi-net
+    volumes:
+      - $PWD/app:/app
+networks:
+  medi-net:
+    driver: bridge
+volumes:
+  deidentdata:
+    # deident:
+    #   image: deident
+    #   build:
+    #     context: .
+    #     dockerfile: ./Dockerfile
+    #   ports:
+    #     - 8081:8081
