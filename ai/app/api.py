@@ -1,3 +1,10 @@
+# TODO: remove 
+# import debugpy
+
+# debugpy.listen(("0.0.0.0", 5678))
+# print("Waiting for client to attach...")
+# debugpy.wait_for_client()
+
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -43,4 +50,4 @@ async def deident(req):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8080, log_level="info")
+    uvicorn.run(app, host="0.0.0.0", port=8083, log_level="info")
