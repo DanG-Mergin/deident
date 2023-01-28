@@ -1,14 +1,14 @@
 version: '3.4'
 
 services:
-  # ui:
-  #   build: ./ui
-  #   ports:
-  #     - "8081:8081"
-  #   networks:
-  #     - medi-net
-  #   volumes:
-  #     - $PWD/app:/app
+  ui:
+    build: ./ui
+    ports:
+      - "8081:8081"
+    networks:
+      - medi-net
+    volumes:
+      - $PWD/app:/app
   ai:
     build: ./ai #this won't work for docker-swarm
     ports:

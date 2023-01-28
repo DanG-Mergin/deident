@@ -17,7 +17,6 @@ async def deident(req):
     _doc = nlp(
         "Patient Dan Goldberg called in from 617-123-8899 complaining of acute lack of synthetic data."
     )
-    raise Exception("debug me")
     return _doc
 
 
