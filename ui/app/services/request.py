@@ -21,11 +21,11 @@ from ..schema.inbound import _Response
 
 # TODO: clean this unholy mess up hahahaha
 async def make_request(req: _Request)-> _Response:
-    if req.host_name is "ai" and req.meta_type is "deident":
-        _req = DeIdentRequest(req)
-        if isinstance(_req, _PostRequest):
-            res = await make_post_json_req(_req)
-            return res
+    # if req.host_name is "ai" and req.meta_type is "deident":
+    #     _req = DeIdentRequest(req)
+    if isinstance(req, type(_PostRequest)):
+        res = await make_post_json_req(req)
+        return res
 
 # TODO: use response objects
 async def make_post_json_req(req):

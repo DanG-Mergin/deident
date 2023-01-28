@@ -4,8 +4,8 @@ from fastapi.responses import Response, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import sys
 sys.path.append(".")
-from .schema.outbound import DeIdentRequest
-from .schema import InternalMsg
+from .schema.outbound.DeIdentRequest import DeIdentRequest
+from .schema.InternalMsg import InternalMsg
 from .controllers import ai
 from .services import sockets
 
@@ -45,7 +45,7 @@ async def deident():
         data = {
             "doc": "Patient Dan Goldberg called in from 617-123-8899 complaining of acute lack of synthetic data."
         },
-        type="deident"
+        meta_type="deident"
     )
     res = await ai.deident(
         msg
