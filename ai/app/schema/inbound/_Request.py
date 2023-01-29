@@ -2,9 +2,9 @@ from datetime import datetime
 from uuid import UUID, uuid4
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, Json 
-import sys
-sys.path.append("..")
-from .. import InternalMsg
+# import sys
+# sys.path.append("..")
+
 
 
 class _Request(BaseModel):
@@ -16,17 +16,11 @@ class _Request(BaseModel):
     # data: Optional[Json[Any]] #TODO: ensure this field is of some type of schema
     data: Optional[Dict]
     meta_type: str #TODO: make this an enforced enum
-    host_name: str #TODO: make this an enforced enum
 
-    # @staticmethod 
-    # def from_obj(obj: BaseModel, **kwargs):
-    #     attr = {k: v for k, v in obj.__dict__.items()}
-    #     return _Request(**attr, **kwargs)
-
-    # @classmethod
-    # def from_obj(self, obj: BaseModel, **kwargs):
-    #     attr = {k: v for k, v in obj.__dict__.items()}
-    #     return self.__class__(**attr, **kwargs)
+    @staticmethod 
+    def from_obj(obj: BaseModel, **kwargs):
+        attr = {k: v for k, v in obj.__dict__.items()}
+        return _Request(**attr, **kwargs)
     
     # TODO: add validators where appropriate
 

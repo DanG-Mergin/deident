@@ -3,15 +3,20 @@ services:
   ai:
     image: ai
     build:
-      context: .
+      context: ../ai
       dockerfile: ./Dockerfile
     volumes:
-      - $PWD/app:/app
-    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8083 --reload"]
+      - $PWD/app:/ai/app
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]
     environment:
       - APP_MESSAGE=Hello debugger
+    networks: 
+      - medi-net
     ports:
-      - 8083:8083
+      - 8083:8081
       - 5678:5678
-    # networks:
-    #   - medi-net
+networks:
+  medi-net:
+    driver: bridge
+volumes:
+  deidentdata:

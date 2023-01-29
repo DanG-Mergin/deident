@@ -12,7 +12,7 @@
          "pathMappings":[
             {
                "localRoot":"${workspaceFolder}",
-               "remoteRoot":"/code"
+               "remoteRoot":"/code/ui"
             }
          ]
       }

@@ -1,12 +1,45 @@
 version: '3.4'
 
 services:
-  deident:
-    image: deident
+  ui-service:
+    env_file:
+      - .env.dev
+      - .env.secret.dev
+    image: ui
     build:
-      context: .
+      context: ./ui
       dockerfile: ./Dockerfile
-    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn reverse-proxy.api:app --host 0.0.0.0 --port 8081"]
+    volumes:
+      - $PWD/app:/ui/app
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3003 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]
+    environment:
+      - APP_MESSAGE=Hello debugger
+    networks: 
+      - medi-net
     ports:
       - 8081:8081
+      - 3003:3003
+    
+  ai-service:
+    image: ai
+    env_file:
+      - .env.dev
+      - .env.secret.dev
+    build:
+      context: ./ai
+      dockerfile: ./Dockerfile
+    volumes:
+      - $PWD/app:/ai/app
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]
+    environment:
+      - APP_MESSAGE=Hello debugger
+    networks: 
+      - medi-net
+    ports:
+      - 8083:8081
       - 5678:5678
+networks:
+  medi-net:
+    driver: bridge
+# volumes:
+#   deidentdata:

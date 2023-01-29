@@ -1,6 +1,7 @@
 # App
 ai/data/
 /ignore-*
+*secret*
 
 # IDE
 .idea/

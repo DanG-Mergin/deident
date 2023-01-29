@@ -2,7 +2,9 @@ import logging
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import Response, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+import os
 import sys
+
 sys.path.append(".")
 from .schema.outbound.DeIdentRequest import DeIdentRequest
 from .schema.InternalMsg import InternalMsg
@@ -18,19 +20,25 @@ import json
 
 app = FastAPI()
 log = logging.getLogger(__name__)
+# ---------------------------------------------------#
+# DEV
+# ---------------------------------------------------#
+if os.environ["ENV"] == "DEV":
+    origins = [
+        f"http://{os.environ['AI_SERVICE_DOMAIN']}",
+        f"http://{os.environ['AI_SERVICE_DOMAIN']}:{os.environ['UI_SERVICE_PORT']}",
+    ]
 
-origins = [
-    "http://localhost:8082",
-    "http://localhost:8083",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+# ---------------------------------------------------#
+# END DEV
+# ---------------------------------------------------#
 
 
 @app.get("/")
@@ -39,18 +47,18 @@ def read_root():
 
 
 # TODO: the api should use models to validate requests - define in UI first
-@app.get("/deident/", response_class=JSONResponse)
-async def deident():
+@app.post("/deidentify/", response_class=JSONResponse)
+async def deident(request: Request):
+    b = request.json()
     msg = InternalMsg(
-        data = {
+        data={
             "doc": "Patient Dan Goldberg called in from 617-123-8899 complaining of acute lack of synthetic data."
         },
-        meta_type="deident"
+        meta_type="deident",
     )
-    res = await ai.deident(
-        msg
-    )
+    res = await ai.deident(msg)
     return res
+
 
 # s_manager = sockets.SocketManager()
 

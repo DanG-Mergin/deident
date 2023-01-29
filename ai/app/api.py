@@ -1,9 +1,13 @@
 import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response, JSONResponse
+import os
 import sys
+
 sys.path.append(".")
+from .schema.inbound.DeIdentRequest import DeIdentRequest
+from .schema.InternalMsg import InternalMsg
 from .controllers import spacy as spacy_c
 
 # from ai.app import app as ai_app
@@ -13,30 +17,44 @@ from .controllers import spacy as spacy_c
 app = FastAPI()
 log = logging.getLogger(__name__)
 
-origins = [
-    "http://localhost:8081",
-    "http://localhost:8082",
-]
+# ---------------------------------------------------#
+# DEV
+# ---------------------------------------------------#
+if os.environ["ENV"] == "DEV":
+    origins = [
+        f"http://{os.environ['UI_SERVICE_DOMAIN']}",
+        f"http://{os.environ['UI_SERVICE_DOMAIN']}:{os.environ['UI_SERVICE_PORT']}",
+        # "http://localhost:8081",
+    ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+# ---------------------------------------------------#
+# END DEV
+# ---------------------------------------------------#
 
 
 @app.get("/")
 def test():
     return {"Hello": "From ml_app"}
 
-# TODO: add request object
-# TODO: add response object
-@app.get("/deident/", response_class=JSONResponse)
-async def deident(req):
-    res = await spacy_c.deident(req)
+
+@app.post("/deident", response_class=JSONResponse)
+async def deident(request: Request):
+    b = request.json()
+    res = await spacy_c.deident({"hi": "hihi"})
     return res
+
+
+# @app.post("/deident/{DeIdentRequest}", response_class=JSONResponse)
+# async def deident(req):
+#     res = await spacy_c.deident(req)
+#     return res
 
 
 # if __name__ == "__main__":
