@@ -7,8 +7,11 @@ import sys
 
 sys.path.append(".")
 from .schema.inbound.DeIdentRequest import DeIdentRequest
-from .schema.InternalMsg import InternalMsg
+from .schema.outbound.DeIdentResponse import DeIdentResponse
+
+# from .schema.InternalMsg import InternalMsg
 from .controllers import spacy as spacy_c
+from .services.utils import cast_to_class
 
 # from ai.app import app as ai_app
 # from frontend.app import app as ui_app
@@ -44,20 +47,13 @@ def test():
     return {"Hello": "From ml_app"}
 
 
+# TODO: log the round trip on this server
 @app.post("/deident", response_class=JSONResponse)
-async def deident(request: Request):
-    b = request.json()
-    res = await spacy_c.deident({"hi": "hihi"})
+async def deident(req: Request):
+    req_data = await req.json()
+    _req = DeIdentRequest(data=req_data["data"], req_id=req_data["req_id"])
+    # _req = cast_to_class(req, DeIdentRequest, data=req_data)
+    annotations = await spacy_c.deident(_req)
+    # TODO add field mapping between request and response to response object
+    res = DeIdentResponse(annotations=annotations, req_id=_req.req_id)
     return res
-
-
-# @app.post("/deident/{DeIdentRequest}", response_class=JSONResponse)
-# async def deident(req):
-#     res = await spacy_c.deident(req)
-#     return res
-
-
-# if __name__ == "__main__":
-#     import uvicorn
-
-#     uvicorn.run(app, host="0.0.0.0", port=8083, log_level="info")

@@ -1,9 +1,13 @@
 import sys
 
 sys.path.append("..")
-from ..services import spacy as spacy_s, utils
+from typing import List
+from ..services import spacy as spacy_s
+from ..schema.inbound.DeIdentRequest import DeIdentRequest
+from ..schema.outbound.DeIdentResponse import DeIdentResponse
 
-# TODO: transform the request
-async def deident(req):
-    res = await spacy_s.deident(req)
-    return res
+
+async def deident(req: DeIdentRequest) -> List:
+    annotations = await spacy_s.deident(req)
+
+    return annotations

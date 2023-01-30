@@ -2,45 +2,39 @@ import httpx
 
 # import asyncio
 from pydantic import ValidationError
+from fastapi.encoders import jsonable_encoder
 import sys
 
 sys.path.append("..")
 from ..schema.outbound import DeIdentRequest, _Request, _PostRequest
 from ..schema.inbound import _Response
 
+# from ..services.utils import cast_to_class
 
-# TODO: add config to env
 
-
-# TODO: clean this unholy mess up hahahaha
-async def make_request(req: _Request) -> _Response:
-    if req.req_type == "post":
-        res = await make_post_json_req(req)
+async def make_request(req: _Request, res_cls: _Response) -> _Response:
+    if req.method == "POST":
+        res = await make_post_json_req(req, res_cls)
 
         return res
-    # elif req.req_type == 'get':
-    #     async with httpx.AsyncClient() as client:
-    #         try:
-    #             res = await client.get("http://ai-service:8081/")
-    #         except httpx.RequestError as exc:
-    #             print(exc)
-    #         # TODO: handle error and return properly
-    #         return res
 
 
 # TODO: use response objects
-async def make_post_json_req(req):
-    response = httpx.post("http://ai-service:8081/deident", data=req.data)
-    # response = await httpx.post(req.url, json=req.data)
-    print(response)
+async def make_post_json_req(req: _PostRequest, res_cls: _Response):
+    # response = httpx.post("http://ai-service:8081/deident", json=req)
+    async with httpx.AsyncClient() as client:
+        res = await client.post(req.url, json=jsonable_encoder(req))
+
+        print(res)
     print("hi")
-    # async with httpx.AsyncClient() as client:
-    #     res = await client.post(req.url, json=req.data)
-    #     try:
-    #         _res = _Response(res)
-    #         return _res
-    #     except ValidationError as e:
-    #         print(e)  # TODO: log this and handle completely
+    res_data = res.json()
+    # TODO: handle all of this in the class
+    _res = res_cls(
+        data=res_data["data"],
+        req_id=res_data["req_id"],
+        time_start=res_data["time_start"],
+    )
+    return _res
 
 
 # TODO: implement for processing multiple documents on different servers

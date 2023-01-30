@@ -1,10 +1,13 @@
 import sys
 
 sys.path.append("..")
-from ..services import ai as ai_s
-from ..schema import InternalMsg
+from ..services import request
+from ..schema.outbound.DeIdentRequest import DeIdentRequest
+from ..schema.inbound.DeIdentResponse import DeIdentResponse
 
-# TODO: transform the request
-async def deident(req: InternalMsg) -> InternalMsg:
-    res = await ai_s.deident(req)
+
+async def deident(req: DeIdentRequest) -> DeIdentResponse:
+    # res = await ai_s.deident(req)
+    res = await request.make_request(req, res_cls=DeIdentResponse)
+
     return res

@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 # TODO: review fields and requirements
 # TODO: move optional/not into validator
-class SpacyModel(BaseModel):
+class Model(BaseModel):
     name: str
     # TODO: rethink this classification
     type: str
@@ -29,36 +29,6 @@ class SpacyModel(BaseModel):
                 "components": ["tokenizer", "tagger", "en_core_lg", "custom_model"],
                 "uuid": "123e4567-e89b-12d3-a456-426614174000",
                 "specialties": ["general", "allergy", "oncology"],
-            }
-        }
-
-
-# TODO: define message protocol
-class EntityRecogRequest(BaseModel):
-    doc: str
-    # TODO: does this belong here?  the idea is to use it for formatting the UI output
-    # -- however that work probably belongs in the front end so that entities can be toggled on and off
-    entities: List[str]
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "doc": "Hello I am a named entity request string",
-                "entities": ["phi"],
-            }
-        }
-
-
-# TODO: define message protocol
-class EntityRecogResponse(BaseModel):
-    doc: str
-    entities: List[str]
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "doc": "Hello I am a named entity request string",
-                "entities": ["phi"],
             }
         }
 
