@@ -1,10 +1,14 @@
 version: '3.4'
 services:
   ai:
+    env_file:
+      - .env.dev
+      - .env.secret.dev
+      - .env
     image: ai
     build:
       context: ../ai
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.dev
     volumes:
       - $PWD/app:/ai/app
     command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]

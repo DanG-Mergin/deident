@@ -18,9 +18,7 @@ async def deident(req: DeIdentRequest) -> List[Type[Doc]]:
     annotated = []
     for doc in req.docs:
         _doc = nlp(doc)
-        # s_doc = SpacyDoc(ents=_doc.doc.ents, sents=_doc.doc.sents)
         s_doc = SpacyDoc(ents=_doc.doc.ents)
         b_doc = cast_to_class(s_doc, Doc)
-        # b_doc = Doc(**s_doc)
         annotated.append(b_doc)
     return annotated

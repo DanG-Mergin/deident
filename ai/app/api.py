@@ -52,7 +52,6 @@ def test():
 async def deident(req: Request):
     req_data = await req.json()
     _req = DeIdentRequest(data=req_data["data"], req_id=req_data["req_id"])
-    # _req = cast_to_class(req, DeIdentRequest, data=req_data)
     annotations = await spacy_c.deident(_req)
     # TODO add field mapping between request and response to response object
     res = DeIdentResponse(annotations=annotations, req_id=_req.req_id)

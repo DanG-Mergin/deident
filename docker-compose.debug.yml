@@ -5,10 +5,11 @@ services:
     env_file:
       - .env.dev
       - .env.secret.dev
+      - .env
     image: ui
     build:
       context: ./ui
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.dev
     volumes:
       - $PWD/app:/ui/app
     command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3003 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]
@@ -27,7 +28,7 @@ services:
       - .env.secret.dev
     build:
       context: ./ai
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.dev
     volumes:
       - $PWD/app:/ai/app
     command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]
