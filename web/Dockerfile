@@ -9,12 +9,12 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /code/ui
+WORKDIR /code/web
 
-COPY ./requirements.txt /code/ui/requirements.txt
+COPY ./requirements.txt /code/web/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /code/ui/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/web/requirements.txt
 
-COPY ./app /code/ui/app
+COPY ./app /code/web/app
 
 CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8081", "--log-level", "debug"]

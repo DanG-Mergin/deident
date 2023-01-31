@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 if os.environ["ENV"] == "DEV":
     origins = [
         f"http://{os.environ['AI_SERVICE_DOMAIN']}",
-        f"http://{os.environ['AI_SERVICE_DOMAIN']}:{os.environ['UI_SERVICE_PORT']}",
+        f"http://{os.environ['AI_SERVICE_DOMAIN']}:{os.environ['WEB_SERVICE_PORT']}",
     ]
 
     app.add_middleware(
@@ -36,10 +36,10 @@ if os.environ["ENV"] == "DEV":
 
 @app.get("/")
 def read_root():
-    return {"Hello": "From ui_api"}
+    return {"Hello": "Fromweb_api"}
 
 
-# TODO: the api should use models to validate requests - define in UI first
+# TODO: the api should use models to validate requests - define in webfirst
 @app.post("/deidentify/", response_class=JSONResponse)
 async def deident(req: Request):
     _req = cast_to_class(

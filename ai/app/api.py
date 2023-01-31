@@ -24,8 +24,8 @@ log = logging.getLogger(__name__)
 # ---------------------------------------------------#
 if os.environ["ENV"] == "DEV":
     origins = [
-        f"http://{os.environ['UI_SERVICE_DOMAIN']}",
-        f"http://{os.environ['UI_SERVICE_DOMAIN']}:{os.environ['UI_SERVICE_PORT']}",
+        f"http://{os.environ['WEB_SERVICE_DOMAIN']}",
+        f"http://{os.environ['WEB_SERVICE_DOMAIN']}:{os.environ['WEB_SERVICE_PORT']}",
         # "http://localhost:8081",
     ]
 
