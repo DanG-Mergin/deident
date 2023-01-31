@@ -1,6 +1,24 @@
 version: '3.4'
 
 services:
+  data-service:  
+    env_file:
+      - .env.dev
+      - .env.secret.dev
+      - .env
+    image: data
+    build:
+      context: ./data
+      dockerfile: ./Dockerfile
+    volumes:
+      - $PWD/app:/data/app
+    environment:
+      - APP_MESSAGE=Hello debugger
+    networks: 
+      - medi-net
+    ports:
+      - "8082:8082"
+
   ui-service:
     image: ui
     build:
@@ -11,7 +29,7 @@ services:
     networks: 
       - medi-net
     ports:
-      - 8081:8081
+      - "8081:8081"
   ai-service:
     image: ai
     build:
@@ -22,7 +40,7 @@ services:
     networks: 
       - medi-net
     ports:
-      - 8083:8081
+      - "8083:8083"
 networks:
   medi-net:
     driver: bridge

@@ -3,7 +3,6 @@
 # import sys
 
 # sys.path.append("..")
-# from ..schema.InternalMsg import InternalMsg
 # from ..schema.outbound.DeIdentRequest import DeIdentRequest
 # from .request import make_request
 # from .utils import cast_to_class

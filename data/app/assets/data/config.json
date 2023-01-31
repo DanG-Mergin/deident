@@ -1,0 +1,9 @@
+
+{
+    "read_me": "config should be injected per client/facility.  Never store passwords or endpoints, validation rules, etc here for security reasons.",
+    "clients": {
+        "dev": {
+            
+        }
+    }
+}
