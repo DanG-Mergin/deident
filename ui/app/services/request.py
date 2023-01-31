@@ -24,9 +24,6 @@ async def make_post_json_req(req: _PostRequest, res_cls: _Response):
     # response = httpx.post("http://ai-service:8081/deident", json=req)
     async with httpx.AsyncClient() as client:
         res = await client.post(req.url, json=jsonable_encoder(req))
-
-        print(res)
-    print("hi")
     res_data = res.json()
     # TODO: handle all of this in the class
     _res = res_cls(
