@@ -2,9 +2,9 @@ version: '3.4'
 services:
   ui-service:
     env_file:
-      - .env.dev
-      - .env.secret.dev
-      - .env
+      - ../.env.dev
+      - ../.env.secret.dev
+      - ../.env
     image: ui
     build:
       context: .
@@ -14,8 +14,6 @@ services:
     command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:3003 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]
     environment:
       - APP_MESSAGE=Hello debugger
-    networks: 
-      - medi-net
     ports:
-      - 8081:8081
-      - 3003:3003
+      - "8081:8081"
+      - "3003:3003"

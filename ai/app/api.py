@@ -9,7 +9,6 @@ sys.path.append(".")
 from .schema.inbound.DeIdentRequest import DeIdentRequest
 from .schema.outbound.DeIdentResponse import DeIdentResponse
 
-# from .schema.InternalMsg import InternalMsg
 from .controllers import spacy as spacy_c
 from .services.utils import cast_to_class
 

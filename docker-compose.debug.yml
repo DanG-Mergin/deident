@@ -18,9 +18,29 @@ services:
     networks: 
       - medi-net
     ports:
-      - 8081:8081
-      - 3003:3003
-    
+      - "8081:8081"
+      - "3003:3003"
+
+  data-service:  
+    env_file:
+      - .env.dev
+      - .env.secret.dev
+      - .env
+    image: data
+    build:
+      context: ./data
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - $PWD/app:/data/app
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3002 -m uvicorn app.api:app --host 0.0.0.0 --port 8082 --reload"]
+    environment:
+      - APP_MESSAGE=Hello debugger
+    networks: 
+      - medi-net
+    ports:
+      - "8082:8082"
+      - "3002:3002"
+
   ai-service:
     image: ai
     env_file:
@@ -31,16 +51,16 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - $PWD/app:/ai/app
-    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8083 --reload"]
     environment:
       - APP_MESSAGE=Hello debugger
     networks: 
       - medi-net
     ports:
-      - 8083:8081
-      - 5678:5678
+      - "8083:8083"
+      - "5678:5678"
 networks:
   medi-net:
     driver: bridge
-# volumes:
-#   deidentdata:
+    
+
