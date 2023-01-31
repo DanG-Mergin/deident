@@ -16,7 +16,9 @@ services:
     environment:
       - APP_MESSAGE=Hello debugger
     networks: 
-      - medi-net
+      medi-net:
+        aliases:
+          - deident-ui-service
     ports:
       - "8081:8081"
       - "3003:3003"
@@ -36,7 +38,9 @@ services:
     environment:
       - APP_MESSAGE=Hello debugger
     networks: 
-      - medi-net
+      medi-net:
+        aliases:
+          - deident-data-service
     ports:
       - "8082:8082"
       - "3002:3002"
@@ -55,12 +59,16 @@ services:
     environment:
       - APP_MESSAGE=Hello debugger
     networks: 
-      - medi-net
+      medi-net:
+        aliases:
+          - deident-ai-service
     ports:
       - "8083:8083"
       - "5678:5678"
 networks:
   medi-net:
     driver: bridge
+    name: medi-net
+    
     
 

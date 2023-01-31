@@ -14,6 +14,14 @@ services:
     command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:3003 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]
     environment:
       - APP_MESSAGE=Hello debugger
+    # networks: 
+    #   medi-net:
+    #     aliases:
+    #       - ui-service
     ports:
       - "8081:8081"
       - "3003:3003"
+# networks: 
+#   medi-net:
+#     external: true
+#     name: medi-net

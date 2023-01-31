@@ -17,7 +17,7 @@ services:
     networks: 
       - medi-net
     ports:
-      - 8082:8081
+      - "8082:8082"
 
   ui-service:
     image: ui
@@ -40,7 +40,7 @@ services:
     networks: 
       - medi-net
     ports:
-      - 8083:8081
+      - "8083:8083"
 networks:
   medi-net:
     driver: bridge
