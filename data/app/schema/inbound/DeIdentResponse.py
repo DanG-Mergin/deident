@@ -7,7 +7,7 @@ from ._Response import _Response
 
 
 class DeIdentResponse(_Response):
-    # This is from the ui server
+    # This is from the webserver
 
     # @root_validator(pre=True)
     # def convert_fields(cls, values):

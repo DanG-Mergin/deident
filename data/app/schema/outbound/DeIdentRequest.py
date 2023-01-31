@@ -9,7 +9,7 @@ from ._PostRequest import _PostRequest
 class DeIdentRequest(_PostRequest):
     blip = "hi"
 
-    # this is from the UI server
+    # this is from the webserver
 
     # url = f"{os.environ['AI_DEIDENT_URL']}"
 

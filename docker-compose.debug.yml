@@ -1,24 +1,24 @@
 version: '3.4'
 
 services:
-  ui-service:
+  web-service:
     env_file:
       - .env.dev
       - .env.secret.dev
       - .env
-    image: ui
+    image: web
     build:
-      context: ./ui
+      context: ./web
       dockerfile: ./Dockerfile.dev
     volumes:
-      - $PWD/ui/app:/ui/app
+      - $PWD/web/app:/web/volume
     command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3003 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]
     environment:
       - APP_MESSAGE=Hello debugger
     networks: 
       medi-net:
         aliases:
-          - deident-ui-service
+          - deident-web-service
     ports:
       - "8081:8081"
       - "3003:3003"

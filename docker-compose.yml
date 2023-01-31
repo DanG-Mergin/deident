@@ -19,13 +19,13 @@ services:
     ports:
       - "8082:8082"
 
-  ui-service:
-    image: ui
+  web-service:
+    image: web
     build:
-      context: ./ui
+      context: ./web
       dockerfile: ./Dockerfile
     volumes:
-      - $PWD/app:/ui/app
+      - $PWD/app:/web/app
     networks: 
       - medi-net
     ports:
