@@ -1,15 +1,17 @@
 import logging
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.responses import Response, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from typing import List
 import os
 import sys
 
 sys.path.append(".")
-from .schema.outbound.DeIdentRequest import DeIdentRequest
+from .schema.messages.outbound.DeIdentRequest import DeIdentRequest
+from .schema.messages.inbound.FileUploadRequest import FileUploadRequest
 from .controllers import ai
 from .services.utils import cast_to_class
-
+from .services.SocketManager import SocketManager
 
 app = FastAPI()
 log = logging.getLogger(__name__)
@@ -53,3 +55,24 @@ async def deident(req: Request):
     )
     res = await ai.deident(_req)
     return res
+
+
+# @app.post("/uploadfiles/")
+# async def create_upload_files(files: List[UploadFile]):
+#     # TODO take file.type and compare against schema
+#     return {"file_fids": [file.fid for file in files]}
+
+socket_mgr = SocketManager()
+
+# TODO: display connection status in UI   
+@app.websocket("/ws/{client_id}")
+async def websocket_endpoint(websocket: WebSocket, client_id: int):
+    await manager.connect(websocket)
+    try:
+        while True:
+            data = await websocket.receive_text()
+            await manager.send_personal_message(f"You wrote: {data}", websocket)
+            await manager.broadcast(f"Client #{client_id} says: {data}")
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
+        await manager.broadcast(f"Client #{client_id} left the chat")
