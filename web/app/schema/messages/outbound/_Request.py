@@ -1,14 +1,14 @@
 from datetime import datetime
 from uuid import UUID, uuid4
-from typing import Dict, Optional
-from pydantic import BaseModel, Field, Json
-import sys
+from typing import Any, Dict, Optional
+from pydantic import BaseModel, Field, Extra, ValidationError, validator, root_validator
 
-sys.path.append("..")
+# import sys
+
+# sys.path.append("..")
 
 
-class _Request(BaseModel):
-    extra = "ignore"  # only defined properties can be set
+class _Request(BaseModel, extra=Extra.allow):
     # service_name: str #TODO: make this an enforced enum
     req_id: UUID = Field(default_factory=uuid4)
     _orig_id: Optional[str]  # from the webfor example
@@ -16,7 +16,12 @@ class _Request(BaseModel):
     time_end: Optional[datetime]
     # data: Optional[Json[Any]] #TODO: ensure this field is of some type of schema
     data: Optional[Dict]
-    # meta_type: str #TODO: make this an enforced enum
-    # host_name: str #TODO: make this an enforced enum
 
     # TODO: add validators where appropriate
+    # @root_validator
+    # def convert_fields(cls, values):
+    #     docs = values.pop("docs", None)
+    #     if docs:
+    #         values["data"] = {"docs": docs}
+
+    #     return values

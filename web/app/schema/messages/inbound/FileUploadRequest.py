@@ -1,16 +1,13 @@
 import os
 import sys
-
-sys.path.append("..")
-from ._Response import _Response
-from ..nlp.Doc import Doc
-from typing import Any, Dict, Optional, List
 from pydantic import ValidationError, validator, root_validator
 
+sys.path.append("..")
+from ._Request import _Request
 
-class DeIdentResponse(_Response):
-    data: Dict[str, List[Doc]]
 
+class FileUploadRequest(_Request):
+    type = "dictionary"  # TODO: store a reference to an actual class here
     # @root_validator(pre=True)
     # def convert_fields(cls, values):
     #     annotations = values.pop("annotations", None)

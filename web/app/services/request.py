@@ -6,8 +6,8 @@ from fastapi.encoders import jsonable_encoder
 import sys
 
 sys.path.append("..")
-from ..schema.outbound import DeIdentRequest, _Request, _PostRequest
-from ..schema.inbound import _Response
+from ..schema.messages.outbound import DeIdentRequest, _Request, _PostRequest
+from ..schema.messages.inbound import _Response
 
 # from ..services.utils import cast_to_class
 

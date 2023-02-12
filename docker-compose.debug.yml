@@ -12,10 +12,15 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - $PWD/web/app:/web/volume
-    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3003 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"]
+    command:
+      [
+        "sh",
+        "-c",
+        "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3003 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"
+      ]
     environment:
       - APP_MESSAGE=Hello debugger
-    networks: 
+    networks:
       medi-net:
         aliases:
           - deident-web-service
@@ -23,7 +28,7 @@ services:
       - "8081:8081"
       - "3003:3003"
 
-  data-service:  
+  data-service:
     env_file:
       - .env.dev
       - .env.secret.dev
@@ -34,10 +39,15 @@ services:
       dockerfile: ./Dockerfile.dev
     volumes:
       - $PWD/data/app:/data/app
-    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3002 -m uvicorn app.api:app --host 0.0.0.0 --port 8082 --reload"]
+    command:
+      [
+        "sh",
+        "-c",
+        "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3002 -m uvicorn app.api:app --host 0.0.0.0 --port 8082 --reload"
+      ]
     environment:
       - APP_MESSAGE=Hello debugger
-    networks: 
+    networks:
       medi-net:
         aliases:
           - deident-data-service
@@ -50,15 +60,21 @@ services:
     env_file:
       - .env.dev
       - .env.secret.dev
+      - .env
     build:
       context: ./ai
       dockerfile: ./Dockerfile.dev
     volumes:
-      - $PWD/ai/app:/ai/app
-    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8083 --reload"]
+      - $PWD/ai/app:/ai/volume
+    command:
+      [
+        "sh",
+        "-c",
+        "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8083 --reload"
+      ]
     environment:
       - APP_MESSAGE=Hello debugger
-    networks: 
+    networks:
       medi-net:
         aliases:
           - deident-ai-service
@@ -69,6 +85,3 @@ networks:
   medi-net:
     driver: bridge
     name: medi-net
-    
-    
-

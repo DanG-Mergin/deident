@@ -1,0 +1,40 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Web server attach",
+      "type": "python",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 3003
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/web",
+          "remoteRoot": "/code/web"
+        }
+      ],
+      "justMyCode": true
+    },
+    {
+      "name": "AI server attach",
+      "type": "python",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 5678
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/ai",
+          "remoteRoot": "/code/ai"
+        }
+      ],
+      "justMyCode": true
+    }
+  ],
+}

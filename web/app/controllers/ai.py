@@ -2,8 +2,8 @@ import sys
 
 sys.path.append("..")
 from ..services import request
-from ..schema.outbound.DeIdentRequest import DeIdentRequest
-from ..schema.inbound.DeIdentResponse import DeIdentResponse
+from ..schema.messages.outbound.DeIdentRequest import DeIdentRequest
+from ..schema.messages.inbound.DeIdentResponse import DeIdentResponse
 
 
 async def deident(req: DeIdentRequest) -> DeIdentResponse:

@@ -4,7 +4,8 @@ import sys
 
 sys.path.append("..")
 from .Vocab import VocabItem
-from .Span import Span
+
+# from .Span import Span
 from .Token import Token
 
 
@@ -22,8 +23,8 @@ class EntityInstance(VocabItem):
     token_ids: List[int]  # TODO: this should just be IDs
     text: str
 
-    @validator("token_ids", pre=True)
-    def set_token_ids(cls, v):
-        if not isinstance(v, list):
-            return [id for id in range(v["start"], v["end"])]
-        return v
+    # @validator("token_ids", pre=True)
+    # def set_token_ids(cls, v):
+    #     if not isinstance(v, list):
+    #         return [id for id in range(v["start"], v["end"])]
+    #     return v

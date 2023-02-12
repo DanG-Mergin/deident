@@ -1,5 +1,5 @@
 from typing import Dict, List, Optional, Type
-from pydantic import BaseModel, ValidationError, validator, root_validator
+from pydantic import BaseModel, Extra, ValidationError, validator, root_validator
 
 import sys
 
@@ -12,17 +12,14 @@ class EntityLabel(BaseModel):
     text: str
 
 
-class SpacyEntityInstance(BaseModel):
+class SpacyEntityInstance(BaseModel, extra=Extra.ignore):
     id: str
-    # kb_id: str
-    text: str  #
-    start: int  #
-    end: int  #
+    text: str
+    start: int
+    end: int
     start_char: int
     end_char: int
-    # entities: List[Type["Entity"]] = []
     label: EntityLabel
-    # lemma: str # TODO: should be attached to token not entity
     text: str
     # tokens: List[Token] TODO: map tokens, see spacy.Doc.py
 

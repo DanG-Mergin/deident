@@ -6,6 +6,6 @@ from pydantic import BaseModel
 # https://spacy.io/api/token
 class Token(BaseModel):
     text: str
-    start: int
-    end: int
+    start_char: int
+    end_char: int
     id: int
