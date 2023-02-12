@@ -16,9 +16,10 @@ nlp = spacy.load("en_core_sci_sm")
 
 async def deident(req: DeIdentRequest) -> List[Type[Doc]]:
     annotated = []
+
     for doc in req.docs:
-        _doc = nlp(doc)
-        s_doc = SpacyDoc(ents=_doc.doc.ents)
+        _doc = nlp(doc.text)
+        s_doc = SpacyDoc(ents=_doc.doc.ents, text=_doc.doc.text)
         b_doc = cast_to_class(s_doc, Doc)
         annotated.append(b_doc)
     return annotated

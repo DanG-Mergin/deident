@@ -9,6 +9,9 @@ import sys
 sys.path.append(".")
 from .schema.messages.outbound.DeIdentRequest import DeIdentRequest
 from .schema.messages.inbound.FileUploadRequest import FileUploadRequest
+from .schema.messages.inbound.DeIdentRequest import SocDeIdentRequest
+from .schema.messages.outbound.DeIdentResponse import SocDeIdentResponse
+from .schema.messages._MessageEnums import O_Action, O_Type, O_Status, UI_Entity
 from .controllers import ai
 from .services.utils import cast_to_class
 from .services.SocketManager import SocketManager
@@ -21,7 +24,9 @@ log = logging.getLogger(__name__)
 if os.environ["ENV"] == "DEV":
     origins = [
         f"http://{os.environ['AI_SERVICE_DOMAIN']}",
-        f"http://{os.environ['AI_SERVICE_DOMAIN']}:{os.environ['WEB_SERVICE_PORT']}",
+        f"http://{os.environ['AI_SERVICE_DOMAIN']}:{os.environ['AI_SERVICE_PORT']}",
+        f"http://{os.environ['UI_SERVICE_DOMAIN']}:{os.environ['UI_SERVICE_PORT']}",
+        "*",
     ]
 
     app.add_middleware(
@@ -64,15 +69,32 @@ async def deident(req: Request):
 
 socket_mgr = SocketManager()
 
-# TODO: display connection status in UI   
+# TODO: display connection status in UI
 @app.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
-    await manager.connect(websocket)
+    await socket_mgr.connect(websocket)
     try:
         while True:
-            data = await websocket.receive_text()
-            await manager.send_personal_message(f"You wrote: {data}", websocket)
-            await manager.broadcast(f"Client #{client_id} says: {data}")
+            json_data = await websocket.receive_json()
+            # TODO: move this into a socket controller
+            if json_data["entity"] == "deident":
+                try:
+                    _req = SocDeIdentRequest.parse_obj(json_data)
+                    _req_out = cast_to_class(_req, DeIdentRequest)
+                    res = await ai.deident(_req_out)
+                    _res = cast_to_class(
+                        res,
+                        SocDeIdentResponse,
+                        orig_id=_req._orig_id,
+                        action=_req._o_action,
+                        status="success",
+                        entity="deident",
+                        type=_req._o_type,
+                    )
+                    await websocket.send_json(_res.dict())
+                except Exception as e:
+                    print(str(e))
+            print(json_data)
+
     except WebSocketDisconnect:
-        manager.disconnect(websocket)
-        await manager.broadcast(f"Client #{client_id} left the chat")
+        socket_mgr.disconnect(websocket)

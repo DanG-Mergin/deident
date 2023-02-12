@@ -15,8 +15,9 @@ from .Token import Token
 
 class Doc(BaseModel):
     id = "fake_id_fix_me"
+    text: str
     entities: List[SpacyEntityInstance]
-    # tokens: List[Token]
+    tokens: List[Token]
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
@@ -35,14 +36,37 @@ class Doc(BaseModel):
                 )
                 for e in ents
             ]
-
-        # TODO: need to associate entities and tokens.. use map_tokens
-        # sents = values.pop("sents", None)
-        # if sents:
-        #     values["tokens"] = [Token(t) for t in sents.split(' ')]
+            values["tokens"] = cls._map_tokens(cls, values["entities"])
         return values
 
-    # def _map_tokens(doc: str, ents: list):
-    #     tokens = []
-    # for each entity get the start and end characters, find the tokens, add as ids to entities, add as tokens here
-    # it might be better to pull tokens from the text value in entities, using the offset of start, end, etc
+    def _split_entity(e: SpacyEntityInstance):
+        tokens = []
+        words = e.text.split(" ")
+        start_char = e.start_char
+        id = e.start
+        for w in words:
+            if w.isalnum():
+                end_char = start_char + len(w)
+                tokens.append(
+                    Token(text=w, start_char=start_char, end_char=end_char, id=id)
+                )
+                start_char = end_char + 1
+                id = id + 1
+        return tokens
+
+    def _map_tokens(cls, ents: list):
+        tokens = []
+        for e in ents:
+            if e.end - e.start == 1:
+                # there is only one token in this entity
+                tokens.append(
+                    Token(
+                        text=e.text,
+                        start_char=e.start_char,
+                        end_char=e.end_char,
+                        id=e.start,
+                    )
+                )
+            else:
+                tokens = tokens + cls._split_entity(e)
+        return tokens

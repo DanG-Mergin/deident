@@ -1,12 +1,26 @@
-
 from enum import Enum, IntEnum
 
-class Action(Enum):
-    create: 'create'
-    read: 'read'
-    update: 'update'
-    delete: 'delete'
 
-class Status(Enum):
-    success: 'success'
-    failure: 'failure'
+class O_Action(str, Enum):
+    create: "create"
+    read: "read"
+    update: "update"
+    delete: "delete"
+
+
+class O_Status(str, Enum):
+    success: "success"
+    error: "error"
+    refetching: "refetching"
+    isFetchingMore: "isFetchingMore"
+    isUpdating: "isUpdating"
+
+
+class O_Type(str, Enum):
+    data: "data"
+    state: "state"
+    index: "index"
+
+
+class UI_Entity(str, Enum):
+    deident: "deident"

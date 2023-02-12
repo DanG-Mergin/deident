@@ -9,10 +9,12 @@ from pydantic import ValidationError, validator, root_validator
 
 
 class DeIdentResponse(_Response):
-    @root_validator(pre=True)
-    def convert_fields(cls, values):
-        annotations = values.pop("annotations", None)
-        if annotations:
-            values["data"] = {"annotations": annotations}
+    data: Dict[str, List[Doc]]
 
-        return values
+    # @root_validator(pre=True)
+    # def convert_fields(cls, values):
+    #     annotations = values.pop("annotations", None)
+    #     if annotations:
+    #         values["data"] = {"annotations": annotations}
+
+    #     return values

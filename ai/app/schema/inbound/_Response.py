@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field, Json
 class _Response(BaseModel):
     service_name = str  # TODO: make this an enforced enum
     req_id: UUID = Field(default_factory=uuid4)
-    orig_id: Optional[UUID]  # from the webfor example
+    _orig_id: Optional[str]  # from the webfor example
     time_start: datetime = Field(default_factory=datetime.utcnow)
     time_end: Optional[datetime]
     # data: Optional[Json[Any]]#TODO: ensure this field is of some type of schema

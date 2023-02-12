@@ -26,7 +26,7 @@ if os.environ["ENV"] == "DEV":
     origins = [
         f"http://{os.environ['WEB_SERVICE_DOMAIN']}",
         f"http://{os.environ['WEB_SERVICE_DOMAIN']}:{os.environ['WEB_SERVICE_PORT']}",
-        # "http://localhost:8081",
+        "*",
     ]
 
     app.add_middleware(
@@ -50,8 +50,9 @@ def test():
 @app.post("/deident", response_class=JSONResponse)
 async def deident(req: Request):
     req_data = await req.json()
-    _req = DeIdentRequest(data=req_data["data"], req_id=req_data["req_id"])
+    _req = DeIdentRequest.parse_obj(req_data)
+    # _req = DeIdentRequest(data=req_data["data"], req_id=req_data["req_id"])
     annotations = await spacy_c.deident(_req)
     # TODO add field mapping between request and response to response object
-    res = DeIdentResponse(annotations=annotations, req_id=_req.req_id)
+    res = DeIdentResponse(data={"docs": annotations}, req_id=_req.req_id)
     return res
