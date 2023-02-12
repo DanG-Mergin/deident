@@ -5,7 +5,6 @@ ai/data/
 
 # IDE
 .idea/
-.vscode/
 *.code-workspace
 
 # Mac
