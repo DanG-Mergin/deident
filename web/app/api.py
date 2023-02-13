@@ -62,11 +62,6 @@ async def deident(req: Request):
     return res
 
 
-# @app.post("/uploadfiles/")
-# async def create_upload_files(files: List[UploadFile]):
-#     # TODO take file.type and compare against schema
-#     return {"file_fids": [file.fid for file in files]}
-
 socket_mgr = SocketManager()
 
 # TODO: display connection status in UI
@@ -82,28 +77,6 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                     _req = SocDeIdentRequest.parse_obj(json_data)
                     _req_out = cast_to_class(_req, DeIdentRequest)
                     res = await ai.deident(_req_out)
-                    # _res = cast_to_class(
-                    #     {
-                    #         "data": res.data,
-                    #         "orig_id": _req.orig_id,
-                    #         "o_action": _req.o_action,
-                    #         "o_status": "success",
-                    #         "entity": "deident",
-                    #         "o_type": _req.o_type,
-                    #     },
-                    #     SocDeIdentResponse,
-                    # )
-                    # _res = SocDeIdentResponse.parse_obj(
-                    #     {
-                    #         "data": res.data,
-                    #         "orig_id": _req.orig_id,
-                    #         "o_action": _req.o_action,
-                    #         "o_status": "success",
-                    #         "entity": "deident",
-                    #         "o_type": _req.o_type,
-                    #     }
-                    # )
-                    # print(_res)
                     _res = SocDeIdentResponse(
                         data=res.data,
                         orig_id=_req.orig_id,

@@ -14,14 +14,4 @@ class _Request(BaseModel, extra=Extra.allow):
     orig_id: Optional[str]  # from the webfor example
     time_start: datetime = Field(default_factory=datetime.utcnow)
     time_end: Optional[datetime]
-    # data: Optional[Json[Any]] #TODO: ensure this field is of some type of schema
     data: Optional[Dict]
-
-    # TODO: add validators where appropriate
-    # @root_validator
-    # def convert_fields(cls, values):
-    #     docs = values.pop("docs", None)
-    #     if docs:
-    #         values["data"] = {"docs": docs}
-
-    #     return values

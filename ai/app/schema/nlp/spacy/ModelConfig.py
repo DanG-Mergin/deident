@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 # TODO: review fields and requirements
 # TODO: move optional/not into validator
+# TODO: currently just a thought experiment... not in use
 class Model(BaseModel):
     name: str
     # TODO: rethink this classification
