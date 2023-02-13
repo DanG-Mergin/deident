@@ -11,11 +11,3 @@ from ..inbound.nlp.Doc import Doc
 class DeIdentRequest(_PostRequest, extra=Extra.ignore):
     url = f"{os.environ['AI_DEIDENT_URL']}"
     data: Dict[str, List[Doc]]
-
-    # @root_validator
-    # def convert_fields(cls, values):
-    #     docs = values.pop("docs", None)
-    #     if docs:
-    #         values["data"] = {"docs": docs}
-
-    #     return values

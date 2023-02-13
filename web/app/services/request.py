@@ -9,8 +9,6 @@ sys.path.append("..")
 from ..schema.messages.outbound import DeIdentRequest, _Request, _PostRequest
 from ..schema.messages.inbound import _Response
 
-# from ..services.utils import cast_to_class
-
 
 async def make_request(req: _Request, res_cls: _Response) -> _Response:
     if req.method == "POST":
@@ -21,7 +19,6 @@ async def make_request(req: _Request, res_cls: _Response) -> _Response:
 
 # TODO: use response objects
 async def make_post_json_req(req: _PostRequest, res_cls: _Response):
-    # response = httpx.post("http://ai-service:8081/deident", json=req)
     async with httpx.AsyncClient() as client:
         res = await client.post(req.url, json=jsonable_encoder(req))
     res_data = res.json()

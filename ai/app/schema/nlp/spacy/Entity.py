@@ -21,23 +21,11 @@ class SpacyEntityInstance(BaseModel, extra=Extra.ignore):
     end_char: int
     label: EntityLabel
     text: str
-    # tokens: List[Token] TODO: map tokens, see spacy.Doc.py
-
-    # @validator("tokens")
-    # def access_tokens(cls, v):
-    #     if not isinstance(v, list):
-    #         tokens =
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
         label_txt = values.pop("label_", None)
         if label_txt:
             values["label"] = EntityLabel(kb_id=values["kb_id"], text=label_txt)
-
-        # ents = values.pop("ents", None)
-        # if ents:
-        #     for field_name in cls.__fields__:
-        #         if field_name in data:
-        #             values[field_name] = data[field_name]
 
         return values

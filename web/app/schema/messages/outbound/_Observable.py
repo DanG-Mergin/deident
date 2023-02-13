@@ -15,8 +15,6 @@ class _Observable(BaseModel, extra=Extra.allow):
     o_status: str
     o_type: str
     entity: str
-    # time_start: datetime = Field(default_factory=datetime.utcnow)
-    # time_end: Optional[datetime]
     data: Optional[dict]
 
     @property

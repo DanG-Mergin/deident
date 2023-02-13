@@ -9,5 +9,4 @@ class _Response(BaseModel):
     orig_id: Optional[str]  # from the webfor example
     time_start: datetime = Field(default_factory=datetime.utcnow)
     time_end: Optional[datetime]
-    # data: Optional[Json[Any]]#TODO: ensure this field is of some type of schema
     data: Optional[Dict]

@@ -1,4 +1,5 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from typing import List
 
 # https://medium.com/@pranata.giya12.gp/develop-a-chat-application-using-react-js-fastapi-and-websocket-5660143c4f80
 

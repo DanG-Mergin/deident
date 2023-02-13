@@ -68,5 +68,6 @@ class Doc(BaseModel):
                     )
                 )
             else:
+                # There are multiple tokens in this entity
                 tokens = tokens + cls._split_entity(e)
         return tokens
