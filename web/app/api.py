@@ -82,15 +82,37 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                     _req = SocDeIdentRequest.parse_obj(json_data)
                     _req_out = cast_to_class(_req, DeIdentRequest)
                     res = await ai.deident(_req_out)
-                    _res = cast_to_class(
-                        res,
-                        SocDeIdentResponse,
-                        orig_id=_req._orig_id,
-                        action=_req._o_action,
-                        status="success",
+                    # _res = cast_to_class(
+                    #     {
+                    #         "data": res.data,
+                    #         "orig_id": _req.orig_id,
+                    #         "o_action": _req.o_action,
+                    #         "o_status": "success",
+                    #         "entity": "deident",
+                    #         "o_type": _req.o_type,
+                    #     },
+                    #     SocDeIdentResponse,
+                    # )
+                    # _res = SocDeIdentResponse.parse_obj(
+                    #     {
+                    #         "data": res.data,
+                    #         "orig_id": _req.orig_id,
+                    #         "o_action": _req.o_action,
+                    #         "o_status": "success",
+                    #         "entity": "deident",
+                    #         "o_type": _req.o_type,
+                    #     }
+                    # )
+                    # print(_res)
+                    _res = SocDeIdentResponse(
+                        data=res.data,
+                        orig_id=_req.orig_id,
+                        o_action=_req.o_action,
+                        o_status="success",
                         entity="deident",
-                        type=_req._o_type,
+                        o_type=_req.o_type,
                     )
+                    print(_res)
                     await websocket.send_json(_res.dict())
                 except Exception as e:
                     print(str(e))

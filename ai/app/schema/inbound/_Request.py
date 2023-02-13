@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field, Json
 
 class _Request(BaseModel):
     req_id: UUID = Field(default_factory=uuid4)
-    _orig_id: Optional[str]  # from the webfor example
+    orig_id: Optional[str]  # from the webfor example
     time_start: datetime = Field(default_factory=datetime.utcnow)
     time_end: Optional[datetime]
     data: Optional[Dict]

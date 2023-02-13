@@ -16,12 +16,12 @@ from .._MessageEnums import O_Status, O_Action, O_Type, UI_Entity
 
 
 class _Observable(BaseModel, extra=Extra.allow):
-    _req_id: UUID = Field(default_factory=uuid4)
-    _orig_id: str = Field(alias="orig_id")
-    _o_action: str = Field(alias="action")
-    _o_status: str = Field(alias="status")
-    _o_type: str = Field(alias="type")
-    _entity: str = Field(alias="entity")
+    req_id: UUID = Field(default_factory=uuid4)
+    orig_id: str
+    o_action: str
+    o_status: str
+    o_type: str
+    entity: str
     # time_start: datetime = Field(default_factory=datetime.utcnow)
     # time_end: Optional[datetime]
     data: Optional[dict]
@@ -58,22 +58,22 @@ class _Observable(BaseModel, extra=Extra.allow):
     def convert_fields(cls, values):
         _status = values.pop("status", None)
         if _status and _status is not None:
-            values["_o_status"] = _status
+            values["o_status"] = _status
 
         _action = values.pop("action", None)
         if _action is not None:
-            values["_o_action"] = _action
+            values["o_action"] = _action
 
         _type = values.pop("type", None)
         if _type and _type is not None:
-            values["_o_type"] = _type
+            values["o_type"] = _type
 
-        _entity = values.pop("entity", None)
-        if _entity and _entity is not None:
-            values["_entity"] = _entity
+        # entity = values.pop("entity", None)
+        # if entity and entity is not None:
+        #     values["entity"] = entity
 
-        _orig_id = values.pop("orig_id", None)
-        if _orig_id and _orig_id is not None:
-            values["_orig_id"] = _orig_id
+        # orig_id = values.pop("orig_id", None)
+        # if orig_id and orig_id is not None:
+        #     values["orig_id"] = orig_id
 
         return values

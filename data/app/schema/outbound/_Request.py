@@ -10,7 +10,7 @@ sys.path.append("..")
 class _Request(BaseModel):
     # service_name: str #TODO: make this an enforced enum
     req_id: UUID = Field(default_factory=uuid4)
-    _orig_id: Optional[str]  # from the webfor example
+    orig_id: Optional[str]  # from the webfor example
     time_start: datetime = Field(default_factory=datetime.utcnow)
     time_end: Optional[datetime]
     # data: Optional[Json[Any]] #TODO: ensure this field is of some type of schema

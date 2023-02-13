@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field, Json
 class _Response(BaseModel):
     extra = "ignore"
     req_id: UUID
-    _orig_id: Optional[str]  # from the webfor example
+    orig_id: Optional[str]  # from the webfor example
     time_start: datetime = Field(default_factory=datetime.utcnow)
     time_end: Optional[datetime]
     # data: Optional[Json[Any]]#TODO: ensure this field is of some type of schema
