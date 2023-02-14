@@ -43,7 +43,6 @@ def read_root():
 
 
 # This is from the web-service if you want to follow the thread
-# TODO: the api should use models to validate requests - define in webfirst
 # @app.post("/deidentify/", response_class=JSONResponse)
 # async def deident(req: Request):
 #     _req = cast_to_class(
