@@ -5,6 +5,22 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Data server attach",
+      "type": "python",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 3002
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/web",
+          "remoteRoot": "/code/web"
+        }
+      ],
+      "justMyCode": true
+    },
+    {
       "name": "Web server attach",
       "type": "python",
       "request": "attach",

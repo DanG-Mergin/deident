@@ -4,6 +4,25 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "docker-build-data",
+      "type": "shell",
+      "command": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "docker-compose.debug.yml",
+        "up",
+        "--build",
+        "data-service"
+      ],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "dependsOn": []
+    },
+    {
       "label": "docker-build-web",
       "type": "shell",
       "command": "docker",
