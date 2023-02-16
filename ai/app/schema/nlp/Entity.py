@@ -10,7 +10,7 @@ from .Vocab import VocabItem
 
 
 class EntityLabel(BaseModel):
-    extra = "forbid"
+    Extra = "ignore"
     kb_id: str  # points to a description of the entity
     text: str
 
@@ -18,9 +18,11 @@ class EntityLabel(BaseModel):
 class EntityInstance(VocabItem):
     id: str
     # TODO: should be a list of label ids
-    label: EntityLabel  # TODO: this should just be IDs
+    label_id: Optional[str]  # TODO: this should just be IDs
     token_ids: List[int]  # TODO: this should just be IDs
     text: str
+    start_index: int  # TODO: fix casing and consistency
+    end_index: int
 
     @validator("token_ids", pre=True)
     def set_token_ids(cls, v):

@@ -18,6 +18,7 @@ async def deident(req: DeIdentRequest) -> List[Type[Doc]]:
     annotated = []
 
     for doc in req.docs:
+        # TODO: handle failure conditions.  One is text with no entities
         _doc = nlp(doc.text)
         s_doc = SpacyDoc(ents=_doc.doc.ents, text=_doc.doc.text)
         b_doc = cast_to_class(s_doc, Doc)
