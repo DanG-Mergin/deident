@@ -11,6 +11,7 @@ from .schema.messages.outbound.DeIdentRequest import DeIdentRequest
 from .schema.messages.inbound.FileUploadRequest import FileUploadRequest
 from .schema.messages.inbound.DeIdentRequest import SocDeIdentRequest
 from .schema.messages.outbound.DeIdentResponse import SocDeIdentResponse
+from .schema.ui.Doc import Doc
 from .schema.messages._MessageEnums import O_Action, O_Type, O_Status, UI_Entity
 from .controllers import ai
 from .services.utils import cast_to_class
@@ -77,6 +78,9 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                     _req = SocDeIdentRequest.parse_obj(json_data)
                     _req_out = cast_to_class(_req, DeIdentRequest)
                     res = await ai.deident(_req_out)
+                    d = res.data
+                    # ggmf = [Doc(y) for y in d["docs"]]
+
                     _res = SocDeIdentResponse(
                         data=res.data,
                         orig_id=_req.orig_id,

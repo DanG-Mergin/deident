@@ -12,6 +12,7 @@ class Token(VocabItem):
     text: str
     start_char: int
     end_char: int
-    # TODO: the id is an entity id, not a token id
+    # TODO: the id is the index of the token
+    index: int
     id: str
     lemma: Optional[Lemma]
