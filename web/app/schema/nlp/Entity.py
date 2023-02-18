@@ -16,7 +16,7 @@ class EntityLabel(BaseModel):
     # description: str
     # TODO: FIX ME
     type = "ner"
-    task = "deident"
+    task = "deID"
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
@@ -29,6 +29,7 @@ class EntityLabel(BaseModel):
 
 class EntityInstance(VocabItem):
     id: str
+    uuid: str
     # TODO: should be a list of label ids
     label_id: Optional[str]
     start_index: int

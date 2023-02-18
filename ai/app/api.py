@@ -6,8 +6,8 @@ import os
 import sys
 
 sys.path.append(".")
-from .schema.inbound.DeIdentRequest import DeIdentRequest
-from .schema.outbound.DeIdentResponse import DeIdentResponse
+from .schema.inbound.DeIDRequest import DeIDRequest
+from .schema.outbound.DeIDResponse import DeIDResponse
 
 from .controllers import spacy as spacy_c
 from .services.utils import cast_to_class
@@ -47,10 +47,10 @@ def test():
 
 
 # TODO: log the round trip on this server
-@app.post("/deident", response_class=JSONResponse)
-async def deident(req: Request):
+@app.post("/deID", response_class=JSONResponse)
+async def deID(req: Request):
     req_data = await req.json()
-    _req = DeIdentRequest.parse_obj(req_data)
-    annotations = await spacy_c.deident(_req)
-    res = DeIdentResponse(data={"docs": annotations}, req_id=_req.req_id)
+    _req = DeIDRequest.parse_obj(req_data)
+    annotations = await spacy_c.deID(_req)
+    res = DeIDResponse(data={"docs": annotations}, req_id=_req.req_id)
     return res

@@ -11,12 +11,14 @@ from ...ui.Doc import Doc
 # from ._Response import _Response
 
 
-class SocDeIdentResponse(_Observable):
+class SocDeIDResponse(_Observable):
     data: Dict[str, List[Doc]]
+    entity = "doc"
 
     # TODO: clean this up
     @root_validator(pre=True)
     def convert_fields(cls, values):
+        values.pop("entity", None)
         data = values.get("docs")
         if data:
             # if all checks pass, return the original values

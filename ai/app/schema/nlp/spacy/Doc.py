@@ -45,13 +45,13 @@ class Doc(BaseModel):
         start_char = e.start_char
         id = e.start
         for w in words:
-            if w.isalnum():
-                end_char = start_char + len(w)
-                tokens.append(
-                    Token(text=w, start_char=start_char, end_char=end_char, id=id)
-                )
-                start_char = end_char + 1
-                id = id + 1
+            # if w.isalnum():
+            end_char = start_char + len(w)
+            tokens.append(
+                Token(text=w, start_char=start_char, end_char=end_char, id=id)
+            )
+            start_char = end_char + 1
+            id = id + 1
         return tokens
 
     def _map_tokens(cls, ents: list):

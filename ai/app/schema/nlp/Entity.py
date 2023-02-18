@@ -1,8 +1,6 @@
 from typing import Dict, List, Optional, Type
 from pydantic import BaseModel, ValidationError, validator
-import sys
-
-sys.path.append("..")
+from uuid import uuid4
 from .Vocab import VocabItem
 
 # from .Span import Span
@@ -17,6 +15,7 @@ class EntityLabel(BaseModel):
 
 class EntityInstance(VocabItem):
     id: str
+    uuid: str
     # TODO: should be a list of label ids
     label_id: Optional[str]  # TODO: this should just be IDs
     token_ids: List[int]  # TODO: this should just be IDs
@@ -29,3 +28,9 @@ class EntityInstance(VocabItem):
         if not isinstance(v, list):
             return [id for id in range(v["start"], v["end"])]
         return v
+
+    # @validator("uuid", pre=True)
+    # def set_uuid(cls, v):
+    #     if not v:
+    #         return str(uuid4())
+    #     return v

@@ -4,7 +4,7 @@ sys.path.append("..")
 # import scispacy
 import spacy
 from .utils import cast_to_class
-from ..schema.inbound.DeIdentRequest import DeIdentRequest
+from ..schema.inbound.DeIDRequest import DeIDRequest
 from ..schema.nlp.spacy.Doc import Doc as SpacyDoc
 from ..schema.nlp.Doc import Doc
 from typing import List, Type
@@ -14,7 +14,7 @@ from typing import List, Type
 nlp = spacy.load("en_core_sci_sm")
 
 
-async def deident(req: DeIdentRequest) -> List[Type[Doc]]:
+async def deID(req: DeIDRequest) -> List[Type[Doc]]:
     annotated = []
 
     for doc in req.docs:

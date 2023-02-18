@@ -8,6 +8,6 @@ from ._PostRequest import _PostRequest
 from ..inbound.nlp.Doc import Doc
 
 
-class DeIdentRequest(_PostRequest, extra=Extra.ignore):
+class DeIDRequest(_PostRequest, extra=Extra.ignore):
     url = f"{os.environ['AI_DEIDENT_URL']}"
     data: Dict[str, List[Doc]]

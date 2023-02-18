@@ -6,7 +6,7 @@ from ._Response import _Response
 from ...nlp.Doc import Doc
 
 
-class DeIdentResponse(_Response):
+class DeIDResponse(_Response):
     data: Dict[str, List[Doc]]
 
     @root_validator(pre=True)

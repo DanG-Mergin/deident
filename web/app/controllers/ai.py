@@ -2,12 +2,12 @@ import sys
 
 sys.path.append("..")
 from ..services import request
-from ..schema.messages.outbound.DeIdentRequest import DeIdentRequest
-from ..schema.messages.inbound.DeIdentResponse import DeIdentResponse
+from ..schema.messages.outbound.DeIDRequest import DeIDRequest
+from ..schema.messages.inbound.DeIDResponse import DeIDResponse
 
 
-async def deident(req: DeIdentRequest) -> DeIdentResponse:
-    # res = await ai_s.deident(req)
-    res = await request.make_request(req, res_cls=DeIdentResponse)
+async def deID(req: DeIDRequest) -> DeIDResponse:
+    # res = await ai_s.deID(req)
+    res = await request.make_request(req, res_cls=DeIDResponse)
 
     return res

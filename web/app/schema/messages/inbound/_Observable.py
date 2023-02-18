@@ -22,6 +22,7 @@ class _Observable(BaseModel, extra=Extra.allow):
     o_status: str
     o_type: str
     entity: str
+    entityType: str
     data: Optional[dict]
 
     @root_validator(pre=True)

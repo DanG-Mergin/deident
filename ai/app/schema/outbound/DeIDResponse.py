@@ -8,5 +8,5 @@ from typing import Any, Dict, Optional, List
 from pydantic import Extra, ValidationError, validator, root_validator
 
 
-class DeIdentResponse(_Response):
+class DeIDResponse(_Response):
     data: Dict[str, List[Doc]]

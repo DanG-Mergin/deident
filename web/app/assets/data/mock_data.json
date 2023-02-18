@@ -1,5 +1,5 @@
 {
-  "deidentSamples": [
+  "deIDSamples": [
     {
       "id": "123",
       "text": "John, a 35-year-old male carpenter, was admitted to Sacred Heart Hospital with symptoms of fatigue, high fever, and body aches. Upon admission, John was diagnosed with a severe case of pneumonia.\n To treat his illness, John was prescribed the following medications: Amoxicillin and Azithromycin.In addition, he underwent several tests including a chest X- ray and a complete blood count(CBC) to monitor the progress of his treatment.\nJohn's insurance is with Blue Cross and his policy number is NZ-07852. He was housed in room number 502 during his stay at the hospital, located at 322 Martin Luther King Blvd, Cambridge MA 02138. \nAfter a few days of treatment and monitoring, John showed significant improvement and was eventually discharged from the hospital.He was instructed to continue taking his medications as prescribed and to follow up with his primary care physician in a week.\nFor any further concerns or questions, John may reach out to the hospital's phone line at 617-999-5432."
