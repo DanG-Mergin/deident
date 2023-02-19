@@ -1,6 +1,7 @@
 from typing import Any, List, Optional
 from pydantic import BaseModel, ValidationError, validator, root_validator
 from .Vocab import VocabItem
+from .Lemma import Lemma
 
 # from .Lemma import Lemma
 
@@ -8,12 +9,13 @@ from .Vocab import VocabItem
 # https://spacy.io/api/token
 class Token(VocabItem):
     text: str
-    start_char: int
-    end_char: int
+    # start_char: int
+    # end_char: int
     index: int
-    # TODO: the id is an entity id, not a token id
+    # TODO: the id is an index
     id: str
-    lemma: Optional[str]
+    lemma: Optional[Lemma]
+    whitespace: Optional[str]
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
@@ -21,14 +23,14 @@ class Token(VocabItem):
             raise ValueError("text is a required field")
         if not isinstance(values["text"], str):
             raise ValueError("text must be a string")
-        if "start_char" not in values:
-            raise ValueError("start_char is a required field")
-        if not isinstance(values["start_char"], int):
-            raise ValueError("start_char must be an integer")
-        if "end_char" not in values:
-            raise ValueError("end_char is a required field")
-        if not isinstance(values["end_char"], int):
-            raise ValueError("end_char must be an integer")
+        # if "start_char" not in values:
+        #     raise ValueError("start_char is a required field")
+        # if not isinstance(values["start_char"], int):
+        #     raise ValueError("start_char must be an integer")
+        # if "end_char" not in values:
+        # #     raise ValueError("end_char is a required field")
+        # if not isinstance(values["end_char"], int):
+        #     raise ValueError("end_char must be an integer")
         if "index" not in values:
             raise ValueError("index is a required field")
         if not isinstance(values["index"], int):
@@ -37,9 +39,5 @@ class Token(VocabItem):
             raise ValueError("id is a required field")
         if not isinstance(values["id"], str):
             raise ValueError("id must be a string")
-
-        if "lemma" in values and values["lemma"] is not None:
-            if not isinstance(values["lemma"], str):
-                raise ValueError("lemma must be a string")
 
         return values

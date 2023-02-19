@@ -20,7 +20,8 @@ async def deID(req: DeIDRequest) -> List[Type[Doc]]:
     for doc in req.docs:
         # TODO: handle failure conditions.  One is text with no entities
         _doc = nlp(doc.text)
-        s_doc = SpacyDoc(ents=_doc.doc.ents, text=_doc.doc.text)
+        tokens = [token for token in _doc]
+        s_doc = SpacyDoc(ents=_doc.doc.ents, text=_doc.doc.text, tokens=tokens)
         b_doc = cast_to_class(s_doc, Doc)
         annotated.append(b_doc)
     return annotated

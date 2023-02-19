@@ -19,6 +19,7 @@ class SpacyEntityInstance(BaseModel, extra=Extra.ignore):
     start_char: int
     end_char: int
     label: EntityLabel
+    model_type: str = "spacy"
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
