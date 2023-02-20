@@ -2,12 +2,12 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.responses import Response, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-import os
-import sys
+import os, sys
 
 sys.path.append(".")
 from .schema.outbound.DeIdentRequest import DeIdentRequest
 from .controllers.ai import save_annotations
+from .controllers.elastic.router import elastic_router
 from .services.utils import cast_to_class
 
 
@@ -42,6 +42,8 @@ def read_root():
     return {"Hello": "From data_api"}
 
 
+# mount the elastic router endpoints
+app.mount("/elastic", elastic_router)
 # This is from the web-service if you want to follow the thread
 # @app.post("/deidentify/", response_class=JSONResponse)
 # async def deident(req: Request):

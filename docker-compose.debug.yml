@@ -1,5 +1,9 @@
 version: '3.4'
 
+volumes:
+  deidentdata:
+
+
 services:
   web-service:
     env_file:
@@ -11,7 +15,7 @@ services:
       context: ./web
       dockerfile: ./Dockerfile.dev
     volumes:
-      - $PWD/web/app:/web/volume
+      - deidentdata:/code/web/volume
     command:
       [
         "sh",
@@ -38,7 +42,7 @@ services:
       context: ./data
       dockerfile: ./Dockerfile.dev
     volumes:
-      - $PWD/data/app:/data/app
+      - deidentdata:/code/data/volume
     command:
       [
         "sh",
@@ -65,7 +69,7 @@ services:
       context: ./ai
       dockerfile: ./Dockerfile.dev
     volumes:
-      - $PWD/ai/app:/ai/volume
+      - deidentdata:/code/ai/volume
     command:
       [
         "sh",
@@ -81,6 +85,21 @@ services:
     ports:
       - "8083:8083"
       - "5678:5678"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - deidentdata:/usr/share/elasticsearch/data
+    networks:
+      medi-net:
+        aliases:
+          - elasticsearch
 networks:
   medi-net:
     driver: bridge
