@@ -1,10 +1,10 @@
 import logging
 from fastapi import FastAPI, Request, UploadFile, WebSocket, WebSocketDisconnect
-from fastapi.responses import Response, JSONResponse
+from fastapi.responses import Response, JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
-import os
-import sys
+import os, sys, json
+
 
 sys.path.append(".")
 from .schema.messages.outbound.DeIDRequest import DeIDRequest
@@ -85,12 +85,13 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                             # TODO: get a real dictionary from a database
                             fake_labels = [
                                 {
+                                    "uuid": "0",
                                     "kb_id": "0",
                                     "description": "This is a fake label for generic Entities",
                                     "text": "Entity",
-                                    "type": "ner",
+                                    "types": ["ner"],
                                     "task": "deID",
-                                }
+                                },
                             ]
                             _res = ObsResponse(
                                 orig_id=_req.orig_id,
