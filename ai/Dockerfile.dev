@@ -25,6 +25,6 @@ RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5
 # # END DEV MODE
 # # -------------------------------------------------------------------------#
 
-COPY ./app /code/ai/app
+COPY . .
 
 CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8083", "--log-level", "debug"]

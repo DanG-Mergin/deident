@@ -2,12 +2,12 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.responses import Response, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-import os
-import sys
+import os, sys
 
 sys.path.append(".")
 from .schema.outbound.DeIdentRequest import DeIdentRequest
 from .controllers.ai import save_annotations
+from .controllers.elastic.router import elastic_router
 from .services.utils import cast_to_class
 
 
@@ -34,6 +34,12 @@ if os.environ["ENV"] == "DEV":
 # ---------------------------------------------------#
 # END DEV
 # ---------------------------------------------------#
+
+
+@app.on_event("startup")
+async def init():
+    log.info("Starting up data_api")
+    app.mount("/elastic/", elastic_router)
 
 
 @app.get("/")
