@@ -36,14 +36,18 @@ if os.environ["ENV"] == "DEV":
 # ---------------------------------------------------#
 
 
+@app.on_event("startup")
+async def init():
+    log.info("Starting up data_api")
+    app.mount("/elastic/", elastic_router)
+
+
 @app.get("/")
 def read_root():
     save_annotations("I'm an annotation")
     return {"Hello": "From data_api"}
 
 
-# mount the elastic router endpoints
-app.mount("/elastic", elastic_router)
 # This is from the web-service if you want to follow the thread
 # @app.post("/deidentify/", response_class=JSONResponse)
 # async def deident(req: Request):

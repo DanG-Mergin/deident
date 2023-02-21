@@ -1,0 +1,666 @@
+[
+  {
+    "uuid": "44cecac2-f305-44b3-9627-4f7d6c12db3b",
+    "kb_id": "0",
+    "description": "This is a fake label for generic Entities",
+    "text": "Entity",
+    "types": [
+      "ner"
+    ],
+    "tasks": [
+      "deID"
+    ],
+    "substitutionId": "3bdd63aa-f182-480a-bea4-b39ac2648d50",
+    "category": "ENTITY",
+    "subCategory": "ENTITY",
+    "tag": "ENTITY",
+    "short_description": "Entity",
+    "instructions": "Highlight the entity"
+  },
+  {
+    "category": "NAME",
+    "subCategory": "PATIENT",
+    "types": [
+      "ner"
+    ],
+    "tag": "PATIENT",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "7cf57950-0feb-41cc-ab60-d270e1a3f6e9",
+    "short_description": "Patient name",
+    "description": "This represents the name of a patient",
+    "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
+    "substitutionId": "2545a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "NAME",
+    "subCategory": "PATIENT",
+    "types": [
+      "ner"
+    ],
+    "tag": "LAST NAME",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "2cf57950-0feb-41cc-ab60-d270e1a3f6e9",
+    "short_description": "Patient last name",
+    "description": "This represents the name of a patient",
+    "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
+    "substitutionId": "3545a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "DATE",
+    "subCategory": "BIRTH DATE",
+    "types": [
+      "ner"
+    ],
+    "tag": "DATE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "d0b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "short_description": "Date of birth",
+    "description": "This represents the day someone was born",
+    "instructions": "Highlight the date",
+    "substitutionId": "d0b5a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "DATE",
+    "subCategory": "DEATH DATE",
+    "types": [
+      "ner"
+    ],
+    "tag": "DATE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "e0b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "short_description": "Death date",
+    "description": "This represents the day someone passed away",
+    "instructions": "Highlight the date",
+    "substitutionId": "e0b5a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "DATE",
+    "subCategory": "ADMISSION DATE",
+    "types": [
+      "ner"
+    ],
+    "tag": "DATE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "f0b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "short_description": "Admission date",
+    "description": "This represents the day someone was admitted to a facility",
+    "instructions": "Highlight the date",
+    "substitutionId": "f0b5a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "DATE",
+    "subCategory": "DISCHARGE DATE",
+    "types": [
+      "ner"
+    ],
+    "tag": "DATE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "10b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "short_description": "Discharge date",
+    "description": "This represents the day someone was discharged from a facility",
+    "instructions": "Highlight the date",
+    "substitutionId": "10b5a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "DATE",
+    "subCategory": "SERVICE DATE",
+    "types": [
+      "ner"
+    ],
+    "tag": "DATE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "20b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "short_description": "Service date",
+    "description": "This represents the day a service was provided",
+    "instructions": "Highlight the date",
+    "substitutionId": "20b5a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "DATE",
+    "subCategory": "ENCOUNTER DATE",
+    "types": [
+      "ner"
+    ],
+    "tag": "DATE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "30b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "short_description": "Encounter date",
+    "description": "This represents the day an encounter occurred",
+    "instructions": "Highlight the date",
+    "substitutionId": "30b5a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "DATE",
+    "subCategory": "ONSET DATE",
+    "types": [
+      "ner"
+    ],
+    "tag": "DATE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "40b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "short_description": "Onset date",
+    "description": "This represents the day an onset of a condition occurred",
+    "instructions": "Highlight the date",
+    "substitutionId": "40b5a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "DATE",
+    "subCategory": "END DATE",
+    "types": [
+      "ner"
+    ],
+    "tag": "DATE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "50b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "short_description": "End date",
+    "description": "This represents the end date of a condition or event",
+    "instructions": "Highlight the date",
+    "substitutionId": "50b5a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "NAME",
+    "subCategory": "PATIENT",
+    "types": [
+      "ner"
+    ],
+    "tag": "FIRST NAME",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "1cf57950-0feb-41cc-ab60-d270e1a3f6e9",
+    "short_description": "Patient first name",
+    "description": "This represents the first name of a patient",
+    "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
+    "substitutionId": "1545a46b-e5f7-4d77-9d13-d137e875adc2"
+  },
+  {
+    "category": "NAME",
+    "subCategory": "DOCTOR",
+    "types": [
+      "ner"
+    ],
+    "tag": "DOCTOR",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "969fc6a4-495a-4c90-8845-03a3aeccb3c7",
+    "short_description": "Doctor name",
+    "description": "This represents the name of a doctor",
+    "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
+    "substitutionId": "61183f07-08e2-406f-9b0b-ba37ea809d03"
+  },
+  {
+    "category": "NAME",
+    "subCategory": "USERNAME",
+    "types": [
+      "ner"
+    ],
+    "tag": "USERNAME",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "1a247450-1747-437c-a25e-4a569927cb4c",
+    "short_description": "Username",
+    "description": "This represents a username",
+    "instructions": "Highlight the entire username",
+    "substitutionId": "a5c2957d-158e-4118-9c80-4103ec680a20"
+  },
+  {
+    "category": "PROFESSION",
+    "subCategory": "PROFESSION",
+    "types": [
+      "ner"
+    ],
+    "tag": "PROFESSION",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "b661b6e3-0872-42b7-8337-d8cf80c5608f",
+    "short_description": "Profession",
+    "description": "This represents a profession",
+    "instructions": "Highlight the entire profession",
+    "substitutionId": "9b274426-b414-46e7-8506-98f5e32e934a"
+  },
+  {
+    "category": "LOCATION",
+    "subCategory": "ROOM",
+    "types": [
+      "ner"
+    ],
+    "tag": "ROOM",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "0b0be22c-dd25-4e92-9501-0193730b2e2a",
+    "short_description": "Room",
+    "description": "This represents a room number",
+    "instructions": "Highlight the entire room number",
+    "substitutionId": "dbd715d2-5ec9-4b9f-86af-a65a1a1e9da2"
+  },
+  {
+    "category": "LOCATION",
+    "subCategory": "DEPARTMENT",
+    "types": [
+      "ner"
+    ],
+    "tag": "DEPARTMENT",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "e85b6604-fb88-46c0-8da9-b60e429b67d2",
+    "short_description": "Department",
+    "description": "This represents a department name",
+    "instructions": "Highlight the entire department name",
+    "substitutionId": "a68d49bb-8239-4be2-a2be-ebdb8ac8e757"
+  },
+  {
+    "category": "LOCATION",
+    "subCategory": "HOSPITAL",
+    "types": [
+      "ner"
+    ],
+    "tag": "HOSPITAL",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "890fbeaf-ac2c-4666-b2c6-da08d33b90bb",
+    "short_description": "Hospital",
+    "description": "This represents a hospital name",
+    "instructions": "Highlight the entire hospital name including spaces",
+    "substitutionId": "034bea39-9472-4f58-8975-13494af60571"
+  },
+  {
+    "category": "LOCATION",
+    "subCategory": "ORGANIZATION",
+    "types": [
+      "ner"
+    ],
+    "tag": "ORGANIZATION",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "3c89f4dc-54b3-4364-874a-62235262e852",
+    "short_description": "Organization",
+    "description": "This represents an organization name",
+    "instructions": "Highlight the entire organization name",
+    "substitutionId": "858d8706-c7db-4509-aa8c-7d61cd8d7f66"
+  },
+  {
+    "category": "LOCATION",
+    "subCategory": "STREET",
+    "types": [
+      "ner"
+    ],
+    "tag": "STREET",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "a43128da-ca21-498a-bc7e-3c79c61066c0",
+    "short_description": "Street",
+    "description": "This represents a street name",
+    "instructions": "Highlight the entire street name, being careful to avoid highlighting names of people",
+    "substitutionId": "4ff71f45-4a72-4459-b5d0-dcfc3482c971"
+  },
+  {
+    "category": "LOCATION",
+    "subCategory": "CITY",
+    "types": [
+      "ner"
+    ],
+    "tag": "CITY",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "d47e51df-3f2d-4dc8-a0a7-46ab775a4dec",
+    "short_description": "City",
+    "description": "This represents a city name",
+    "instructions": "Highlight the entire city name",
+    "substitutionId": "482bfda6-e828-45c8-97dc-77dec558e6df"
+  },
+  {
+    "category": "LOCATION",
+    "subCategory": "STATE",
+    "types": [
+      "ner"
+    ],
+    "tag": "STATE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "971b3569-48b5-4156-a172-d0968ad3d5a4",
+    "short_description": "State",
+    "description": "This represents a state name",
+    "instructions": "Highlight the entire state name",
+    "substitutionId": "3a15e5c5-31f5-418a-941d-c6fcb59654e9"
+  },
+  {
+    "category": "LOCATION",
+    "subCategory": "COUNTRY",
+    "types": [
+      "ner"
+    ],
+    "tag": "COUNTRY",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "b9dc1cc4-1182-4196-882c-38546d950419",
+    "short_description": "Country",
+    "description": "This represents a country name",
+    "instructions": "Highlight the entire country name",
+    "substitutionId": "1d7076a6-d490-4731-9ef0-c9ae38896040"
+  },
+  {
+    "category": "LOCATION",
+    "subCategory": "ZIP CODE",
+    "types": [
+      "ner"
+    ],
+    "tag": "ZIP_CODE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "289af975-5366-4d01-ac04-0d394d44fdf6",
+    "short_description": "Zip code",
+    "description": "This represents a zip code",
+    "instructions": "Highlight the entire zip code",
+    "substitutionId": "680fca6f-fb92-472d-91b5-6b13a331ad6a"
+  },
+  {
+    "category": "LOCATION",
+    "subCategory": "OTHER",
+    "types": [
+      "ner"
+    ],
+    "tag": "LOCATION",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "ded28ea3-e2e4-4b5f-b557-2e39cdf27abc",
+    "short_description": "Other location",
+    "description": "This represents a location other than those listed",
+    "instructions": "Highlight the entire location",
+    "substitutionId": "bfcb8d10-52f3-4626-96e7-02f1cdfc745c"
+  },
+  {
+    "category": "CONTACT",
+    "subCategory": "PHONE",
+    "types": [
+      "ner"
+    ],
+    "tag": "PHONE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "b8d6eaf4-7613-4e9f-9b8d-bba653a4e970",
+    "short_description": "Phone number",
+    "description": "This represents a phone number",
+    "instructions": "Highlight the entire phone number",
+    "substitutionId": "ea8b0952-2acc-4945-83a0-072069bb3a3b"
+  },
+  {
+    "category": "CONTACT",
+    "subCategory": "FAX",
+    "types": [
+      "ner"
+    ],
+    "tag": "FAX",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "2006e9c7-1e57-4a17-9584-108dc00b134c",
+    "short_description": "Fax number",
+    "description": "This represents a fax number",
+    "instructions": "Highlight the entire fax number",
+    "substitutionId": "c2687a5b-ce67-46d1-a5eb-e0bf20b1bcd5"
+  },
+  {
+    "category": "CONTACT",
+    "subCategory": "EMAIL",
+    "types": [
+      "ner"
+    ],
+    "tag": "EMAIL",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "0ddc3377-b63a-415e-afb4-e4cee8335468",
+    "short_description": "Email",
+    "description": "This represents an email address",
+    "instructions": "Highlight the entire email address",
+    "substitutionId": "6a369c8a-14f8-4853-bd4c-12c94018920e"
+  },
+  {
+    "category": "CONTACT",
+    "subCategory": "URL",
+    "types": [
+      "ner"
+    ],
+    "tag": "URL",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "c426b5f0-6d77-491d-8d1f-59bad7496c11",
+    "short_description": "URL",
+    "description": "This represents a URL",
+    "instructions": "Highlight the entire URL",
+    "substitutionId": "2135e42e-2a84-45ef-a7c1-8b26c161dbf6"
+  },
+  {
+    "category": "CONTACT",
+    "subCategory": "IPADDRESS",
+    "types": [
+      "ner"
+    ],
+    "tag": "IPADDRESS",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "ad989a4c-6f42-460f-9dbc-73923a8cf2d2",
+    "short_description": "IP address",
+    "description": "This represents an IP address",
+    "instructions": "Highlight the entire IP address",
+    "substitutionId": "a6d9a27a-1382-49ed-aaa1-3e51d516da5c"
+  },
+  {
+    "category": "ID",
+    "subCategory": "SSN",
+    "types": [
+      "ner"
+    ],
+    "tag": "SSN",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "554f15a1-908b-4761-98ea-d184a79cceb4",
+    "short_description": "Social Security Number",
+    "description": "This represents a Social Security Number",
+    "instructions": "Highlight the entire Social Security Number",
+    "substitutionId": "04f77069-9837-419c-9645-f3d0bb8d641d"
+  },
+  {
+    "category": "ID",
+    "subCategory": "MEDICAL RECORD",
+    "types": [
+      "ner"
+    ],
+    "tag": "MEDICAL_RECORD",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "ed12dcd7-c94b-4319-b742-fbfcbbd3ed94",
+    "short_description": "Medical record number",
+    "description": "This represents a medical record number",
+    "instructions": "Highlight the entire medical record number",
+    "substitutionId": "211a8eef-36f6-4253-8d0f-9dc06200183d"
+  },
+  {
+    "category": "ID",
+    "subCategory": "HEALTH PLAN",
+    "types": [
+      "ner"
+    ],
+    "tag": "HEALTH_PLAN",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "6e209a68-8ebd-4589-b409-1b75e3c959da",
+    "short_description": "Health plan number",
+    "description": "This represents a health plan number",
+    "instructions": "Highlight the entire health plan number",
+    "substitutionId": "6c7ee287-02ea-4227-abe6-2e32de9f9ea8"
+  },
+  {
+    "category": "ID",
+    "subCategory": "ACCOUNT",
+    "types": [
+      "ner"
+    ],
+    "tag": "ACCOUNT",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "3425b926-5472-4469-80d9-8a8143b5fa35",
+    "short_description": "Account number",
+    "description": "This represents an account number",
+    "instructions": "Highlight the entire account number",
+    "substitutionId": "ac54a9bf-fa76-487b-be27-be77efc45764"
+  },
+  {
+    "category": "ID",
+    "subCategory": "LICENSE",
+    "types": [
+      "ner"
+    ],
+    "tag": "LICENSE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "68985b26-1ad0-4a90-b550-3f15b96d3130",
+    "short_description": "License number",
+    "description": "This represents a license number",
+    "instructions": "Highlight the entire license number",
+    "substitutionId": "807fde68-5105-4be4-b8a4-df2a724bab4d"
+  },
+  {
+    "category": "ID",
+    "subCategory": "VEHICLE",
+    "types": [
+      "ner"
+    ],
+    "tag": "VEHICLE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "1f5ed142-1a4a-46e0-bf2b-6aed46cc4a8c",
+    "short_description": "Vehicle number",
+    "description": "This represents a vehicle number",
+    "instructions": "Highlight the entire vehicle number",
+    "substitutionId": "0616cff7-1029-4614-b156-3a0567076986"
+  },
+  {
+    "category": "ID",
+    "subCategory": "DEVICE",
+    "types": [
+      "ner"
+    ],
+    "tag": "DEVICE",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "41eeb658-4306-411e-ae47-4d8adf3580e2",
+    "short_description": "Device ID",
+    "description": "This represents a device ID",
+    "instructions": "Highlight the entire device ID",
+    "substitutionId": "672500f4-6c49-44e1-ae83-feeeb11d1674"
+  },
+  {
+    "category": "ID",
+    "subCategory": "BIO ID",
+    "types": [
+      "ner"
+    ],
+    "tag": "BIO_ID",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "f829c62c-4a83-4e09-adb8-5ef76deb6334",
+    "short_description": "Biometric ID",
+    "description": "This represents a biometric ID",
+    "instructions": "Highlight the entire biometric ID",
+    "substitutionId": "71900358-d0ad-42ae-b8ac-5bec979d7119"
+  },
+  {
+    "category": "ID",
+    "subCategory": "ID NUMBER",
+    "types": [
+      "ner"
+    ],
+    "tag": "ID_NUMBER",
+    "tasks": [
+      "deID"
+    ],
+    "kb_id": null,
+    "uuid": "64d5194b-d2ac-4b74-b21c-d95e75b8546a",
+    "short_description": "ID number",
+    "description": "This represents an ID number",
+    "instructions": "Highlight the entire ID number",
+    "substitutionId": "537f1720-947c-4d2e-9b1b-0e78392e3e91"
+  }
+]

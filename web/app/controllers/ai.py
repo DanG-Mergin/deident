@@ -1,6 +1,3 @@
-import sys
-
-sys.path.append("..")
 from ..services import request
 from ..schema.messages.outbound.DeIdentRequest import DeIdentRequest
 from ..schema.messages.inbound.DeIdentResponse import DeIdentResponse

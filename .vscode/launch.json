@@ -14,8 +14,8 @@
       },
       "pathMappings": [
         {
-          "localRoot": "${workspaceFolder}/web",
-          "remoteRoot": "/code/web"
+          "localRoot": "${workspaceFolder}/data",
+          "remoteRoot": "/code/data"
         }
       ],
       "justMyCode": true
