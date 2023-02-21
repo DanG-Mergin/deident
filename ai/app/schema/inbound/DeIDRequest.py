@@ -8,7 +8,7 @@ from ._PostRequest import _PostRequest
 from .Doc import Doc
 
 
-class DeIdentRequest(_PostRequest, extra=Extra.ignore):
+class DeIDRequest(_PostRequest, extra=Extra.ignore):
     data: Dict[str, List[Doc]]
 
     @property

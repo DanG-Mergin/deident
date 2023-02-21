@@ -6,7 +6,7 @@ sys.path.append("..")
 from ._PostRequest import _PostRequest
 
 
-class DeIdentRequest(_PostRequest):
+class DeIDRequest(_PostRequest):
     blip = "hi"
 
     # this is from the webserver

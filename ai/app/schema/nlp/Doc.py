@@ -47,21 +47,21 @@ class Doc(VocabItem):
         return v
 
     # TODO: this is a hack to get around time constraints..  clean it up
-    @validator("tokens", pre=True)
-    def cast_tokens(cls, t_list):
-        v = []
-        try:
-            for t in t_list:
-                if not isinstance(t, Token):
-                    v.append(
-                        cast_to_class(
-                            t,
-                            Token,
-                            index=t.id,
-                        )
-                    )
-                else:
-                    v.append(t)
-            return v
-        except Exception as e:
-            print(e)
+    # @validator("tokens", pre=True)
+    # def cast_tokens(cls, t_list):
+    #     v = []
+    #     try:
+    #         for t in t_list:
+    #             if not isinstance(t, Token):
+    #                 v.append(
+    #                     cast_to_class(
+    #                         t,
+    #                         Token,
+    #                         index=t.id,
+    #                     )
+    #                 )
+    #             else:
+    #                 v.append(t)
+    #         return v
+    #     except Exception as e:
+    #         print(e)

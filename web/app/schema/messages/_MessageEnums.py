@@ -13,9 +13,9 @@ class O_Action(str, Enum):
 class O_Status(str, Enum):
     success: "success"
     error: "error"
-    refetching: "refetching"
-    isFetchingMore: "isFetchingMore"
-    isUpdating: "isUpdating"
+    loading: "loading"
+    idle: "idle"
+    pending: "pending"
 
 
 class O_Type(str, Enum):
@@ -25,4 +25,11 @@ class O_Type(str, Enum):
 
 
 class UI_Entity(str, Enum):
-    deident: "deident"
+    doc: "doc"
+    label: "label"
+
+
+class UI_EntityType(str, Enum):
+    ner: "ner"
+    deID: "deID"
+    dictionary: "dictionary"

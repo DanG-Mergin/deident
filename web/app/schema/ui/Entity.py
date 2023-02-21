@@ -9,7 +9,7 @@ class EntityLabel(BaseModel):
     text: str
     # TODO: FIX ME
     type = "ner"
-    task = "deident"
+    task = "deID"
     description = "I'm a fake description set on the web server"
 
     @root_validator(pre=True)
@@ -23,6 +23,7 @@ class EntityLabel(BaseModel):
 
 class EntityInstance(VocabItem, extra=Extra.ignore):
     id: str
+    uuid: str
     labelId: Optional[str]  # TODO: this should just be IDs
     startIndex: int
     endIndex: int

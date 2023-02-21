@@ -6,7 +6,7 @@ sys.path.append("..")
 from ._Response import _Response
 
 
-class DeIdentResponse(_Response):
+class DeIDResponse(_Response):
     # This is from the webserver
 
     # @root_validator(pre=True)

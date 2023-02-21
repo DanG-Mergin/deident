@@ -27,7 +27,7 @@ services:
     networks:
       medi-net:
         aliases:
-          - deident-web-service
+          - deID-web-service
     ports:
       - "8081:8081"
       - "3003:3003"
@@ -54,7 +54,7 @@ services:
     networks:
       medi-net:
         aliases:
-          - deident-data-service
+          - deID-data-service
     ports:
       - "8082:8082"
       - "3002:3002"
@@ -81,7 +81,7 @@ services:
     networks:
       medi-net:
         aliases:
-          - deident-ai-service
+          - deID-ai-service
     ports:
       - "8083:8083"
       - "5678:5678"
