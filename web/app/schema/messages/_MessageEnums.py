@@ -6,6 +6,8 @@ class O_Action(str, Enum):
     read: "read"
     update: "update"
     delete: "delete"
+    index: "index"
+    search: "search"
 
 
 class O_Status(str, Enum):

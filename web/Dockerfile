@@ -15,6 +15,6 @@ COPY ./requirements.txt /code/web/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/web/requirements.txt
 
-COPY ./app /code/web/app
+COPY . .
 
 CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8081", "--log-level", "debug"]

@@ -1,10 +1,8 @@
-import logging
 from fastapi import FastAPI, Request, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.responses import Response, JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
-import os, sys, json
-
+import os, logging, sys, json
 
 sys.path.append(".")
 from .schema.messages.outbound.DeIDRequest import DeIDRequest

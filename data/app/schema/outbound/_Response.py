@@ -1,15 +1,13 @@
 from datetime import datetime
 from uuid import UUID, uuid4
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 from pydantic import BaseModel, Extra, Field, Json
-import sys
-
-sys.path.append("..")
 
 
-class _Request(BaseModel, extra=Extra.ignore):
-    req_id: UUID = Field(default_factory=uuid4)
+class _Response(BaseModel, extra=Extra.ignore):
+    req_id: UUID
     orig_id: Optional[str]  # from the webfor example
     time_start: datetime = Field(default_factory=datetime.utcnow)
     time_end: Optional[datetime]
     data: Optional[Dict]
+    error: Optional[Dict]  # for sharing additional error data

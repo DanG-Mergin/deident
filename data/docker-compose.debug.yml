@@ -1,4 +1,9 @@
 version: '3.4'
+
+volumes:
+  deidentdata:
+
+
 services:
   data-service:
     env_file:
@@ -10,11 +15,15 @@ services:
       context: .
       dockerfile: ./Dockerfile.dev
     volumes:
-      - $PWD/app:/data/app
-    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:3002 -m uvicorn app.api:app --host 0.0.0.0 --port 8082 --reload"]
+      - deidentdata:/code/data/volume
+    command:
+      [
+        "sh",
+        "-c",
+        "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:3002 -m uvicorn app.api:app --host 0.0.0.0 --port 8082 --reload"
+      ]
     environment:
       - APP_MESSAGE=Hello debugger
     ports:
       - "8082:8082"
       - "3002:3002"
-  

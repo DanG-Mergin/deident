@@ -11,9 +11,9 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /code/web
 
-COPY ./requirements.txt /code/webrequirements.txt
+COPY ./requirements.txt /code/web/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /code/webrequirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/web/requirements.txt
 # # -------------------------------------------------------------------------#
 # # DEV MODE
 # # -------------------------------------------------------------------------#
@@ -23,6 +23,6 @@ RUN pip install --no-cache-dir --upgrade -r /code/webrequirements.txt
 # # END DEV MODE
 # # -------------------------------------------------------------------------#
 
-COPY ./app /code/web/app
+COPY . .
 
 CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8081", "--log-level", "debug"]

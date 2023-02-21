@@ -17,13 +17,12 @@ async def make_request(req: _Request, res_cls: _Response) -> _Response:
         return res
 
 
-# TODO: use response objects
 async def make_post_json_req(req: _PostRequest, res_cls: _Response):
     async with httpx.AsyncClient() as client:
         res = await client.post(req.url, json=jsonable_encoder(req))
 
     res_data = res.json()
-    # TODO: handle all of this in the class
+
     _res = res_cls(
         data=res_data["data"],
         req_id=res_data["req_id"],

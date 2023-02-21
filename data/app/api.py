@@ -2,12 +2,12 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.responses import Response, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-import os
-import sys
+import os, sys
 
 sys.path.append(".")
 from .schema.outbound.DeIDRequest import DeIDRequest
 from .controllers.ai import save_annotations
+from .controllers.elastic.router import elastic_router
 from .services.utils import cast_to_class
 
 
@@ -36,6 +36,12 @@ if os.environ["ENV"] == "DEV":
 # ---------------------------------------------------#
 
 
+@app.on_event("startup")
+async def init():
+    log.info("Starting up data_api")
+    app.mount("/elastic/", elastic_router)
+
+
 @app.get("/")
 def read_root():
     save_annotations("I'm an annotation")
@@ -43,9 +49,8 @@ def read_root():
 
 
 # This is from the web-service if you want to follow the thread
-# TODO: the api should use models to validate requests - define in webfirst
-# @app.post("/deIDify/", response_class=JSONResponse)
-# async def deID(req: Request):
+# @app.post("/deidentify/", response_class=JSONResponse)
+# async def deident(req: Request):
 #     _req = cast_to_class(
 #         req,
 #         DeIDRequest,
