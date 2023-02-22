@@ -1,5 +1,6 @@
 import asyncio
-from schema import ElasticsearchQuery
+
+# from .schema.ElasticRequest import ElasticsearchQuery
 
 
 async def create_document(index, document_id, document, es):
@@ -18,7 +19,24 @@ async def update_document(index, document_id, document, es):
     return res["_id"]
 
 
+async def get_index(index, es):
+    """
+    Retrieves an index from Elasticsearch
+    """
+    res = await es.search(index=index, body={"query": {"match_all": {}}})
+    # return res["_source"]
+    return res["hits"]["hits"]
+
+
 async def get_document(index, document_id, es):
+    """
+    Retrieves a document from Elasticsearch by ID
+    """
+    res = await es.get(index=index, id=document_id)
+    return res["_source"]
+
+
+async def get_document_by_id(index, document_id, es):
     """
     Retrieves a document from Elasticsearch by ID
     """
@@ -83,41 +101,41 @@ async def bulk_delete_documents(index, document_ids, es):
     return await asyncio.gather(*tasks)
 
 
-async def complex_query(index: str, query: ElasticsearchQuery, es):
-    # Construct Elasticsearch query
-    body = {
-        "query": {
-            "bool": {
-                "must": [
-                    {
-                        "multi_match": {
-                            "query": query.query,
-                            "type": "cross_fields",
-                            "fields": ["*"],
-                            "operator": "and",
-                        }
-                    }
-                ]
-            }
-        },
-        "sort": [{"_score": {"order": "desc"}}],
-        "from": (query.page_number - 1) * query.page_size,
-        "size": query.page_size,
-    }
+# async def complex_query(index: str, query: ElasticsearchQuery, es):
+#     # Construct Elasticsearch query
+#     body = {
+#         "query": {
+#             "bool": {
+#                 "must": [
+#                     {
+#                         "multi_match": {
+#                             "query": query.query,
+#                             "type": "cross_fields",
+#                             "fields": ["*"],
+#                             "operator": "and",
+#                         }
+#                     }
+#                 ]
+#             }
+#         },
+#         "sort": [{"_score": {"order": "desc"}}],
+#         "from": (query.page_number - 1) * query.page_size,
+#         "size": query.page_size,
+#     }
 
-    if query.sort_by:
-        body["sort"] = [
-            {"_score": {"order": "desc"}},
-            {query.sort_by: {"order": "asc"}},
-        ]
+#     if query.sort_by:
+#         body["sort"] = [
+#             {"_score": {"order": "desc"}},
+#             {query.sort_by: {"order": "asc"}},
+#         ]
 
-    # Apply filters
-    filters = query.filters
-    if filters:
-        filter_list = [f.dict() for f in filters]
-        body["query"]["bool"].update({"filter": filter_list})
+#     # Apply filters
+#     filters = query.filters
+#     if filters:
+#         filter_list = [f.dict() for f in filters]
+#         body["query"]["bool"].update({"filter": filter_list})
 
-    # Execute query
-    results = await es.search(index="my_index", body=body)
+#     # Execute query
+#     results = await es.search(index="my_index", body=body)
 
-    return results
+#     return results

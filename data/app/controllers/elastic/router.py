@@ -11,9 +11,11 @@ from .request import (
     create_document,
     update_document,
     get_document,
+    get_document_by_id,
+    get_index,
     delete_document,
     search_documents,
-    complex_query,
+    # complex_query,
 )
 
 
@@ -29,7 +31,7 @@ def get_es_client():
 async def init():
     elastic_router.app.state.es = es
     # initialize elastic indexes if they aren't already
-    # await init_indexes(es)
+    await init_indexes(es)
     log.info("Elasticsearch router started")
 
 
@@ -58,6 +60,8 @@ async def update_document_endpoint(index: str, document_id: str, document: dict)
 
 @elastic_router.get("/")
 async def test_indexing():
+    # for testing purposes only
+    # TODO: delete this
     await init_indexes(es)
     return {"message": "success"}
 
@@ -83,18 +87,22 @@ async def delete_document_endpoint(index: str, document_id: str):
 
 
 @elastic_router.get("/{index}")
-async def search_documents_endpoint(index: str, query: str):
+async def search_documents_endpoint(index: str, query: str = None):
     """
     Searches for documents in Elasticsearch
     """
-    documents = await search_documents(index, query, es)
+    if query is not None:
+        documents = await search_documents(index, query, es)
+    else:
+        documents = await get_index(index, es)
+
     return documents
 
 
-@elastic_router.get("/complex/{index}")
-async def complex_search_documents_endpoint(index: str, query: str):
-    """
-    Searches for documents in Elasticsearch
-    """
-    documents = await complex_query(index, query, es)
-    return documents
+# @elastic_router.get("/complex/{index}")
+# async def complex_search_documents_endpoint(index: str, query: str):
+#     """
+#     Searches for documents in Elasticsearch
+#     """
+#     documents = await complex_query(index, query, es)
+#     return documents

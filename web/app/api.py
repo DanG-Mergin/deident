@@ -14,7 +14,7 @@ from .schema.messages.inbound.DeIDRequest import SocDeIDRequest
 from .schema.messages.outbound.DeIDResponse import SocDeIDResponse
 from .schema.ui.Doc import Doc
 from .schema.messages._MessageEnums import O_Action, O_Type, O_Status, UI_Entity
-from .controllers import ai
+from .controllers import ai, dictionary
 from .services.utils import cast_to_class
 from .services.SocketManager import SocketManager
 
@@ -80,7 +80,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                         try:
                             # TODO: move this to the top to handle misformated messages
                             _req = ObsRequest.parse_obj(json_data)
-                            # TODO: get a real dictionary from a database
+                            res = await dictionary.elastic(_req)
                             fake_labels = [
                                 {
                                     "uuid": "0",

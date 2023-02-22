@@ -4,8 +4,8 @@ from pydantic import BaseModel, ValidationError, validator, root_validator, Extr
 from typing import List, Dict, Union, Optional
 
 # TODO: do I only need to append .. once?
-from ._Request import _Request
-from ..inbound.nlp.Doc import Doc
+# from ._Request import _Request
+from ....schema.inbound import _Request
 
 
 class ElasticsearchFilter(BaseModel):
@@ -125,18 +125,11 @@ class ElasticRequest(_Request, extra=Extra.ignore):
 
     @property
     def url(this):
-        query = this.query
+        _base_url = os.environ["ELASTIC_URL"]
         if this.item_ids is not None:
             # TODO: currently only handles one id
-            return f"{os.environ['DATA_URL']}/elastic/{this.index}/{this.item_ids[0]}"
-        if query is not None:
-            return f"{os.environ['DATA_URL']}/elastic/{this.index}/{query}"
-        return f"{os.environ['DATA_URL']}/elastic/{this.index}"
-
-    @property
-    def query(this):
-        # TODO: add support for filters
-        return None
+            return f"{_base_url}/{this.index}/{this.item_ids[0]}"
+        return f"{_base_url}/{this.index}"
 
     @validator("method")
     def map_method(cls, value):

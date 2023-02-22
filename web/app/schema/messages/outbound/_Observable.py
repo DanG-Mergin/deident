@@ -14,6 +14,7 @@ class _Observable(BaseModel, extra=Extra.allow):
     o_action: str
     o_status: str
     o_type: str
+    task: Optional[str]
     entity: str
     entityType: str
     data: Optional[dict]
