@@ -76,34 +76,15 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             # TODO: move this into a socket controller
             if json_data["type"] == "index":
                 if json_data["entityType"] == "dictionary":
-                    if json_data["entity"] == "label":
-                        try:
-                            # TODO: move this to the top to handle misformated messages
-                            _req = ObsRequest.parse_obj(json_data)
-                            res = await dictionary.elastic(_req)
-                            fake_labels = [
-                                {
-                                    "uuid": "0",
-                                    "kb_id": "0",
-                                    "description": "This is a fake label for generic Entities",
-                                    "text": "Entity",
-                                    "types": ["ner"],
-                                    "task": "deID",
-                                },
-                            ]
-                            _res = ObsResponse(
-                                orig_id=_req.orig_id,
-                                data={"dictionaries": [fake_labels]},
-                                o_action=_req.o_action,
-                                o_status="success",
-                                o_type=_req.o_type,
-                                entity=_req.entity,
-                                entityType=_req.entityType,
-                            )
-                            await websocket.send_json(_res.dict())
-                        except Exception as e:
-                            print(str(e))
-            if json_data["entity"] == "doc":
+                    try:
+                        # TODO: move this to the top to handle misformated messages
+                        _req = ObsRequest.parse_obj(json_data)
+                        res = await dictionary.elastic(_req)
+                        _res = cast_to_class(_req, ObsResponse, data=res.data)
+                        await websocket.send_json(_res.dict())
+                    except Exception as e:
+                        print(str(e))
+            elif json_data["entity"] == "doc":
                 try:
                     _req = SocDeIDRequest.parse_obj(json_data)
                     _req_out = cast_to_class(_req, DeIDRequest)

@@ -1,14 +1,12 @@
-import os
-import sys
 from typing import List, Dict
 from pydantic import Extra, ValidationError, validator, root_validator
 
-sys.path.append("..")
-from ._PostRequest import _PostRequest
+from ._Request import _Request
 from .Doc import Doc
 
 
-class DeIDRequest(_PostRequest, extra=Extra.ignore):
+class DeIDRequest(_Request, extra=Extra.ignore):
+    method = "POST"
     data: Dict[str, List[Doc]]
 
     @property

@@ -1,5 +1,17 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from typing import List
+from ..schema.messages.inbound import _Observable as Observable
+from ..schema.messages._MessageEnums import (
+    O_Action,
+    O_Status,
+    O_Type,
+    UI_Entity,
+    UI_EntityType,
+    Job_Task,
+    ElasticMethod,
+    ElasticIndexes,
+    ElasticTasks,
+)
 
 # https://medium.com/@pranata.giya12.gp/develop-a-chat-application-using-react-js-fastapi-and-websocket-5660143c4f80
 
@@ -21,3 +33,6 @@ class SocketManager:
     async def broadcast(self, message: str):
         for connection in self.active_connections:
             await connection.send_text(message)
+
+    # TODO: This is where we will handle the incoming messages using a dispatch map to controllers
+    # async def handle_request(self, obs: Observable):

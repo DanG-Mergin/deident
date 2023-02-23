@@ -8,6 +8,6 @@ from pydantic import BaseModel, Field, Json
 
 
 class _Request(BaseModel):
-    req_id: UUID = Field(default_factory=uuid4)
+    req_id: str = Field(default_factory=lambda: str(uuid4()))
     orig_id: Optional[str]
     data: Optional[Dict]

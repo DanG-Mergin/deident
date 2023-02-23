@@ -7,7 +7,7 @@ from ...nlp.Doc import Doc
 
 
 class ElasticResponse(_Response):
-    data: Dict[str, List[Doc]]
+    data: Dict[str, List[Dict]]
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

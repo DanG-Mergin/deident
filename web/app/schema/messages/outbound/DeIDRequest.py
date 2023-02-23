@@ -4,10 +4,11 @@ from pydantic import ValidationError, validator, root_validator, Extra
 from typing import List, Dict
 
 # TODO: do I only need to append .. once?
-from ._PostRequest import _PostRequest
+from ._Request import _Request
 from ..inbound.nlp.Doc import Doc
 
 
-class DeIDRequest(_PostRequest, extra=Extra.ignore):
+class DeIDRequest(_Request, extra=Extra.ignore):
+    method = "POST"
     url = f"{os.environ['AI_DEIDENT_URL']}"
     data: Dict[str, List[Doc]]

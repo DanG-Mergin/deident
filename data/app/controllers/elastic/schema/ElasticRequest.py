@@ -6,6 +6,7 @@ from typing import List, Dict, Union, Optional
 # TODO: do I only need to append .. once?
 # from ._Request import _Request
 from ....schema.inbound import _Request
+from ElasticEnums import ElasticTasks, ElasticIndexes, ElasticMethod
 
 
 class ElasticsearchFilter(BaseModel):
@@ -82,34 +83,6 @@ class ElasticsearchQuery(BaseModel):
     page_number: int = 1
 
 
-from enum import Enum
-
-# Maps o_action in observable requests to the corresponding Elasticsearch method
-class ElasticMethod(str, Enum):
-    search = "GET"
-    get = "GET"
-    read = "GET"
-    delete = "DELETE"
-    update = "PUT"
-    put = "PUT"
-    bulk = "POST"
-    post = "POST"
-    create = "POST"
-
-
-# maps UI_Entity to the corresponding Elasticsearch index
-class ElasticIndexes(str, Enum):
-    labels = "label"
-    label = "label"
-    substitutions = "substitution"
-    substitution = "substitution"
-
-
-# maps Job_Task to the corresponding Elasticsearch type
-class ElasticTasks(str, Enum):
-    deID = "deID"
-
-
 # class ElasticTypes(str, Enum):
 #     label = "label"
 #     substitution = "substitution"
@@ -125,11 +98,18 @@ class ElasticRequest(_Request, extra=Extra.ignore):
 
     @property
     def url(this):
-        _base_url = os.environ["ELASTIC_URL"]
+        query = this.query
         if this.item_ids is not None:
             # TODO: currently only handles one id
-            return f"{_base_url}/{this.index}/{this.item_ids[0]}"
-        return f"{_base_url}/{this.index}"
+            return f"{os.environ['DATA_URL']}/elastic/{this.index}/{this.item_ids[0]}"
+        if query is not None:
+            return f"{os.environ['DATA_URL']}/elastic/{this.index}/{query}"
+        return f"{os.environ['DATA_URL']}/elastic/{this.index}"
+
+    @property
+    def query(this):
+        # TODO: add support for filters
+        return None
 
     @validator("method")
     def map_method(cls, value):

@@ -1,6 +1,10 @@
 import logging
 from fastapi import APIRouter, HTTPException
 from .create_indexes import init_indexes
+from pydantic import BaseModel
+from typing import Type
+from .schema.Label import Label
+from ...schema.outbound._Response import _Response as Response
 
 # from .labels import router as labels_router
 from elasticsearch import AsyncElasticsearch
@@ -25,6 +29,17 @@ log = logging.getLogger(__name__)
 
 def get_es_client():
     return es
+
+
+# Dictionary that maps model names to Pydantic classes
+MODEL_MAP = {"label": Label}
+
+
+def get_model(model_name: str) -> Type[BaseModel]:
+    try:
+        return MODEL_MAP[model_name]
+    except KeyError:
+        raise ValueError(f"Unknown model name: {model_name}")
 
 
 @elastic_router.on_event("startup")
@@ -91,12 +106,19 @@ async def search_documents_endpoint(index: str, query: str = None):
     """
     Searches for documents in Elasticsearch
     """
-    if query is not None:
-        documents = await search_documents(index, query, es)
-    else:
-        documents = await get_index(index, es)
+    try:
+        if query is not None:
+            documents = await search_documents(index, query, es)
+        else:
+            documents = await get_index(index, es)
 
-    return documents
+        cls = get_model(index)
+        items = [cls(**doc["_source"]) for doc in documents]
+        res = Response(data={"items": items})
+
+        return res
+    except Exception as e:
+        return Response(error=e)
 
 
 # @elastic_router.get("/complex/{index}")
