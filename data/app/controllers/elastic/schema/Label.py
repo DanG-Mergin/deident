@@ -16,6 +16,7 @@ class Label(BaseModel, extra=Extra.ignore):
     description: str
     instructions: str
     substitutionId: Optional[UUID] = None
+    badgeName: Optional[str] = None
 
     @validator("tasks")
     def map_task(cls, tasks):

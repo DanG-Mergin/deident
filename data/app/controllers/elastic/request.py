@@ -23,7 +23,7 @@ async def get_index(index, es):
     """
     Retrieves an index from Elasticsearch
     """
-    res = await es.search(index=index, body={"query": {"match_all": {}}})
+    res = await es.search(index=index, body={"query": {"match_all": {}}, "size": 1000})
     # return res["_source"]
     return res["hits"]["hits"]
 
