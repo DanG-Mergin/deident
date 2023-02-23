@@ -45,9 +45,12 @@ def get_model(model_name: str) -> Type[BaseModel]:
 @elastic_router.on_event("startup")
 async def init():
     elastic_router.app.state.es = es
-    # initialize elastic indexes if they aren't already
     await init_indexes(es)
+
+    # initialize elastic indexes if they aren't already
+
     log.info("Elasticsearch router started")
+    print("Elasticsearch router started")
 
 
 @elastic_router.on_event("shutdown")

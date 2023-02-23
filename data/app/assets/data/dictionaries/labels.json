@@ -15,7 +15,8 @@
     "subCategory": "ENTITY",
     "tag": "ENTITY",
     "short_description": "Entity",
-    "instructions": "Highlight the entity"
+    "instructions": "Highlight the entity",
+    "badgeName": "ibex-one"
   },
   {
     "category": "NAME",
@@ -32,7 +33,8 @@
     "short_description": "Patient name",
     "description": "This represents the name of a patient",
     "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
-    "substitutionId": "2545a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "2545a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "ibex-two"
   },
   {
     "category": "NAME",
@@ -49,7 +51,8 @@
     "short_description": "Patient last name",
     "description": "This represents the name of a patient",
     "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
-    "substitutionId": "3545a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "3545a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "ibex-three"
   },
   {
     "category": "DATE",
@@ -66,7 +69,8 @@
     "short_description": "Date of birth",
     "description": "This represents the day someone was born",
     "instructions": "Highlight the date",
-    "substitutionId": "d0b5a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "d0b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "wolf-one"
   },
   {
     "category": "DATE",
@@ -83,7 +87,8 @@
     "short_description": "Death date",
     "description": "This represents the day someone passed away",
     "instructions": "Highlight the date",
-    "substitutionId": "e0b5a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "e0b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "wolf-two"
   },
   {
     "category": "DATE",
@@ -100,7 +105,8 @@
     "short_description": "Admission date",
     "description": "This represents the day someone was admitted to a facility",
     "instructions": "Highlight the date",
-    "substitutionId": "f0b5a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "f0b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "wolf-three"
   },
   {
     "category": "DATE",
@@ -117,7 +123,8 @@
     "short_description": "Discharge date",
     "description": "This represents the day someone was discharged from a facility",
     "instructions": "Highlight the date",
-    "substitutionId": "10b5a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "10b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "hammerheadShark-one"
   },
   {
     "category": "DATE",
@@ -134,7 +141,8 @@
     "short_description": "Service date",
     "description": "This represents the day a service was provided",
     "instructions": "Highlight the date",
-    "substitutionId": "20b5a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "20b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "hammerheadShark-two"
   },
   {
     "category": "DATE",
@@ -151,7 +159,8 @@
     "short_description": "Encounter date",
     "description": "This represents the day an encounter occurred",
     "instructions": "Highlight the date",
-    "substitutionId": "30b5a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "30b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "hammerheadShark-three"
   },
   {
     "category": "DATE",
@@ -168,7 +177,8 @@
     "short_description": "Onset date",
     "description": "This represents the day an onset of a condition occurred",
     "instructions": "Highlight the date",
-    "substitutionId": "40b5a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "40b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "hawk-one"
   },
   {
     "category": "DATE",
@@ -185,7 +195,8 @@
     "short_description": "End date",
     "description": "This represents the end date of a condition or event",
     "instructions": "Highlight the date",
-    "substitutionId": "50b5a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "50b5a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "hawk-two"
   },
   {
     "category": "NAME",
@@ -202,7 +213,8 @@
     "short_description": "Patient first name",
     "description": "This represents the first name of a patient",
     "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
-    "substitutionId": "1545a46b-e5f7-4d77-9d13-d137e875adc2"
+    "substitutionId": "1545a46b-e5f7-4d77-9d13-d137e875adc2",
+    "badgeName": "hawk-three"
   },
   {
     "category": "NAME",
@@ -219,7 +231,8 @@
     "short_description": "Doctor name",
     "description": "This represents the name of a doctor",
     "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
-    "substitutionId": "61183f07-08e2-406f-9b0b-ba37ea809d03"
+    "substitutionId": "61183f07-08e2-406f-9b0b-ba37ea809d03",
+    "badgeName": "monitorLizard-one"
   },
   {
     "category": "NAME",
@@ -236,7 +249,8 @@
     "short_description": "Username",
     "description": "This represents a username",
     "instructions": "Highlight the entire username",
-    "substitutionId": "a5c2957d-158e-4118-9c80-4103ec680a20"
+    "substitutionId": "a5c2957d-158e-4118-9c80-4103ec680a20",
+    "badgeName": "monitorLizard-two"
   },
   {
     "category": "PROFESSION",
@@ -253,7 +267,8 @@
     "short_description": "Profession",
     "description": "This represents a profession",
     "instructions": "Highlight the entire profession",
-    "substitutionId": "9b274426-b414-46e7-8506-98f5e32e934a"
+    "substitutionId": "9b274426-b414-46e7-8506-98f5e32e934a",
+    "badgeName": "monitorLizard-three"
   },
   {
     "category": "LOCATION",
@@ -270,7 +285,8 @@
     "short_description": "Room",
     "description": "This represents a room number",
     "instructions": "Highlight the entire room number",
-    "substitutionId": "dbd715d2-5ec9-4b9f-86af-a65a1a1e9da2"
+    "substitutionId": "dbd715d2-5ec9-4b9f-86af-a65a1a1e9da2",
+    "badgeName": "jaguar-one"
   },
   {
     "category": "LOCATION",
@@ -287,7 +303,8 @@
     "short_description": "Department",
     "description": "This represents a department name",
     "instructions": "Highlight the entire department name",
-    "substitutionId": "a68d49bb-8239-4be2-a2be-ebdb8ac8e757"
+    "substitutionId": "a68d49bb-8239-4be2-a2be-ebdb8ac8e757",
+    "badgeName": "jaguar-two"
   },
   {
     "category": "LOCATION",
@@ -304,7 +321,8 @@
     "short_description": "Hospital",
     "description": "This represents a hospital name",
     "instructions": "Highlight the entire hospital name including spaces",
-    "substitutionId": "034bea39-9472-4f58-8975-13494af60571"
+    "substitutionId": "034bea39-9472-4f58-8975-13494af60571",
+    "badgeName": "jaguar-three"
   },
   {
     "category": "LOCATION",
@@ -321,7 +339,8 @@
     "short_description": "Organization",
     "description": "This represents an organization name",
     "instructions": "Highlight the entire organization name",
-    "substitutionId": "858d8706-c7db-4509-aa8c-7d61cd8d7f66"
+    "substitutionId": "858d8706-c7db-4509-aa8c-7d61cd8d7f66",
+    "badgeName": "possum-one"
   },
   {
     "category": "LOCATION",
@@ -338,7 +357,8 @@
     "short_description": "Street",
     "description": "This represents a street name",
     "instructions": "Highlight the entire street name, being careful to avoid highlighting names of people",
-    "substitutionId": "4ff71f45-4a72-4459-b5d0-dcfc3482c971"
+    "substitutionId": "4ff71f45-4a72-4459-b5d0-dcfc3482c971",
+    "badgeName": "possum-two"
   },
   {
     "category": "LOCATION",
@@ -355,7 +375,8 @@
     "short_description": "City",
     "description": "This represents a city name",
     "instructions": "Highlight the entire city name",
-    "substitutionId": "482bfda6-e828-45c8-97dc-77dec558e6df"
+    "substitutionId": "482bfda6-e828-45c8-97dc-77dec558e6df",
+    "badgeName": "possum-three"
   },
   {
     "category": "LOCATION",
@@ -372,7 +393,8 @@
     "short_description": "State",
     "description": "This represents a state name",
     "instructions": "Highlight the entire state name",
-    "substitutionId": "3a15e5c5-31f5-418a-941d-c6fcb59654e9"
+    "substitutionId": "3a15e5c5-31f5-418a-941d-c6fcb59654e9",
+    "badgeName": "flamingo-one"
   },
   {
     "category": "LOCATION",
@@ -389,7 +411,8 @@
     "short_description": "Country",
     "description": "This represents a country name",
     "instructions": "Highlight the entire country name",
-    "substitutionId": "1d7076a6-d490-4731-9ef0-c9ae38896040"
+    "substitutionId": "1d7076a6-d490-4731-9ef0-c9ae38896040",
+    "badgeName": "flamingo-two"
   },
   {
     "category": "LOCATION",
@@ -406,7 +429,8 @@
     "short_description": "Zip code",
     "description": "This represents a zip code",
     "instructions": "Highlight the entire zip code",
-    "substitutionId": "680fca6f-fb92-472d-91b5-6b13a331ad6a"
+    "substitutionId": "680fca6f-fb92-472d-91b5-6b13a331ad6a",
+    "badgeName": "flamingo-three"
   },
   {
     "category": "LOCATION",
@@ -423,7 +447,8 @@
     "short_description": "Other location",
     "description": "This represents a location other than those listed",
     "instructions": "Highlight the entire location",
-    "substitutionId": "bfcb8d10-52f3-4626-96e7-02f1cdfc745c"
+    "substitutionId": "bfcb8d10-52f3-4626-96e7-02f1cdfc745c",
+    "badgeName": "antelope-one"
   },
   {
     "category": "CONTACT",
@@ -440,7 +465,8 @@
     "short_description": "Phone number",
     "description": "This represents a phone number",
     "instructions": "Highlight the entire phone number",
-    "substitutionId": "ea8b0952-2acc-4945-83a0-072069bb3a3b"
+    "substitutionId": "ea8b0952-2acc-4945-83a0-072069bb3a3b",
+    "badgeName": "antelope-two"
   },
   {
     "category": "CONTACT",
@@ -457,7 +483,8 @@
     "short_description": "Fax number",
     "description": "This represents a fax number",
     "instructions": "Highlight the entire fax number",
-    "substitutionId": "c2687a5b-ce67-46d1-a5eb-e0bf20b1bcd5"
+    "substitutionId": "c2687a5b-ce67-46d1-a5eb-e0bf20b1bcd5",
+    "badgeName": "antelope-three"
   },
   {
     "category": "CONTACT",
@@ -474,7 +501,8 @@
     "short_description": "Email",
     "description": "This represents an email address",
     "instructions": "Highlight the entire email address",
-    "substitutionId": "6a369c8a-14f8-4853-bd4c-12c94018920e"
+    "substitutionId": "6a369c8a-14f8-4853-bd4c-12c94018920e",
+    "badgeName": "albatross-one"
   },
   {
     "category": "CONTACT",
@@ -491,7 +519,8 @@
     "short_description": "URL",
     "description": "This represents a URL",
     "instructions": "Highlight the entire URL",
-    "substitutionId": "2135e42e-2a84-45ef-a7c1-8b26c161dbf6"
+    "substitutionId": "2135e42e-2a84-45ef-a7c1-8b26c161dbf6",
+    "badgeName": "albatross-two"
   },
   {
     "category": "CONTACT",
@@ -499,7 +528,7 @@
     "types": [
       "ner"
     ],
-    "tag": "IPADDRESS",
+    "tag": "IP ADDRESS",
     "tasks": [
       "deID"
     ],
@@ -508,7 +537,8 @@
     "short_description": "IP address",
     "description": "This represents an IP address",
     "instructions": "Highlight the entire IP address",
-    "substitutionId": "a6d9a27a-1382-49ed-aaa1-3e51d516da5c"
+    "substitutionId": "a6d9a27a-1382-49ed-aaa1-3e51d516da5c",
+    "badgeName": "albatross-three"
   },
   {
     "category": "ID",
@@ -525,15 +555,16 @@
     "short_description": "Social Security Number",
     "description": "This represents a Social Security Number",
     "instructions": "Highlight the entire Social Security Number",
-    "substitutionId": "04f77069-9837-419c-9645-f3d0bb8d641d"
+    "substitutionId": "04f77069-9837-419c-9645-f3d0bb8d641d",
+    "badgeName": "albatross-four"
   },
   {
     "category": "ID",
-    "subCategory": "MEDICAL RECORD",
+    "subCategory": "MEDICAL_RECORD",
     "types": [
       "ner"
     ],
-    "tag": "MEDICAL_RECORD",
+    "tag": "MEDICAL RECORD",
     "tasks": [
       "deID"
     ],
@@ -542,15 +573,16 @@
     "short_description": "Medical record number",
     "description": "This represents a medical record number",
     "instructions": "Highlight the entire medical record number",
-    "substitutionId": "211a8eef-36f6-4253-8d0f-9dc06200183d"
+    "substitutionId": "211a8eef-36f6-4253-8d0f-9dc06200183d",
+    "badgeName": "cobra-one"
   },
   {
     "category": "ID",
-    "subCategory": "HEALTH PLAN",
+    "subCategory": "HEALTH_PLAN",
     "types": [
       "ner"
     ],
-    "tag": "HEALTH_PLAN",
+    "tag": "HEALTH PLAN",
     "tasks": [
       "deID"
     ],
@@ -559,7 +591,8 @@
     "short_description": "Health plan number",
     "description": "This represents a health plan number",
     "instructions": "Highlight the entire health plan number",
-    "substitutionId": "6c7ee287-02ea-4227-abe6-2e32de9f9ea8"
+    "substitutionId": "6c7ee287-02ea-4227-abe6-2e32de9f9ea8",
+    "badgeName": "cobra-two"
   },
   {
     "category": "ID",
@@ -576,7 +609,8 @@
     "short_description": "Account number",
     "description": "This represents an account number",
     "instructions": "Highlight the entire account number",
-    "substitutionId": "ac54a9bf-fa76-487b-be27-be77efc45764"
+    "substitutionId": "ac54a9bf-fa76-487b-be27-be77efc45764",
+    "badgeName": "cobra-three"
   },
   {
     "category": "ID",
@@ -593,7 +627,8 @@
     "short_description": "License number",
     "description": "This represents a license number",
     "instructions": "Highlight the entire license number",
-    "substitutionId": "807fde68-5105-4be4-b8a4-df2a724bab4d"
+    "substitutionId": "807fde68-5105-4be4-b8a4-df2a724bab4d",
+    "badgeName": "alligator-one"
   },
   {
     "category": "ID",
@@ -610,7 +645,8 @@
     "short_description": "Vehicle number",
     "description": "This represents a vehicle number",
     "instructions": "Highlight the entire vehicle number",
-    "substitutionId": "0616cff7-1029-4614-b156-3a0567076986"
+    "substitutionId": "0616cff7-1029-4614-b156-3a0567076986",
+    "badgeName": "alligator-two"
   },
   {
     "category": "ID",
@@ -627,7 +663,8 @@
     "short_description": "Device ID",
     "description": "This represents a device ID",
     "instructions": "Highlight the entire device ID",
-    "substitutionId": "672500f4-6c49-44e1-ae83-feeeb11d1674"
+    "substitutionId": "672500f4-6c49-44e1-ae83-feeeb11d1674",
+    "badgeName": "alligator-three"
   },
   {
     "category": "ID",
@@ -644,7 +681,8 @@
     "short_description": "Biometric ID",
     "description": "This represents a biometric ID",
     "instructions": "Highlight the entire biometric ID",
-    "substitutionId": "71900358-d0ad-42ae-b8ac-5bec979d7119"
+    "substitutionId": "71900358-d0ad-42ae-b8ac-5bec979d7119",
+    "badgeName": "bull-one"
   },
   {
     "category": "ID",
@@ -661,6 +699,7 @@
     "short_description": "ID number",
     "description": "This represents an ID number",
     "instructions": "Highlight the entire ID number",
-    "substitutionId": "537f1720-947c-4d2e-9b1b-0e78392e3e91"
+    "substitutionId": "537f1720-947c-4d2e-9b1b-0e78392e3e91",
+    "badgeName": "bull-two"
   }
 ]

@@ -27,7 +27,9 @@ class Doc(VocabItem):
             if not hasattr(e, "label") or not hasattr(e.label, "kb_id"):
                 label_id = None
             else:
-                label_id = e.label.kb_id
+                # label_id = e.label.kb_id
+                # TODO: this is a hack as we're only getting the kb_id for now
+                label_id = "44cecac2-f305-44b3-9627-4f7d6c12db3b"
                 labels[label_id] = EntityLabel(kb_id=label_id, text=e.label.text)
 
             if not isinstance(e, EntityInstance):

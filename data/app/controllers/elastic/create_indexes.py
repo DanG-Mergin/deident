@@ -47,6 +47,7 @@ async def create_labels_index(es):
                     "text": {"type": "text"},
                     "short_description": {"type": "text"},
                     "instructions": {"type": "text"},
+                    "badgeName": {"type": "text"},
                 }
             }
         }
@@ -88,21 +89,21 @@ def get_index(name):
 
 
 async def init_data(es):
+    labels_count = await es.count(index="label")
+    if labels_count["count"] == 0:
+        await _create_labels(es)
     # Check if any documents exist in the "substitution" index
     substitution_count = await es.count(index="substitution")
     if substitution_count["count"] == 0:
         # If no documents are found, initialize the index
-        return await asyncio.gather(
-            _create_labels(es),
+        await asyncio.gather(
             _create_contacts(es),
             _create_ids(es),
             _create_locations(es),
             _create_names(es),
             _create_professions(es),
         )
-    else:
-        # If documents exist, don't run initialization logic
-        log.info("Data already initialized")
+    return None
 
 
 async def _create_labels(es):
