@@ -13,15 +13,14 @@ class Token(VocabItem, extra=Extra.ignore):
     # TODO: the id is an entity id, not a token id
     id: str
     lemma: Optional[Lemma]
-    whitespace: Optional[str]
+    spacesAfter: Optional[int]
 
-    # @root_validator(pre=True)
-    # def convert_fields(cls, values):
-    #     startChar = values.pop("start_char", None)
-    #     if startChar:
-    #         values["startChar"] = startChar
-    #     endChar = values.pop("end_char", None)
-    #     if endChar:
-    #         values["endChar"] = endChar
+    @root_validator(pre=True)
+    def convert_fields(cls, values):
+        whitespace = values.pop("whitespace", None)
+        if whitespace:
+            values["spacesAfter"] = len(whitespace)
+        else:
+            values["spacesAfter"] = 0
 
-    #     return values
+        return values
