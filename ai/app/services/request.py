@@ -3,9 +3,7 @@ import httpx
 # import asyncio
 from pydantic import ValidationError
 from fastapi.encoders import jsonable_encoder
-import sys
 
-sys.path.append("..")
 from ..schema.messages.outbound import _Request
 from ..schema.messages.inbound import _Response
 

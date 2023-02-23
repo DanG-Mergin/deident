@@ -4,8 +4,9 @@ from pydantic import BaseModel, ValidationError, validator, root_validator, Extr
 from typing import List, Dict, Union, Optional
 
 # TODO: do I only need to append .. once?
-from ._Request import _Request
-from .._MessageEnums import ElasticMethod, ElasticIndexes, ElasticTasks
+# from ._Request import _Request
+from ....schema.inbound import _Request
+from ElasticEnums import ElasticTasks, ElasticIndexes, ElasticMethod
 
 
 class ElasticsearchFilter(BaseModel):
@@ -80,9 +81,6 @@ class ElasticsearchQuery(BaseModel):
     sort_by: str = None
     page_size: int = 10
     page_number: int = 1
-
-
-from enum import Enum
 
 
 # class ElasticTypes(str, Enum):

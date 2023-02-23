@@ -8,10 +8,6 @@ from pydantic import BaseModel, Field, Json
 
 
 class _Request(BaseModel):
-    req_id: UUID = Field(default_factory=uuid4)
-    orig_id: Optional[str]  # from the webfor example
-    time_start: datetime = Field(default_factory=datetime.utcnow)
-    time_end: Optional[datetime]
+    req_id: str = Field(default_factory=lambda: str(uuid4()))
+    orig_id: Optional[str]
     data: Optional[Dict]
-
-    # TODO: add validators where appropriate

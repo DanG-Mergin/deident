@@ -6,8 +6,8 @@ import os
 import sys
 
 sys.path.append(".")
-from .schema.inbound.DeIDRequest import DeIDRequest
-from .schema.outbound.DeIDResponse import DeIDResponse
+from .schema.messages.inbound.DeIDRequest import DeIDRequest
+from .schema.messages.outbound.DeIDResponse import DeIDResponse
 
 from .controllers import spacy as spacy_c
 from .services.utils import cast_to_class

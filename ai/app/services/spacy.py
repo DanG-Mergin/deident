@@ -4,7 +4,7 @@ sys.path.append("..")
 # import scispacy
 import spacy
 from .utils import cast_to_class
-from ..schema.inbound.DeIDRequest import DeIDRequest
+from ..schema.messages.inbound.DeIDRequest import DeIDRequest
 from ..schema.nlp.spacy.Doc import Doc as SpacyDoc
 from ..schema.nlp.Doc import Doc
 from typing import List, Type

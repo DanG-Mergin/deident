@@ -1,6 +1,10 @@
 import logging
 from fastapi import APIRouter, HTTPException
 from .create_indexes import init_indexes
+from pydantic import BaseModel
+from typing import Type
+from .schema.Label import Label
+from ...schema.outbound._Response import _Response as Response
 
 # from .labels import router as labels_router
 from elasticsearch import AsyncElasticsearch
@@ -11,9 +15,11 @@ from .request import (
     create_document,
     update_document,
     get_document,
+    get_document_by_id,
+    get_index,
     delete_document,
     search_documents,
-    complex_query,
+    # complex_query,
 )
 
 
@@ -25,11 +31,22 @@ def get_es_client():
     return es
 
 
+# Dictionary that maps model names to Pydantic classes
+MODEL_MAP = {"label": Label}
+
+
+def get_model(model_name: str) -> Type[BaseModel]:
+    try:
+        return MODEL_MAP[model_name]
+    except KeyError:
+        raise ValueError(f"Unknown model name: {model_name}")
+
+
 @elastic_router.on_event("startup")
 async def init():
     elastic_router.app.state.es = es
     # initialize elastic indexes if they aren't already
-    # await init_indexes(es)
+    await init_indexes(es)
     log.info("Elasticsearch router started")
 
 
@@ -58,6 +75,8 @@ async def update_document_endpoint(index: str, document_id: str, document: dict)
 
 @elastic_router.get("/")
 async def test_indexing():
+    # for testing purposes only
+    # TODO: delete this
     await init_indexes(es)
     return {"message": "success"}
 
@@ -83,18 +102,29 @@ async def delete_document_endpoint(index: str, document_id: str):
 
 
 @elastic_router.get("/{index}")
-async def search_documents_endpoint(index: str, query: str):
+async def search_documents_endpoint(index: str, query: str = None):
     """
     Searches for documents in Elasticsearch
     """
-    documents = await search_documents(index, query, es)
-    return documents
+    try:
+        if query is not None:
+            documents = await search_documents(index, query, es)
+        else:
+            documents = await get_index(index, es)
+
+        cls = get_model(index)
+        items = [cls(**doc["_source"]) for doc in documents]
+        res = Response(data={"items": items})
+
+        return res
+    except Exception as e:
+        return Response(error=e)
 
 
-@elastic_router.get("/complex/{index}")
-async def complex_search_documents_endpoint(index: str, query: str):
-    """
-    Searches for documents in Elasticsearch
-    """
-    documents = await complex_query(index, query, es)
-    return documents
+# @elastic_router.get("/complex/{index}")
+# async def complex_search_documents_endpoint(index: str, query: str):
+#     """
+#     Searches for documents in Elasticsearch
+#     """
+#     documents = await complex_query(index, query, es)
+#     return documents

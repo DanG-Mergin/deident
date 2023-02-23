@@ -61,6 +61,44 @@
       "dependsOn": []
     },
     {
+      "label": "docker-launch-elastic",
+      "type": "shell",
+      "command": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "docker-compose.debug.yml",
+        "up",
+        "-d",
+        "elasticsearch"
+      ],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "dependsOn": []
+    },
+    {
+      "label": "docker-launch-kibana",
+      "type": "shell",
+      "command": "docker",
+      "args": [
+        "compose",
+        "-f",
+        "docker-compose.debug.yml",
+        "up",
+        "-d",
+        "kibana"
+      ],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "dependsOn": []
+    },
+    {
       "label": "docker-compose-up",
       "type": "shell",
       "command": "docker",
