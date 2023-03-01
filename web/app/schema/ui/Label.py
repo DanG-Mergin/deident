@@ -17,3 +17,4 @@ class Label(BaseModel):
     short_description: str
     instructions: str
     badgeName: str
+    icon: str
