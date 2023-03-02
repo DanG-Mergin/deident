@@ -6,7 +6,7 @@ from .Doc import Doc
 
 
 class DeIDRequest(_Request, extra=Extra.ignore):
-    method = "POST"
+    method: str = "POST"
     data: Dict[str, List[Doc]]
 
     @property

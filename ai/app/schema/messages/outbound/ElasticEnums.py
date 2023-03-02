@@ -25,4 +25,4 @@ class ElasticIndexes(str, Enum):
 
 # maps Job_Task to the corresponding Elasticsearch type
 class ElasticTasks(str, Enum):
-    deid = "deID"
+    deID = "deID"

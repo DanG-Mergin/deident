@@ -9,7 +9,7 @@ sys.path.append(".")
 from .schema.messages.inbound.DeIDRequest import DeIDRequest
 from .schema.messages.outbound.DeIDResponse import DeIDResponse
 
-from .controllers import spacy as spacy_c
+from .controllers import spacy as spacy_c, feedback as feedback_c
 from .services.utils import cast_to_class
 
 # from ai.app import app as ai_app
@@ -54,3 +54,13 @@ async def deID(req: Request):
     annotations = await spacy_c.deID(_req)
     res = DeIDResponse(data={"docs": annotations}, req_id=_req.req_id)
     return res
+
+
+@app.put("/deID", response_class=JSONResponse)
+async def deID(req: Request):
+    # TODO: logic to utilize deidentification updates from the UI via a controller
+    req_data = await req.json()
+    _req = DeIDRequest.parse_obj(req_data)
+    _res = await feedback_c.update_deID(_req)
+
+    return _res

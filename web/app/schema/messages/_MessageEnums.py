@@ -25,7 +25,7 @@ class O_Type(str, Enum):
 
 
 class Job_Task(str, Enum):
-    deID = "deID"
+    deid = "deID"
 
 
 class UI_Entity(str, Enum):
@@ -37,7 +37,7 @@ class UI_Entity(str, Enum):
 # TODO: rethink this whole idea
 class UI_EntityType(str, Enum):
     ner = "ner"
-    deID = "deID"
+    deid = "deID"
     dictionary = "dictionary"
 
 
@@ -60,8 +60,10 @@ class ElasticIndexes(str, Enum):
     label = "label"
     substitutions = "substitution"
     substitution = "substitution"
+    doc = "document"
+    docs = "document"
 
 
 # maps Job_Task to the corresponding Elasticsearch type
 class ElasticTasks(str, Enum):
-    deID = "deID"
+    deid = "deID"

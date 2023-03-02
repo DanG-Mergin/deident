@@ -17,16 +17,9 @@ async def init_indexes(es):
     return (
         await create_labels_index(es),
         await create_substitutions_index(es),
+        # await create_document_index(es),
         await init_data(es),
     )
-
-    # return asyncio.gather(
-    #     [
-    #         create_labels_index(es),
-    #         create_substitutions_index(es),
-    #         init_data(es),
-    #     ]
-    # )
 
 
 # labels index mapping
@@ -48,6 +41,7 @@ async def create_labels_index(es):
                     "short_description": {"type": "text"},
                     "instructions": {"type": "text"},
                     "badgeName": {"type": "text"},
+                    "icon": {"type": "text"},
                 }
             }
         }
@@ -71,6 +65,44 @@ async def create_substitutions_index(es):
         return await es.indices.create(index="substitution", body=mapping)
 
 
+# async def create_document_index(es):
+#     if not await es.indices.exists(index="document"):
+#         mapping = {
+#             {
+#                 "mappings": {
+#                     "properties": {
+#                         "document": {
+#                             "type": "object",
+#                             "properties": {
+#                                 "uuid": {"type": "keyword"},
+#                                 "text": {"type": "text"},
+#                                 "annotations": {
+#                                     "type": "nested",
+#                                     "tokens": {
+#                                         "label_id": {"type": "keyword"},
+#                                         # ner is the BILUO label
+#                                         "ner": {"type": "keyword"},
+#                                         # depencency label (e.g. nsubj, dobj, etc.)
+#                                         "dep": {"type": "keyword"},
+#                                         # part of speech tag
+#                                         "tag": {"type": "keyword"},
+#                                         # index of the token in the document
+#                                         "index": {"type": "integer"},
+#                                         "start_char": {"type": "integer"},
+#                                         "end_char": {"type": "integer"},
+#                                         # orth is the raw text
+#                                         "orth": {"type": "text"},
+#                                     },
+#                                 },
+#                             },
+#                         }
+#                     }
+#                 }
+#             }
+#         }
+#         return await es.indices.create(index="document", body=mapping)
+
+
 def get_index(name):
     # Get the absolute path of the directory containing the current file
     current_dir = Path(__file__).resolve().parent
@@ -81,8 +113,6 @@ def get_index(name):
     # Construct the path to the "labels.json" file
     file_path = data_dir / "assets" / "data" / "dictionaries" / f"{name}.json"
 
-    # current_dir = Path(__file__).parent
-    # file_path = current_dir.parent.joinpath("assets/data/dictionaries/", f"{name}.json")
     with open(file_path) as f:
         data = json.load(f)
     return data
@@ -110,8 +140,6 @@ async def _create_labels(es):
     try:
         labels = get_index("labels")
         return await bulk_create_documents("label", labels, es)
-        # for label in labels:
-        #     create_document("label", label["uuid"], label, es)
     except Exception as e:
         log.error(e)
 

@@ -43,57 +43,32 @@ class _Observable(BaseModel, extra=Extra.ignore):
 
     @validator("o_action")
     def map_action(cls, value):
-        return O_Action[value].value
+        return O_Action[value.lower()].value
 
     @validator("o_status")
     def map_status(cls, value):
-        return O_Status[value].value
+        return O_Status[value.lower()].value
 
     @validator("o_type")
     def map_type(cls, value):
-        return O_Type[value].value
+        return O_Type[value.lower()].value
 
     @validator("task")
     def map_task(cls, value):
         if value is None:
             return None
-        return Job_Task[value].value
+        return Job_Task[value.lower()].value
 
     @validator("entity")
     def map_entity(cls, value):
-        return UI_Entity[value].value
+        return UI_Entity[value.lower()].value
 
     @validator("entityType")
     def map_entityType(cls, value):
-        return UI_EntityType[value].value
+        return UI_EntityType[value.lower()].value
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
-        return values
-        # TODO: add combining data from responses and requests
-        # @root_validator(pre=True)
-        # def consume_elastic_response(cls, values):
-        #     _data = values.pop("data", None)
-        #     if _data and _data is not None:
-        #         if "item_ids" in _data:
-        #             values["item_ids"] = _data["item_ids"]
-
-        #     _method = values.pop("method", None)
-        #     if _method is not None:
-        #         values["o_action"] = _method
-
-        #     _index = values.pop("index", None)
-        #     if _index and _index is not None:
-        #         values["entity"] = _index
-
-        #     _task = values.pop("task", None)
-        #     if _task and _task is not None:
-        #         values["task"] = _task
-
-        #     _entity = values.pop("entity", None)
-        #     if _entity and _entity is not None:
-        #         values["entity"] = _entity
-
         return values
 
     # exclude unset fields from the serialized output

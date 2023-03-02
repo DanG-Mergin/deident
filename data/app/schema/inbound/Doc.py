@@ -12,7 +12,6 @@ from pydantic import (
 from pydantic import ValidationError, validator, root_validator
 from .Token import Token
 from .Entity import EntityInstance, EntityLabel
-from ..nlp.Vocab import VocabItem
 
 
 class Doc(BaseModel, extra=Extra.ignore):
@@ -37,7 +36,6 @@ class Doc(BaseModel, extra=Extra.ignore):
             raise ValueError("tokens is a required field")
         if not isinstance(values["tokens"], list):
             raise ValueError("tokens must be a list")
-
         if "labels" in values:
             if not isinstance(values["labels"], list):
                 raise ValueError("labels must be a list")
