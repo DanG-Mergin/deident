@@ -17,11 +17,11 @@ from ..nlp.Vocab import VocabItem
 
 class Doc(BaseModel, extra=Extra.ignore):
     # TODO: need to figure out how we're keeping track of these
-    id: Optional[str] = Field(default_factory=uuid4, alias="id")
+    uuid: Optional[str] = Field(default_factory=uuid4)
     text: str
     entities: List[EntityInstance]
     tokens: List[Token]
-    labels: List[EntityLabel] = []
+    # labels: List[EntityLabel] = []
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
@@ -38,8 +38,8 @@ class Doc(BaseModel, extra=Extra.ignore):
         if not isinstance(values["tokens"], list):
             raise ValueError("tokens must be a list")
 
-        if "labels" in values:
-            if not isinstance(values["labels"], list):
-                raise ValueError("labels must be a list")
+        # if "labels" in values:
+        #     if not isinstance(values["labels"], list):
+        #         raise ValueError("labels must be a list")
 
         return values

@@ -11,11 +11,12 @@ from ..schema.messages.inbound.ElasticResponse import ElasticResponse
 async def update_deID(req: DeIDRequest) -> DeIDResponse:
 
     # first save the feedback to the database in case of error/rollback/etc
-    _req = ElasticRequest(**req.dict())
-    _res = await request.make_request(_req, res_cls=ElasticResponse)
+    try:
+        _req = ElasticRequest(**req.dict())
+        _res = await request.make_request(_req, res_cls=ElasticResponse)
+        res = DeIDResponse(**_res.dict())
 
-    # TODO: logic to utilize deidentification updates from the UI
-
-    res = DeIDResponse(**_res.dict())
-
-    return res
+        return res
+        # TODO: logic to utilize deidentification updates from the UI
+    except Exception as e:
+        print(str(e))

@@ -88,7 +88,8 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                 _req = SocDeIDRequest.parse_obj(json_data)
                 if _req.o_action == "update":
                     try:
-                        res = await ai.update_deID(_req)
+                        _req_out = cast_to_class(_req, DeIDRequest)
+                        res = await ai.update_deID(_req_out)
                         _res = cast_to_class(_req, ObsResponse, data=res.data)
                         await websocket.send_json(_res.dict())
                     except Exception as e:

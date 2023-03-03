@@ -12,6 +12,7 @@ class DeIDRequest(_Request, extra=Extra.ignore):
     url = f"{os.environ['AI_DEIDENT_URL']}"
     data: Dict[str, List[Doc]]
     method = "POST"
+    entity = "doc"
 
     # @property
     # def url(this):
@@ -31,6 +32,6 @@ class DeIDRequest(_Request, extra=Extra.ignore):
         return values
 
     def _set_method(action):
-        if action == "udpate":
+        if action == "update":
             return "PUT"
         return "POST"

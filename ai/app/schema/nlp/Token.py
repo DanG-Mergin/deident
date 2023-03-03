@@ -10,8 +10,8 @@ from .Lemma import Lemma
 # https://spacy.io/api/token
 class Token(VocabItem):
     text: str
-    # start_char: int
-    # end_char: int
+    start_char: int
+    end_char: int
     # TODO: the id is the index of the token
     index: int
     id: str

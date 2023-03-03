@@ -1,23 +1,22 @@
 from __future__ import annotations
 
 from typing import Any, List, Optional
-import sys
 
-sys.path.append("...")
 # TODO: define generic transmissable classes
-from pydantic import ValidationError, validator, root_validator
+from pydantic import BaseModel, Field, ValidationError, validator, root_validator
 from .Token import Token
 from .Entity import EntityInstance, EntityLabel
 from .Vocab import VocabItem
 from ...services.utils import cast_to_class
+from uuid import uuid4
 
 
-class Doc(VocabItem):
-    id: str
+class Doc(BaseModel):
+    uuid: str = Field(default_factory=lambda: str(uuid4()))
     text: str
     entities: List[EntityInstance]
     tokens: List[Token]
-    labels: List[EntityLabel] = []
+    # labels: List[EntityLabel] = []
 
     @validator("entities", pre=True)
     def cast_entities(cls, e_list):
@@ -37,7 +36,6 @@ class Doc(VocabItem):
                     cast_to_class(
                         e,
                         EntityInstance,
-                        token_ids={"start": e.start, "end": e.end},
                         label_id=label_id,
                         start_index=e.start,
                         end_index=e.end,
@@ -47,6 +45,10 @@ class Doc(VocabItem):
                 v.append(e)
                 v["labels"] = list(labels.values())
         return v
+
+    @root_validator(pre=True)
+    def convert_fields(cls, values):
+        return values
 
     # TODO: this is a hack to get around time constraints..  clean it up
     # @validator("tokens", pre=True)

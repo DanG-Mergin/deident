@@ -10,6 +10,8 @@ from .Lemma import Lemma
 class Token(VocabItem, extra=Extra.ignore):
     text: str
     index: int
+    start_char: int
+    end_char: int
     # TODO: the id is an entity id, not a token id
     id: str
     lemma: Optional[Lemma]

@@ -83,18 +83,20 @@ class ElasticsearchQuery(BaseModel):
     page_number: int = 1
 
 
-# class ElasticTypes(str, Enum):
-#     label = "label"
-#     substitution = "substitution"
+class ElasticData(BaseModel):
+    item_ids: List[str]
+    items: List[Dict]
+
+
 class ElasticRequest(_Request, extra=Extra.ignore):
     method: str
     # url: str
     index: str
-    task: str = ElasticTasks.deID.value
+    task: str = ElasticTasks.deid.value
     # the elastic search document ID
     item_ids: Optional[List[str]] = None
     entity: str
-    data: Optional[Dict[str, List[Dict]]] = None
+    data: Optional[ElasticData] = None
 
     @property
     def url(this):
@@ -129,16 +131,21 @@ class ElasticRequest(_Request, extra=Extra.ignore):
         # if _status and _status is not None:
         #     values["o_status"] = _status
         _data = values.pop("data", None)
+        # _data = values.get("data", None)
         if _data and _data is not None:
+            values["data"] = {}
             if "item_ids" in _data:
-                values["item_ids"] = _data["item_ids"]
-            elif "data" in _data:
-                if "docs" in _data["data"]:
-                    values["item_ids"] = [doc["uuid"] for doc in _data["data"]["docs"]]
-                if "labels" in _data["data"]:
-                    values["item_ids"] = [
-                        label["uuid"] for label in _data["data"]["labels"]
-                    ]
+                values["data"]["item_ids"] = values["item_ids"] = _data["item_ids"]
+            elif "docs" in _data:
+                values["data"]["item_ids"] = values["item_ids"] = [
+                    doc["uuid"] for doc in _data["docs"]
+                ]
+                values["data"]["items"] = [doc for doc in _data["docs"]]
+            elif "labels" in _data:
+                values["data"]["item_ids"] = values["item_ids"] = [
+                    label["uuid"] for label in _data["labels"]
+                ]
+                values["data"]["items"] = [label for label in _data["labels"]]
 
         _action = values.pop("o_action", None)
         if _action is not None:

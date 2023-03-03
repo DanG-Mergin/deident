@@ -27,7 +27,7 @@ class EntityInstance(VocabItem, extra=Extra.ignore):
     labelId: Optional[str]  # TODO: this should just be IDs
     startIndex: int
     endIndex: int
-    tokenIds: List[int]  # TODO: this should just be IDs
+    # tokenIds: List[int]  # TODO: this should just be IDs
     text: str
 
     @root_validator(pre=True)
@@ -35,9 +35,9 @@ class EntityInstance(VocabItem, extra=Extra.ignore):
         labelId = values.pop("label_id", None)
         if labelId:
             values["labelId"] = labelId
-        tokenIds = values.pop("token_ids", None)
-        if tokenIds:
-            values["tokenIds"] = tokenIds
+        # tokenIds = values.pop("token_ids", None)
+        # if tokenIds:
+        #     values["tokenIds"] = tokenIds
         startIndex = values.pop("start_index", None)
         if startIndex:
             values["startIndex"] = startIndex
@@ -57,12 +57,12 @@ class EntityInstance(VocabItem, extra=Extra.ignore):
             raise ValueError("endIndex is a required field")
         if not isinstance(values["endIndex"], int):
             raise ValueError("endIndex must be an integer")
-        if "tokenIds" not in values:
-            raise ValueError("tokenIds is a required field")
-        if not isinstance(values["tokenIds"], list):
-            raise ValueError("tokenIds must be a list")
-        if not all(isinstance(token_id, int) for token_id in values["tokenIds"]):
-            raise ValueError("tokenIds must be a list of integers")
+        # if "tokenIds" not in values:
+        #     raise ValueError("tokenIds is a required field")
+        # if not isinstance(values["tokenIds"], list):
+        #     raise ValueError("tokenIds must be a list")
+        # if not all(isinstance(token_id, int) for token_id in values["tokenIds"]):
+        #     raise ValueError("tokenIds must be a list of integers")
         if "text" not in values:
             raise ValueError("text is a required field")
         if not isinstance(values["text"], str):

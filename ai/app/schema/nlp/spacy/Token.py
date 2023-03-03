@@ -6,8 +6,8 @@ from pydantic import BaseModel, Extra
 # https://spacy.io/api/token
 class Token(BaseModel, extra=Extra.ignore):
     text: str
-    # start_char: int
-    # end_char: int
+    start_char: int
+    end_char: int
     index: int
     id: int  # id is the index of the token
     lemma: Optional[str]

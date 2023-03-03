@@ -13,14 +13,17 @@ class Token(BaseModel, extra=Extra.ignore):
     # TODO: the id is an entity id, not a token id
     id: str
     lemma: Optional[Lemma]
-    spacesAfter: Optional[int]
+    # spacesAfter: Optional[int]
+    start_char: int
+    end_char: int
+    whitespace: Optional[str]
 
-    @root_validator(pre=True)
-    def convert_fields(cls, values):
-        whitespace = values.pop("whitespace", None)
-        if whitespace:
-            values["spacesAfter"] = len(whitespace)
-        else:
-            values["spacesAfter"] = 0
+    # @root_validator(pre=True)
+    # def convert_fields(cls, values):
+    #     whitespace = values.pop("whitespace", None)
+    #     if whitespace:
+    #         values["spacesAfter"] = len(whitespace)
+    #     else:
+    #         values["spacesAfter"] = 0
 
-        return values
+    #     return values

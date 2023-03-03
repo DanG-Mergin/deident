@@ -11,5 +11,5 @@ class ElasticResponse(_Response):
     def convert_fields(cls, values):
         # id = values.pop("id", None)
         # if id and id is not None:
-        #     values["doc_id"] = id
+        #     values["uuid"] = id
         return values

@@ -4,17 +4,14 @@ from __future__ import annotations
 
 from typing import Any, List, Optional
 
-from pydantic import BaseModel, ValidationError, validator, root_validator
-
-import sys
-
-sys.path.append("..")
+from pydantic import BaseModel, Field, ValidationError, validator, root_validator
+from uuid import UUID, uuid4
 from .Entity import SpacyEntityInstance
 from .Token import Token
 
 
 class Doc(BaseModel):
-    id = "fake_id_fix_me"
+    uuid: str = Field(default_factory=lambda: str(uuid4()))
     text: str
     entities: List[SpacyEntityInstance]
     tokens: List[Token]
@@ -46,6 +43,8 @@ class Doc(BaseModel):
                     lemma=t.lemma,
                     lemma_=t.lemma_,
                     whitespace_=t.whitespace_,
+                    start_char=t.idx,
+                    end_char=t.idx + len(t.text),
                 )
                 for t in tokens
             ]

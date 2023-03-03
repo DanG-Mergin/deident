@@ -5,8 +5,8 @@ from typing import List, Dict, Union, Optional
 
 # TODO: do I only need to append .. once?
 # from ._Request import _Request
-from ....schema.inbound import _Request
-from ElasticEnums import ElasticTasks, ElasticIndexes, ElasticMethod
+from ._Request import _Request
+from .ElasticEnums import ElasticTasks, ElasticIndexes, ElasticMethod
 
 
 class ElasticsearchFilter(BaseModel):
@@ -86,15 +86,22 @@ class ElasticsearchQuery(BaseModel):
 # class ElasticTypes(str, Enum):
 #     label = "label"
 #     substitution = "substitution"
+
+
+class ElasticData(BaseModel):
+    item_ids: List[str]
+    items: List[Dict]
+
+
 class ElasticRequest(_Request, extra=Extra.ignore):
     method: str
     # url: str
     index: str
-    task: str = ElasticTasks.deID.value
+    task: str = ElasticTasks.deid.value
     # the elastic search document ID
     item_ids: Optional[List[str]] = None
     entity: str
-    data: Optional[Dict[str, List[Dict]]] = None
+    data: Optional[ElasticData] = None
 
     @property
     def url(this):
@@ -113,24 +120,24 @@ class ElasticRequest(_Request, extra=Extra.ignore):
 
     @validator("method")
     def map_method(cls, value):
-        return ElasticMethod[value].value
+        return ElasticMethod[value.lower()].value
 
     @validator("index")
     def map_index(cls, value):
-        return ElasticIndexes[value].value
+        return ElasticIndexes[value.lower()].value
 
     @validator("task")
     def map_task(cls, value):
-        return ElasticTasks[value].value
+        return ElasticTasks[value.lower()].value
 
     @root_validator(pre=True)
     def consume_observable(cls, values):
         # _status = values.pop("status", None)
         # if _status and _status is not None:
         #     values["o_status"] = _status
-        _data = values.pop("data", None)
+        _data = values.get("data", None)
         if _data and _data is not None:
-            if "item_ids" in _data:
+            if "item_ids" in _data and values.get("item_ids", None) is None:
                 values["item_ids"] = _data["item_ids"]
 
         _action = values.pop("o_action", None)

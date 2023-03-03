@@ -1,10 +1,13 @@
 import logging
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from .create_indexes import init_indexes
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 from typing import Type
 from .schema.Label import Label
+from .schema.Doc import Doc
+from .schema.ElasticRequest import ElasticRequest
 from ...schema.outbound._Response import _Response as Response
+
 
 # from .labels import router as labels_router
 from elasticsearch import AsyncElasticsearch
@@ -32,7 +35,7 @@ def get_es_client():
 
 
 # Dictionary that maps model names to Pydantic classes
-MODEL_MAP = {"label": Label}
+MODEL_MAP = {"label": Label, "document": Doc}
 
 
 def get_model(model_name: str) -> Type[BaseModel]:
@@ -68,11 +71,24 @@ async def create_document_endpoint(index: str, document_id: str, document: dict)
 
 
 @elastic_router.put("/{index}/{document_id}")
-async def update_document_endpoint(index: str, document_id: str, document: dict):
+async def update_document_endpoint(index: str, document_id: str, req: Request):
     """
     Updates an existing document in Elasticsearch
     """
-    _document_id = await update_document(index, document_id, document, es)
+    req_data = await req.json()
+    _req = ElasticRequest.parse_obj(req_data)
+
+    cls = get_model(index)
+    try:
+        document = cls(**_req.data.items[0])
+    except ValidationError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+    if not await get_document(index, document_id, es):
+        _document_id = await create_document(index, document_id, document, es)
+        # raise HTTPException(status_code=404, detail="Document not found")
+    else:
+        _document_id = await update_document(index, document_id, document, es)
     return {"document_id": _document_id}
 
 

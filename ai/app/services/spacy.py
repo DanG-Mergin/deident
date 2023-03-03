@@ -1,6 +1,3 @@
-import sys
-
-sys.path.append("..")
 # import scispacy
 import spacy
 from .utils import cast_to_class
@@ -20,8 +17,14 @@ async def deID(req: DeIDRequest) -> List[Type[Doc]]:
     for doc in req.docs:
         # TODO: handle failure conditions.  One is text with no entities
         _doc = nlp(doc.text)
-        tokens = [token for token in _doc]
-        s_doc = SpacyDoc(ents=_doc.doc.ents, text=_doc.doc.text, tokens=tokens)
+
+        s_doc = SpacyDoc(
+            ents=_doc.doc.ents,
+            text=_doc.doc.text,
+            tokens=[token for token in _doc],
+            uuid=doc.uuid,
+        )
         b_doc = cast_to_class(s_doc, Doc)
+        # b_doc = Doc(**s_doc.dict())
         annotated.append(b_doc)
     return annotated

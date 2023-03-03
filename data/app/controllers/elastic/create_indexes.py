@@ -17,7 +17,7 @@ async def init_indexes(es):
     return (
         await create_labels_index(es),
         await create_substitutions_index(es),
-        # await create_document_index(es),
+        await create_document_index(es),
         await init_data(es),
     )
 
@@ -65,42 +65,41 @@ async def create_substitutions_index(es):
         return await es.indices.create(index="substitution", body=mapping)
 
 
-# async def create_document_index(es):
-#     if not await es.indices.exists(index="document"):
-#         mapping = {
-#             {
-#                 "mappings": {
-#                     "properties": {
-#                         "document": {
-#                             "type": "object",
-#                             "properties": {
-#                                 "uuid": {"type": "keyword"},
-#                                 "text": {"type": "text"},
-#                                 "annotations": {
-#                                     "type": "nested",
-#                                     "tokens": {
-#                                         "label_id": {"type": "keyword"},
-#                                         # ner is the BILUO label
-#                                         "ner": {"type": "keyword"},
-#                                         # depencency label (e.g. nsubj, dobj, etc.)
-#                                         "dep": {"type": "keyword"},
-#                                         # part of speech tag
-#                                         "tag": {"type": "keyword"},
-#                                         # index of the token in the document
-#                                         "index": {"type": "integer"},
-#                                         "start_char": {"type": "integer"},
-#                                         "end_char": {"type": "integer"},
-#                                         # orth is the raw text
-#                                         "orth": {"type": "text"},
-#                                     },
-#                                 },
-#                             },
-#                         }
-#                     }
-#                 }
-#             }
-#         }
-#         return await es.indices.create(index="document", body=mapping)
+async def create_document_index(es):
+    if not await es.indices.exists(index="document"):
+        mapping = {
+            "mappings": {
+                "properties": {
+                    "document": {
+                        "type": "object",
+                        "properties": {
+                            "uuid": {"type": "keyword"},
+                            "text": {"type": "text"},
+                            "tokens": {
+                                "type": "nested",
+                                "properties": {
+                                    "label_id": {"type": "keyword"},
+                                    # ner is the BILUO label
+                                    "ner": {"type": "keyword"},
+                                    # depencency label (e.g. nsubj, dobj, etc.)
+                                    "dep": {"type": "keyword"},
+                                    # part of speech tag
+                                    "tag": {"type": "keyword"},
+                                    # index of the token in the document
+                                    "index": {"type": "integer"},
+                                    "start_char": {"type": "integer"},
+                                    "end_char": {"type": "integer"},
+                                    # orth is the raw text
+                                    "orth": {"type": "text"},
+                                },
+                            },
+                        },
+                    }
+                }
+            }
+        }
+
+        return await es.indices.create(index="document", body=mapping)
 
 
 def get_index(name):
