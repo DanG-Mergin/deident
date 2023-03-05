@@ -7,13 +7,13 @@ volumes:
 services:
   web-service:
     env_file:
-      - .env.dev
-      - .env.secret.dev
-      - .env
+      - ${PWD}/.env.dev
+      - ${PWD}/.env.secret.dev
+      - ${PWD}/.env
     image: web
     build:
-      context: ./web
-      dockerfile: ./Dockerfile.dev
+      context: ${PWD}/web
+      dockerfile: ${PWD}/web/Dockerfile.dev
     volumes:
       - deidentdata:/code/web/volume
     command:
@@ -34,13 +34,13 @@ services:
 
   data-service:
     env_file:
-      - .env.dev
-      - .env.secret.dev
-      - .env
+      - ${PWD}/.env.dev
+      - ${PWD}/.env.secret.dev
+      - ${PWD}/.env
     image: data
     build:
-      context: ./data
-      dockerfile: ./Dockerfile.dev
+      context: ${PWD}/data
+      dockerfile: ${PWD}/data/Dockerfile.dev
     volumes:
       - deidentdata:/code/data/volume
     command:
@@ -62,12 +62,12 @@ services:
   ai-service:
     image: ai
     env_file:
-      - .env.dev
-      - .env.secret.dev
-      - .env
+      - ${PWD}/.env.dev
+      - ${PWD}/.env.secret.dev
+      - ${PWD}/.env
     build:
-      context: ./ai
-      dockerfile: ./Dockerfile.dev
+      context: ${PWD}/ai
+      dockerfile: ${PWD}/ai/Dockerfile.dev
     volumes:
       - deidentdata:/code/ai/volume
     command:
@@ -91,6 +91,7 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     ports:
       - "9200:9200"
       - "9300:9300"
