@@ -7,13 +7,13 @@ volumes:
 services:
   web-service:
     env_file:
-      - ${PWD}/.env.dev
-      - ${PWD}/.env.secret.dev
-      - ${PWD}/.env
+      - ${PWD:-.}/.env.dev
+      - ${PWD:-.}/.env.secret.dev
+      - ${PWD:-.}/.env
     image: web
     build:
-      context: ${PWD}/web
-      dockerfile: ${PWD}/web/Dockerfile.dev
+      context: ${PWD:-.}/web
+      dockerfile: ${PWD:-.}/Dockerfile.dev
     volumes:
       - deidentdata:/code/web/volume
     command:
@@ -34,13 +34,13 @@ services:
 
   data-service:
     env_file:
-      - ${PWD}/.env.dev
-      - ${PWD}/.env.secret.dev
-      - ${PWD}/.env
+      - ${PWD:-.}/.env.dev
+      - ${PWD:-.}/.env.secret.dev
+      - ${PWD:-.}/.env
     image: data
     build:
-      context: ${PWD}/data
-      dockerfile: ${PWD}/data/Dockerfile.dev
+      context: ${PWD:-.}/data
+      dockerfile: ${PWD:-.}/Dockerfile.dev
     volumes:
       - deidentdata:/code/data/volume
     command:
@@ -62,12 +62,12 @@ services:
   ai-service:
     image: ai
     env_file:
-      - ${PWD}/.env.dev
-      - ${PWD}/.env.secret.dev
-      - ${PWD}/.env
+      - ${PWD:-.}/.env.dev
+      - ${PWD:-.}/.env.secret.dev
+      - ${PWD:-.}/.env
     build:
-      context: ${PWD}/ai
-      dockerfile: ${PWD}/ai/Dockerfile.dev
+      context: ${PWD:-.}/ai
+      dockerfile: ${PWD:-.}/Dockerfile.dev
     volumes:
       - deidentdata:/code/ai/volume
     command:
