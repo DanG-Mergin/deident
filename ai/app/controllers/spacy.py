@@ -1,6 +1,3 @@
-import sys
-
-sys.path.append("..")
 from typing import List
 from ..services import spacy as spacy_s
 from ..schema.messages.inbound.DeIDRequest import DeIDRequest

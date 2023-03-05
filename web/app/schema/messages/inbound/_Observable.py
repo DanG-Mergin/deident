@@ -35,29 +35,29 @@ class _Observable(BaseModel, extra=Extra.allow):
 
     @validator("o_action")
     def map_action(cls, value):
-        return O_Action[value].value
+        return O_Action[value.lower()].value
 
     @validator("o_status")
     def map_status(cls, value):
-        return O_Status[value].value
+        return O_Status[value.lower()].value
 
     @validator("o_type")
     def map_type(cls, value):
-        return O_Type[value].value
+        return O_Type[value.lower()].value
 
     @validator("task")
     def map_task(cls, value):
         if value is None:
             return None
-        return Job_Task[value].value
+        return Job_Task[value.lower()].value
 
     @validator("entity")
     def map_entity(cls, value):
-        return UI_Entity[value].value
+        return UI_Entity[value.lower()].value
 
     @validator("entityType")
     def map_entityType(cls, value):
-        return UI_EntityType[value].value
+        return UI_EntityType[value.lower()].value
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

@@ -5,13 +5,13 @@ from .ElasticEnums import ElasticTasks
 
 
 class Label(BaseModel, extra=Extra.ignore):
+    uuid: UUID
+    kb_id: Optional[str] = None
+    types: List[str]
+    tasks: List[str]
     category: str
     subCategory: str
-    types: List[str]
     tag: str
-    tasks: List[str]
-    kb_id: Optional[str] = None
-    uuid: UUID
     short_description: str
     description: str
     instructions: str
@@ -21,7 +21,7 @@ class Label(BaseModel, extra=Extra.ignore):
 
     @validator("tasks")
     def map_task(cls, tasks):
-        return [ElasticTasks[t].value for t in tasks]
+        return [ElasticTasks[t.lower()].value for t in tasks]
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

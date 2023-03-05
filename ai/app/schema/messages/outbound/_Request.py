@@ -7,10 +7,8 @@ import sys
 sys.path.append("..")
 
 
-class _Request(BaseModel, extra=Extra.ignore):
-    method = "POST"
+class _Request(BaseModel, extra=Extra.allow):
+    method: str = "POST"
     req_id: str = Field(default_factory=lambda: str(uuid4()))
     orig_id: Optional[str]  # from the webfor example
-    time_start: datetime = Field(default_factory=datetime.utcnow)
-    time_end: Optional[datetime]
     data: Optional[Dict]

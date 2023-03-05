@@ -85,26 +85,25 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                     except Exception as e:
                         print(str(e))
             elif json_data["entity"] == "doc":
-                try:
-                    _req = SocDeIDRequest.parse_obj(json_data)
-                    _req_out = cast_to_class(_req, DeIDRequest)
-                    res = await ai.deID(_req_out)
-                    _res = cast_to_class(
-                        _req, SocDeIDResponse, data=res.data, o_status="success"
-                    )
-                    # _res = SocDeIDResponse(
-                    #     data=res.data,
-                    #     orig_id=_req.orig_id,
-                    #     o_action=_req.o_action,
-                    #     o_status="success",
-                    #     o_type=_req.o_type,
-                    #     entity=_req.entity,
-                    #     entityType=_req.entityType,
-                    # )
-                    print(_res)
-                    await websocket.send_json(_res.dict())
-                except Exception as e:
-                    print(str(e))
+                _req = SocDeIDRequest.parse_obj(json_data)
+                if _req.o_action == "update":
+                    try:
+                        _req_out = cast_to_class(_req, DeIDRequest)
+                        res = await ai.update_deID(_req_out)
+                        _res = cast_to_class(_req, ObsResponse, data=res.data)
+                        await websocket.send_json(_res.dict())
+                    except Exception as e:
+                        print(str(e))
+                elif _req.o_action == "create":
+                    try:
+                        _req_out = cast_to_class(_req, DeIDRequest)
+                        res = await ai.deID(_req_out)
+                        _res = cast_to_class(
+                            _req, SocDeIDResponse, data=res.data, o_status="success"
+                        )
+                        await websocket.send_json(_res.dict())
+                    except Exception as e:
+                        print(str(e))
             print(json_data)
 
     except WebSocketDisconnect:

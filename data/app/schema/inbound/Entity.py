@@ -1,6 +1,5 @@
 from typing import Dict, List, Optional
 from pydantic import BaseModel, Extra, ValidationError, validator, root_validator
-from ..nlp.Vocab import VocabItem
 
 
 class EntityLabel(BaseModel):
@@ -21,7 +20,7 @@ class EntityLabel(BaseModel):
         return values
 
 
-class EntityInstance(VocabItem, extra=Extra.ignore):
+class EntityInstance(BaseModel, extra=Extra.ignore):
     id: str
     uuid: str
     labelId: Optional[str]  # TODO: this should just be IDs
