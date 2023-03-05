@@ -13,7 +13,7 @@ services:
     image: web
     build:
       context: ${PWD:-.}/web
-      dockerfile: ${PWD:-.}/Dockerfile.dev
+      dockerfile: ./Dockerfile.dev
     volumes:
       - deidentdata:/code/web/volume
     command:
@@ -40,7 +40,7 @@ services:
     image: data
     build:
       context: ${PWD:-.}/data
-      dockerfile: ${PWD:-.}/Dockerfile.dev
+      dockerfile: ./Dockerfile.dev
     volumes:
       - deidentdata:/code/data/volume
     command:
@@ -67,7 +67,7 @@ services:
       - ${PWD:-.}/.env
     build:
       context: ${PWD:-.}/ai
-      dockerfile: ${PWD:-.}/Dockerfile.dev
+      dockerfile: ./Dockerfile.dev
     volumes:
       - deidentdata:/code/ai/volume
     command:
