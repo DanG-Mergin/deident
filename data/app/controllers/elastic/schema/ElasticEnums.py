@@ -19,8 +19,8 @@ class ElasticIndexes(str, Enum):
     label = "label"
     substitutions = "substitution"
     substitution = "substitution"
-    docs = "document"
-    doc = "document"
+    docs = "doc"
+    doc = "doc"
 
 
 # maps Job_Task to the corresponding Elasticsearch type

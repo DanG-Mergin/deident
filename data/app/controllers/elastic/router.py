@@ -35,7 +35,7 @@ def get_es_client():
 
 
 # Dictionary that maps model names to Pydantic classes
-MODEL_MAP = {"label": Label, "document": Doc}
+MODEL_MAP = {"label": Label, "doc": Doc}
 
 
 def get_model(model_name: str) -> Type[BaseModel]:
@@ -84,11 +84,13 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
-    if not await get_document(index, document_id, es):
-        _document_id = await create_document(index, document_id, document, es)
-        # raise HTTPException(status_code=404, detail="Document not found")
-    else:
-        _document_id = await update_document(index, document_id, document, es)
+    # if not await get_document(index, document_id, es):
+    #     _document_id = await create_document(index, document_id, document, es)
+    #     # raise HTTPException(status_code=404, detail="Document not found")
+    # else:
+    _document_id = await update_document(index, document_id, document.dict(), es)
+    # TODO: Delete this test
+    _test_doc = await get_document(index, document_id, es)
     return {"document_id": _document_id}
 
 
