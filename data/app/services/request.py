@@ -33,7 +33,7 @@ async def make_request(req: _Request, res_cls: _Response) -> _Response:
     # TODO: handle all of this in the class
     _res = res_cls(
         data=res_data["data"],
-        req_id=req.req_id,
-        orig_id=req.orig_id,
+        uuid=req.uuid,
+        # orig_id=req.orig_id,
     )
     return _res

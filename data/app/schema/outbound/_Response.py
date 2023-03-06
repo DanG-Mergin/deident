@@ -5,8 +5,8 @@ from pydantic import BaseModel, Extra, Field, Json, root_validator
 
 
 class _Response(BaseModel, extra=Extra.ignore):
-    req_id: str = Field(default_factory=lambda: str(uuid4()))
-    orig_id: Optional[str]  # from the webfor example
+    uuid: str = Field(default_factory=lambda: str(uuid4()))
+    # orig_id: Optional[str]  # from the webfor example
     data: Optional[Dict]
     error: Optional[Dict]  # for sharing additional error data
 

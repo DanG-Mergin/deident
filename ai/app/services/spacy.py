@@ -1,7 +1,9 @@
 # import scispacy
 import spacy
 from .utils import cast_to_class
-from ..schema.messages.inbound.DeIDRequest import DeIDRequest
+
+# from ..schema.messages.inbound.DeIDRequest import DeIDRequest
+from ..schema.base.entities._Doc import _Doc
 from ..schema.nlp.spacy.Doc import Doc as SpacyDoc
 from ..schema.nlp.Doc import Doc
 from typing import List, Type
@@ -11,10 +13,10 @@ from typing import List, Type
 nlp = spacy.load("en_core_sci_sm")
 
 
-async def deID(req: DeIDRequest) -> List[Type[Doc]]:
+async def deID(docs: List[Type[_Doc]]) -> List[Type[Doc]]:
     annotated = []
 
-    for doc in req.docs:
+    for doc in docs:
         # TODO: handle failure conditions.  One is text with no entities
         _doc = nlp(doc.text)
 

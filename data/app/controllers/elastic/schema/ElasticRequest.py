@@ -7,6 +7,7 @@ from typing import List, Dict, Union, Optional
 # from ._Request import _Request
 from ._Request import _Request
 from .ElasticEnums import ElasticTasks, ElasticIndexes, ElasticMethod
+from ....schema.base.messages._Data import _Data
 
 
 class ElasticsearchFilter(BaseModel):
@@ -88,9 +89,9 @@ class ElasticsearchQuery(BaseModel):
 #     substitution = "substitution"
 
 
-class ElasticData(BaseModel):
-    item_ids: List[str]
-    items: List[Dict]
+# class ElasticData(BaseModel):
+#     item_ids: List[str]
+#     items: List[Dict]
 
 
 class ElasticRequest(_Request, extra=Extra.ignore):
@@ -99,19 +100,21 @@ class ElasticRequest(_Request, extra=Extra.ignore):
     index: str
     task: str = ElasticTasks.deid.value
     # the elastic search document ID
-    item_ids: Optional[List[str]] = None
+    # item_ids: Optional[List[str]] = None
     entity: str
-    data: Optional[ElasticData] = None
+    data: _Data
 
-    @property
-    def url(this):
-        query = this.query
-        if this.item_ids is not None:
-            # TODO: currently only handles one id
-            return f"{os.environ['DATA_URL']}/elastic/{this.index}/{this.item_ids[0]}"
-        if query is not None:
-            return f"{os.environ['DATA_URL']}/elastic/{this.index}/{query}"
-        return f"{os.environ['DATA_URL']}/elastic/{this.index}"
+    # @property
+    # def url(this):
+    #     query = this.query
+    #     if this.item_ids is not None:
+    #         # TODO: currently only handles one id
+    #         return (
+    #             f"{os.environ['DATA_URL']}/elastic/{this.index}/{this.data.item_ids[0]}"
+    #         )
+    #     if query is not None:
+    #         return f"{os.environ['DATA_URL']}/elastic/{this.index}/{query}"
+    #     return f"{os.environ['DATA_URL']}/elastic/{this.index}"
 
     @property
     def query(this):
@@ -135,10 +138,10 @@ class ElasticRequest(_Request, extra=Extra.ignore):
         # _status = values.pop("status", None)
         # if _status and _status is not None:
         #     values["o_status"] = _status
-        _data = values.get("data", None)
-        if _data and _data is not None:
-            if "item_ids" in _data and values.get("item_ids", None) is None:
-                values["item_ids"] = _data["item_ids"]
+        # _data = values.get("data", None)
+        # if _data and _data is not None:
+        #     if "item_ids" in _data and values.get("item_ids", None) is None:
+        #         values["item_ids"] = _data["item_ids"]
 
         _action = values.pop("o_action", None)
         if _action is not None:

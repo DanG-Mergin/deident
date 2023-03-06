@@ -5,7 +5,7 @@ from typing import List, Dict, Union, Optional
 
 # TODO: do I only need to append .. once?
 # from ._Request import _Request
-from ._Request import _Request
+from ...base.messages._Request import _Request
 from .ElasticEnums import ElasticTasks, ElasticIndexes, ElasticMethod
 
 
@@ -94,16 +94,18 @@ class ElasticRequest(_Request, extra=Extra.ignore):
     index: str
     task: str = ElasticTasks.deid.value
     # the elastic search document ID
-    item_ids: Optional[List[str]] = None
+    # item_ids: Optional[List[str]] = None
     entity: str
-    data: Optional[ElasticData] = None
+    data: ElasticData
 
     @property
     def url(this):
         query = this.query
-        if this.item_ids is not None:
+        if this.data.item_ids is not None:
             # TODO: currently only handles one id
-            return f"{os.environ['DATA_URL']}/elastic/{this.index}/{this.item_ids[0]}"
+            return (
+                f"{os.environ['DATA_URL']}/elastic/{this.index}/{this.data.item_ids[0]}"
+            )
         if query is not None:
             return f"{os.environ['DATA_URL']}/elastic/{this.index}/{query}"
         return f"{os.environ['DATA_URL']}/elastic/{this.index}"
@@ -130,22 +132,22 @@ class ElasticRequest(_Request, extra=Extra.ignore):
         # _status = values.pop("status", None)
         # if _status and _status is not None:
         #     values["o_status"] = _status
-        _data = values.pop("data", None)
-        # _data = values.get("data", None)
-        if _data and _data is not None:
-            values["data"] = {}
-            if "item_ids" in _data:
-                values["data"]["item_ids"] = values["item_ids"] = _data["item_ids"]
-            elif "docs" in _data:
-                values["data"]["item_ids"] = values["item_ids"] = [
-                    doc["uuid"] for doc in _data["docs"]
-                ]
-                values["data"]["items"] = [doc for doc in _data["docs"]]
-            elif "labels" in _data:
-                values["data"]["item_ids"] = values["item_ids"] = [
-                    label["uuid"] for label in _data["labels"]
-                ]
-                values["data"]["items"] = [label for label in _data["labels"]]
+        # _data = values.pop("data", None)
+        # # _data = values.get("data", None)
+        # if _data and _data is not None:
+        #     values["data"] = {}
+        #     if "item_ids" in _data:
+        #         values["data"]["item_ids"] = values["item_ids"] = _data["item_ids"]
+        #     elif "docs" in _data:
+        #         values["data"]["item_ids"] = values["item_ids"] = [
+        #             doc["uuid"] for doc in _data["docs"]
+        #         ]
+        #         values["data"]["items"] = [doc for doc in _data["docs"]]
+        #     elif "labels" in _data:
+        #         values["data"]["item_ids"] = values["item_ids"] = [
+        #             label["uuid"] for label in _data["labels"]
+        #         ]
+        #         values["data"]["items"] = [label for label in _data["labels"]]
 
         _action = values.pop("o_action", None)
         if _action is not None:

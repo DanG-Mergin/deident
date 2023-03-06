@@ -1,4 +1,4 @@
-from ._Response import _Response
+from ...base.messages._Response import _Response
 from ...nlp.Doc import Doc
 from typing import Any, Dict, Optional, List
 from pydantic import Extra, ValidationError, validator, root_validator

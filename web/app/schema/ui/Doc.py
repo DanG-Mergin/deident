@@ -1,27 +1,16 @@
-from uuid import UUID, uuid4
-from typing import Any, Dict, Optional, Type, List
 from pydantic import (
-    BaseModel,
     Extra,
-    Field,
-    Json,
-    ValidationError,
-    validator,
     root_validator,
 )
-from pydantic import ValidationError, validator, root_validator
+from typing import List
+from ..base.entities._Doc import _Doc
 from .Token import Token
-from .Entity import EntityInstance, EntityLabel
-from ..nlp.Vocab import VocabItem
+from .Entity import Entity
 
 
-class Doc(BaseModel, extra=Extra.ignore):
-    # TODO: need to figure out how we're keeping track of these
-    uuid: Optional[str] = Field(default_factory=uuid4)
-    text: str
-    entities: List[EntityInstance]
+class Doc(_Doc, extra=Extra.ignore):
+    entities: List[Entity]
     tokens: List[Token]
-    # labels: List[EntityLabel] = []
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

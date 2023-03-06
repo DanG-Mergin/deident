@@ -4,8 +4,11 @@ import httpx
 from pydantic import ValidationError
 from fastapi.encoders import jsonable_encoder
 
-from ..schema.messages.outbound import _Request
-from ..schema.messages.inbound import _Response
+# from ..schema.messages.outbound import _Request
+from ..schema.base.messages._Request import _Request
+
+# from ..schema.messages.inbound import _Response
+from ..schema.base.messages._Response import _Response
 
 client = httpx.AsyncClient()
 
@@ -16,6 +19,7 @@ async def make_request(req: _Request, res_cls: _Response) -> _Response:
     elif req.method == "GET":
         res = await client.get(req.url)
     elif req.method == "PUT":
+        bleh = req.url
         res = await client.put(req.url, json=jsonable_encoder(req))
     elif req.method == "DELETE":
         res = await client.delete(req.url, json=jsonable_encoder(req))
@@ -26,7 +30,7 @@ async def make_request(req: _Request, res_cls: _Response) -> _Response:
     # TODO: handle all of this in the class
     _res = res_cls(
         data=res_data["data"],
-        req_id=req.req_id,
-        orig_id=req.orig_id,
+        uuid=req.uuid,
+        # orig_id=req.orig_id,
     )
     return _res

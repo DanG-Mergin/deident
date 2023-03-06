@@ -1,12 +1,14 @@
 from ..services import request
-from ..schema.messages.outbound.ElasticRequest import ElasticRequest
-from ..schema.messages.inbound.ElasticResponse import ElasticResponse
-from ..schema.messages.inbound._Observable import _Observable as Observable
+from ..schema.data._ElasticRequest import ElasticRequest
+
+# from ..schema.data._ElasticResponse import ElasticResponse
+from ..schema.base.messages._Response import _Response
+from ..schema.ui.Observable import _Observable as Observable
 
 
-async def elastic(req: Observable) -> ElasticResponse:
+async def elastic(req: Observable) -> _Response:
     # res = await ai_s.deID(req)
     _req = ElasticRequest(**req.dict())
-    res = await request.make_request(_req, res_cls=ElasticResponse)
+    res = await request.make_request(_req, res_cls=_Response)
 
     return res

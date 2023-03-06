@@ -5,8 +5,8 @@ from pydantic import BaseModel, Extra, Field, Json
 
 
 class _Response(BaseModel, extra=Extra.ignore):
-    req_id: UUID
-    orig_id: Optional[str]  # from the webfor example
+    uuid: UUID
+    # orig_id: Optional[str]  # from the webfor example
     time_start: datetime = Field(default_factory=datetime.utcnow)
     time_end: Optional[datetime]
     data: Optional[Dict]

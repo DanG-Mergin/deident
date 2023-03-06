@@ -5,15 +5,15 @@ from typing import List
 import os, logging, sys, json
 
 sys.path.append(".")
-from .schema.messages.outbound.DeIDRequest import DeIDRequest
-from .schema.messages.inbound.FileUploadRequest import FileUploadRequest
-from .schema.messages.inbound._Observable import _Observable as ObsRequest
-from .schema.messages.outbound._Observable import _Observable as ObsResponse
+from .schema.ai.DeIDRequest import DeIDRequest
 
-from .schema.messages.inbound.DeIDRequest import SocDeIDRequest
-from .schema.messages.outbound.DeIDResponse import SocDeIDResponse
+from .schema.ui.Observable import _Observable as ObsRequest
+from .schema.base.messages._Observable import _Observable as ObsResponse
+
+from .schema.ui.DeIDRequest import SocDeIDRequest
+from .schema.ui.DeIDResponse import SocDeIDResponse
 from .schema.ui.Doc import Doc
-from .schema.messages._MessageEnums import O_Action, O_Type, O_Status, UI_Entity
+from .schema.base.messages._MessageEnums import O_Action, O_Type, O_Status, UI_Entity
 from .controllers import ai, dictionary
 from .services.utils import cast_to_class
 from .services.SocketManager import SocketManager
@@ -72,9 +72,16 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     await socket_mgr.connect(websocket)
     try:
         while True:
-            json_data = await websocket.receive_json()
+            # json_data = await websocket.receive_json(data, mode="binary")
+
+            data = await websocket.receive_text()
+            try:
+                json_data = json.loads(data)
+            except json.JSONDecodeError:
+                # Handle the JSONDecodeError exception
+                pass
             # TODO: move this into a socket controller
-            if json_data["type"] == "index":
+            if json_data["o_type"] == "index":
                 if json_data["entityType"] == "dictionary":
                     try:
                         # TODO: move this to the top to handle misformated messages
@@ -85,18 +92,22 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                     except Exception as e:
                         print(str(e))
             elif json_data["entity"] == "doc":
-                _req = SocDeIDRequest.parse_obj(json_data)
+                # _req = SocDeIDRequest.parse_obj(json_data)
+                _req = ObsRequest.parse_obj(json_data)
                 if _req.o_action == "update":
                     try:
                         _req_out = cast_to_class(_req, DeIDRequest)
                         res = await ai.update_deID(_req_out)
-                        _res = cast_to_class(_req, ObsResponse, data=res.data)
+                        _res = cast_to_class(
+                            _req, SocDeIDResponse, data=res.data, o_status="success"
+                        )
                         await websocket.send_json(_res.dict())
                     except Exception as e:
                         print(str(e))
                 elif _req.o_action == "create":
                     try:
                         _req_out = cast_to_class(_req, DeIDRequest)
+                        # _req_out = ObsRequest.parse_obj(json_data)
                         res = await ai.deID(_req_out)
                         _res = cast_to_class(
                             _req, SocDeIDResponse, data=res.data, o_status="success"
