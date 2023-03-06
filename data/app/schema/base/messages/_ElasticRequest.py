@@ -1,13 +1,13 @@
-import os
-import sys
 from pydantic import BaseModel, ValidationError, validator, root_validator, Extra
 from typing import List, Dict, Union, Optional
 
-# TODO: do I only need to append .. once?
-# from ._Request import _Request
 from ._Request import _Request
-from .ElasticEnums import ElasticTasks, ElasticIndexes, ElasticMethod
-from ....schema.base.messages._Data import _Data
+from ._MessageEnums import (
+    ElasticTasks,
+    ElasticIndexes,
+    ElasticMethod,
+)
+from ._Data import _Data
 
 
 class ElasticsearchFilter(BaseModel):
@@ -94,7 +94,7 @@ class ElasticsearchQuery(BaseModel):
 #     items: List[Dict]
 
 
-class ElasticRequest(_Request, extra=Extra.ignore):
+class _ElasticRequest(_Request, extra=Extra.ignore):
     method: str
     # url: str
     index: str

@@ -6,10 +6,11 @@ from typing import Type
 
 # from .schema.Label import Label
 from ...schema.base.entities._Label import _Label as Label
-from .schema.Doc import Doc
-from .schema.ElasticRequest import ElasticRequest
 
-# from ...schema.outbound._Response import _Response as Response
+# from .schema.Doc import Doc
+from ...schema.base.entities._Doc import _Doc as Doc
+from ...schema.base.messages._ElasticRequest import _ElasticRequest
+
 from ...schema.base.messages._Response import _Response
 
 
@@ -80,7 +81,7 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
     Updates an existing document in Elasticsearch
     """
     req_data = await req.json()
-    _req = ElasticRequest.parse_obj(req_data)
+    _req = _ElasticRequest.parse_obj(req_data)
 
     cls = get_model(index)
     try:

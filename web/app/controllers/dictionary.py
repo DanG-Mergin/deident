@@ -1,7 +1,6 @@
 from ..services import request
 from ..schema.data._ElasticRequest import ElasticRequest
 
-# from ..schema.data._ElasticResponse import ElasticResponse
 from ..schema.base.messages._Response import _Response
 from ..schema.ui.Observable import _Observable as Observable
 

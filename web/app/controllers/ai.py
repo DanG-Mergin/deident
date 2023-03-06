@@ -1,6 +1,7 @@
 from ..services import request
 from ..schema.ai.DeIDRequest import DeIDRequest
-from ..schema.ai.DeIDResponse import DeIDResponse
+
+# from ..schema.ai.DeIDResponse import DeIDResponse
 from ..schema.base.messages._Response import _Response
 
 
