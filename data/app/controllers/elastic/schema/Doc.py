@@ -24,8 +24,6 @@ class Token(InboundToken):
 
 
 class Doc(InboundDoc, extra=Extra.ignore):
-    # uuid: str
-    # text: str
     entities: List[InboundEntity]
     tokens: List[Token]
 

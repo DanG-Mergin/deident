@@ -5,6 +5,6 @@ from pydantic import BaseModel, Extra, ValidationError, validator, root_validato
 class Entity(BaseModel, extra=Extra.ignore):
     id: str
     uuid: str
-    label_id: str  # TODO: this should just be IDs
-    start_index: int  # TODO: fix casing and consistency
+    label_id: str
+    start_index: int
     end_index: int
