@@ -1,19 +1,18 @@
 from typing import Any, List, Optional
 from pydantic import BaseModel, ValidationError, validator, root_validator
-from ._Lemma import Lemma
+from ._Lemma import _Lemma
 
-# from .Lemma import Lemma
 
 # An individual token — i.e. a word, punctuation symbol, whitespace, etc.
 # https://spacy.io/api/token
-class Token(BaseModel):
+class _Token(BaseModel):
     text: str
     start_char: int
     end_char: int
     index: int
     # TODO: the id is an index
-    id: str
-    lemma: Optional[Lemma]
+    id: int
+    lemma: Optional[_Lemma]
     whitespace: Optional[str]
 
     @root_validator(pre=True)
@@ -40,7 +39,5 @@ class Token(BaseModel):
             raise ValueError("index must be an integer")
         if "id" not in values:
             raise ValueError("id is a required field")
-        if not isinstance(values["id"], str):
-            raise ValueError("id must be a string")
 
         return values

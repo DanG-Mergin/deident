@@ -5,8 +5,8 @@ from typing import List, Dict, Union, Optional
 
 # TODO: do I only need to append .. once?
 # from ._Request import _Request
-from ...base.messages._Request import _Request
-from .ElasticEnums import ElasticTasks, ElasticIndexes, ElasticMethod
+from ._Request import _Request
+from ...base.messages._MessageEnums import ElasticMethod, ElasticIndexes, ElasticTasks
 
 
 class ElasticsearchFilter(BaseModel):
@@ -88,13 +88,10 @@ class ElasticData(BaseModel):
     items: List[Dict]
 
 
-class ElasticRequest(_Request, extra=Extra.ignore):
+class _ElasticRequest(_Request, extra=Extra.ignore):
     method: str
-    # url: str
     index: str
     task: str = ElasticTasks.deid.value
-    # the elastic search document ID
-    # item_ids: Optional[List[str]] = None
     entity: str
     data: ElasticData
 

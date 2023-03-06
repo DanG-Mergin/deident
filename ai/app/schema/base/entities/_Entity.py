@@ -1,15 +1,19 @@
 from typing import Dict, List, Optional, Type
-from pydantic import BaseModel, ValidationError, validator, root_validator
-from ._Token import Token
+from pydantic import BaseModel, Field, ValidationError, validator, root_validator
+from uuid import uuid4
 
 
-class Entity(BaseModel):
+class _Entity(BaseModel):
     id: str
-    uuid: str
+    uuid: str = Field(default_factory=lambda: str(uuid4()))
     label_id: Optional[str]
     start_index: int
     end_index: int
     text: str
+
+    @validator("id")
+    def validate_id(cls, v):
+        return str(v)
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
