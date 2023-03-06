@@ -17,7 +17,7 @@ async def init_indexes(es):
     return (
         await create_labels_index(es),
         await create_substitutions_index(es),
-        await create_document_index(es),
+        await create_doc_index(es),
         await init_data(es),
     )
 
@@ -65,32 +65,49 @@ async def create_substitutions_index(es):
         return await es.indices.create(index="substitution", body=mapping)
 
 
-async def create_document_index(es):
-    if not await es.indices.exists(index="document"):
+async def create_doc_index(es):
+    if not await es.indices.exists(index="doc"):
         mapping = {
             "mappings": {
                 "properties": {
-                    "document": {
+                    "doc": {
                         "type": "object",
                         "properties": {
                             "uuid": {"type": "keyword"},
                             "text": {"type": "text"},
+                            "entities": {
+                                "type": "nested",
+                                "properties": {
+                                    "uuid": {"type": "keyword"},
+                                    "label_id": {"type": "keyword"},
+                                    # if there are two named entities in a document with the label "PERSON" and the same start and end character positions, spaCy will assign each entity a unique id value to distinguish between them
+                                    "id": {"type": "text"},
+                                    "start_index": {"type": "integer"},
+                                    "end_index": {"type": "integer"},
+                                },
+                            },
                             "tokens": {
                                 "type": "nested",
                                 "properties": {
-                                    "label_id": {"type": "keyword"},
+                                    # "label_id": {"type": "keyword"},
                                     # ner is the BILUO label
-                                    "ner": {"type": "keyword"},
+                                    # note that ATOW spacy only supports one entity label per span
+                                    # to use multiple labels the sentence/doc can be stored multiple times
+                                    # and used to train separate models built to identify each type
+                                    # ATOW using entities to represent BILUO so we can handle
+                                    # nested entities.  BILUO will be constructed as a view
+                                    # "ner": {"type": "keyword"},
                                     # depencency label (e.g. nsubj, dobj, etc.)
-                                    "dep": {"type": "keyword"},
+                                    # "dep": {"type": "keyword"},
                                     # part of speech tag
-                                    "tag": {"type": "keyword"},
+                                    # "tag": {"type": "keyword"},
                                     # index of the token in the document
                                     "index": {"type": "integer"},
                                     "start_char": {"type": "integer"},
                                     "end_char": {"type": "integer"},
                                     # orth is the raw text
                                     "orth": {"type": "text"},
+                                    "whitespace": {"type": "text"},
                                 },
                             },
                         },
@@ -99,7 +116,7 @@ async def create_document_index(es):
             }
         }
 
-        return await es.indices.create(index="document", body=mapping)
+        return await es.indices.create(index="doc", body=mapping)
 
 
 def get_index(name):

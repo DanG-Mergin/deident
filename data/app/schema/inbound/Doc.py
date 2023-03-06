@@ -11,14 +11,14 @@ from pydantic import (
 )
 from pydantic import ValidationError, validator, root_validator
 from .Token import Token
-from .Entity import EntityInstance, EntityLabel
+from .Entity import Entity
 
 
 class Doc(BaseModel, extra=Extra.ignore):
     # TODO: need to figure out how we're keeping track of these
     uuid: Optional[str] = Field(default_factory=uuid4)
     text: str
-    entities: List[EntityInstance]
+    entities: List[Entity]
     tokens: List[Token]
     # labels: List[EntityLabel] = []
 
