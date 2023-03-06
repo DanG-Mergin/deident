@@ -12,7 +12,7 @@ class _Token(BaseModel):
     end_char: int
     index: int
     # TODO: the id is an index
-    id: str
+    id: int
     lemma: Optional[_Lemma]
     whitespace: Optional[str]
 
@@ -40,7 +40,5 @@ class _Token(BaseModel):
             raise ValueError("index must be an integer")
         if "id" not in values:
             raise ValueError("id is a required field")
-        if not isinstance(values["id"], str):
-            raise ValueError("id must be a string")
 
         return values
