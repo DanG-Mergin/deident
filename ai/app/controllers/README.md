@@ -1,1 +1,0 @@
-controllers call services for abstract work, and encapsulate view specific work besides

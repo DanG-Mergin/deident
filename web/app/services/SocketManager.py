@@ -1,7 +1,7 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from typing import List
-from ..schema.messages.inbound import _Observable as Observable
-from ..schema.messages._MessageEnums import (
+from ..schema.ui import Observable as Observable
+from ..schema.base.messages._MessageEnums import (
     O_Action,
     O_Status,
     O_Type,

@@ -1,15 +1,17 @@
 from ..services import request
-from ..schema.messages.outbound.DeIDRequest import DeIDRequest
-from ..schema.messages.inbound.DeIDResponse import DeIDResponse
+from ..schema.ai.DeIDRequest import DeIDRequest
+
+# from ..schema.ai.DeIDResponse import DeIDResponse
+from ..schema.base.messages._Response import _Response
 
 
-async def deID(req: DeIDRequest) -> DeIDResponse:
-    res = await request.make_request(req, res_cls=DeIDResponse)
+async def deID(req: DeIDRequest) -> _Response:
+    res = await request.make_request(req, res_cls=_Response)
 
     return res
 
 
-async def update_deID(req: DeIDRequest) -> DeIDResponse:
-    res = await request.make_request(req, res_cls=DeIDResponse)
+async def update_deID(req: DeIDRequest) -> _Response:
+    res = await request.make_request(req, res_cls=_Response)
 
     return res

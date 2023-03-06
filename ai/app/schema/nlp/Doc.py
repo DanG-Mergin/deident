@@ -3,25 +3,22 @@ from __future__ import annotations
 from typing import Any, List, Optional
 
 # TODO: define generic transmissable classes
-from pydantic import BaseModel, Field, ValidationError, validator, root_validator
+from pydantic import Extra, Field, ValidationError, validator, root_validator
 from .Token import Token
 from .Entity import EntityInstance, EntityLabel
-from .Vocab import VocabItem
 from ...services.utils import cast_to_class
 from uuid import uuid4
+from ...schema.base.entities._Doc import _Doc
 
 
-class Doc(BaseModel):
-    uuid: str = Field(default_factory=lambda: str(uuid4()))
-    text: str
+class Doc(_Doc, extra=Extra.ignore):
     entities: List[EntityInstance]
     tokens: List[Token]
-    # labels: List[EntityLabel] = []
 
     @validator("entities", pre=True)
     def cast_entities(cls, e_list):
         v = []
-        labels = {}
+        # labels = {}
         for e in e_list:
             if not hasattr(e, "label") or not hasattr(e.label, "kb_id"):
                 label_id = None
@@ -29,7 +26,7 @@ class Doc(BaseModel):
                 # label_id = e.label.kb_id
                 # TODO: this is a hack as we're only getting the kb_id for now
                 label_id = "44cecac2-f305-44b3-9627-4f7d6c12db3b"
-                labels[label_id] = EntityLabel(kb_id=label_id, text=e.label.text)
+                # labels[label_id] = EntityLabel(kb_id=label_id, text=e.label.text)
 
             if not isinstance(e, EntityInstance):
                 v.append(
@@ -37,13 +34,13 @@ class Doc(BaseModel):
                         e,
                         EntityInstance,
                         label_id=label_id,
-                        start_index=e.start,
-                        end_index=e.end,
+                        # start_index=e.start,
+                        # end_index=e.end,
                     )
                 )
             else:
                 v.append(e)
-                v["labels"] = list(labels.values())
+                # v["labels"] = list(labels.values())
         return v
 
     @root_validator(pre=True)

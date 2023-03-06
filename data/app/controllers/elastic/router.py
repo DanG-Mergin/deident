@@ -3,10 +3,15 @@ from fastapi import APIRouter, HTTPException, Request
 from .create_indexes import init_indexes
 from pydantic import BaseModel, ValidationError
 from typing import Type
-from .schema.Label import Label
-from .schema.Doc import Doc
-from .schema.ElasticRequest import ElasticRequest
-from ...schema.outbound._Response import _Response as Response
+
+# from .schema.Label import Label
+from ...schema.base.entities._Label import _Label as Label
+
+# from .schema.Doc import Doc
+from ...schema.base.entities._Doc import _Doc as Doc
+from ...schema.base.messages._ElasticRequest import _ElasticRequest
+
+from ...schema.base.messages._Response import _Response
 
 
 # from .labels import router as labels_router
@@ -76,7 +81,7 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
     Updates an existing document in Elasticsearch
     """
     req_data = await req.json()
-    _req = ElasticRequest.parse_obj(req_data)
+    _req = _ElasticRequest.parse_obj(req_data)
 
     cls = get_model(index)
     try:
@@ -91,7 +96,9 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
     _document_id = await update_document(index, document_id, document.dict(), es)
     # TODO: Delete this test
     _test_doc = await get_document(index, document_id, es)
-    return {"document_id": _document_id}
+    # _res = _Response(data={"item_ids": [document_id]})
+    _res = _Response.parse_obj(_req.dict())
+    return _res
 
 
 @elastic_router.get("/")
@@ -135,11 +142,12 @@ async def search_documents_endpoint(index: str, query: str = None):
 
         cls = get_model(index)
         items = [cls(**doc["_source"]) for doc in documents]
-        res = Response(data={"items": items})
+        res = _Response(data={"items": items})
 
         return res
     except Exception as e:
-        return Response(error=e)
+        print(str(e))
+        return _Response(error=e)
 
 
 # @elastic_router.get("/complex/{index}")

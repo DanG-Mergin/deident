@@ -4,15 +4,15 @@ from __future__ import annotations
 
 from typing import Any, List, Optional
 
-from pydantic import BaseModel, Field, ValidationError, validator, root_validator
-from uuid import UUID, uuid4
+from pydantic import BaseModel, Extra, Field, ValidationError, validator, root_validator
+
+# from uuid import UUID, uuid4
+from ....schema.base.entities._Doc import _Doc
 from .Entity import SpacyEntityInstance
 from .Token import Token
 
 
-class Doc(BaseModel):
-    uuid: str = Field(default_factory=lambda: str(uuid4()))
-    text: str
+class Doc(_Doc, extra=Extra.ignore):
     entities: List[SpacyEntityInstance]
     tokens: List[Token]
 

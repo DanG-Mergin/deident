@@ -1,20 +1,12 @@
 from typing import Any, List, Optional
 from pydantic import BaseModel, Extra, ValidationError, validator, root_validator
-from ..nlp.Vocab import VocabItem
-from .Lemma import Lemma
+from ..base.entities._Token import Token as _Token
 
 # from ..nlp.Lemma import Lemma
 
 # An individual token — i.e. a word, punctuation symbol, whitespace, etc.
 # https://spacy.io/api/token
-class Token(VocabItem, extra=Extra.ignore):
-    text: str
-    index: int
-    start_char: int
-    end_char: int
-    # TODO: the id is an entity id, not a token id
-    id: str
-    lemma: Optional[Lemma]
+class Token(_Token, extra=Extra.ignore):
     spacesAfter: Optional[int]
 
     @root_validator(pre=True)
