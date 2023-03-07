@@ -6,8 +6,6 @@ import os
 import sys
 
 sys.path.append(".")
-# from .schema.messages.inbound.DeIDRequest import DeIDRequest
-# from .schema.messages.outbound.DeIDResponse import DeIDResponse
 
 from .schema.base.messages._Request import _Request
 from .schema.base.messages._Response import _Response

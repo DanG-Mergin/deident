@@ -9,9 +9,6 @@ from .schema.ai.DeIDRequest import DeIDRequest
 
 from .schema.ui.Observable import UIObservableRequest, UIObservableResponse
 
-# from .schema.ui.DeIDResponse import SocDeIDResponse
-
-# from .schema.ui.Doc import Doc
 # from .schema.base.messages._MessageEnums import Msg_Action, Msg_Type, Msg_Status, Entity
 from .controllers import ai, dictionary
 from .services.utils import cast_to_class
@@ -75,57 +72,50 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                 data = await websocket.receive_text()
             except Exception as e:
                 print(str(e))  # Starlette has issues with json
-
-            try:
-                json_data = json.loads(data)
-                _req = UIObservableRequest.parse_obj(json_data)
-            except json.JSONDecodeError:
-                # Handle the JSONDecodeError exception
-                pass
-            # TODO: move this into a socket controller
-            if _req.msg_type == "index":
-                if _req.msg_entity_type == "dictionary":
-                    try:
-                        res = await dictionary.elastic(_req)
-                        _res = cast_to_class(_req, UIObservableResponse, data=res.data)
-                        await websocket.send_json(_res.dict())
-                    except Exception as e:
-                        print(str(e))
-            elif _req.msg_entity == "doc":
-                # _req = ObsRequest.parse_obj(json_data)
-                if _req.msg_action == "update":
-                    try:
-                        _req_out = cast_to_class(_req, DeIDRequest)
-                        res = await ai.update_deID(_req_out)
-                        # _res = cast_to_class(
-                        #     _req, SocDeIDResponse, data=res.data, msg_status="success"
-                        # )
-                        _res = cast_to_class(
-                            _req,
-                            UIObservableResponse,
-                            data=res.data,
-                            msg_status="success",
-                        )
-                        await websocket.send_json(_res.dict())
-                    except Exception as e:
-                        print(str(e))
-                elif _req.msg_action == "create":
-                    try:
-                        _req_out = cast_to_class(_req, DeIDRequest)
-                        res = await ai.deID(_req_out)
-                        # _res = cast_to_class(
-                        #     _req, SocDeIDResponse, data=res.data, msg_status="success"
-                        # )
-                        _res = cast_to_class(
-                            _req,
-                            UIObservableResponse,
-                            data=res.data,
-                            msg_status="success",
-                        )
-                        await websocket.send_json(_res.dict())
-                    except Exception as e:
-                        print(str(e))
-            print(json_data)
+            if data is not None:
+                try:
+                    json_data = json.loads(data)
+                    _req = UIObservableRequest.parse_obj(json_data)
+                except json.JSONDecodeError:
+                    # Handle the JSONDecodeError exception
+                    pass
+                # TODO: move this into a socket controller
+                if _req.msg_type == "index":
+                    if _req.msg_entity_type == "dictionary":
+                        try:
+                            res = await dictionary.elastic(_req)
+                            _res = cast_to_class(
+                                _req, UIObservableResponse, data=res.data
+                            )
+                            await websocket.send_json(_res.dict())
+                        except Exception as e:
+                            print(str(e))
+                elif _req.msg_entity == "doc":
+                    if _req.msg_action == "update":
+                        try:
+                            res = await ai.update_deID(_req)
+                            _res = cast_to_class(
+                                _req,
+                                UIObservableResponse,
+                                data=res.data,
+                                msg_status="success",
+                            )
+                            await websocket.send_json(_res.dict())
+                        except Exception as e:
+                            print(str(e))
+                    elif _req.msg_action == "create":
+                        try:
+                            res = await ai.deID(_req)
+                            _res = cast_to_class(
+                                _req,
+                                UIObservableResponse,
+                                data=res.data,
+                                msg_status="success",
+                            )
+                            await websocket.send_json(_res.dict())
+                        except Exception as e:
+                            print(str(e))
+                print(json_data)
 
     except WebSocketDisconnect:
         socket_mgr.disconnect(websocket)

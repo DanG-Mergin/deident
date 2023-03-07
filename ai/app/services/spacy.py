@@ -2,7 +2,6 @@
 import spacy
 from .utils import cast_to_class
 
-# from ..schema.messages.inbound.DeIDRequest import DeIDRequest
 from ..schema.base.entities._Doc import _Doc
 from ..schema.nlp.spacy.Doc import Doc as SpacyDoc
 from ..schema.nlp.Doc import Doc
