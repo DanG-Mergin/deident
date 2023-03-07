@@ -1,10 +1,6 @@
 import os
-import sys
 from pydantic import BaseModel, ValidationError, validator, root_validator, Extra
 from typing import List, Dict, Union, Optional
-
-# TODO: do I only need to append .. once?
-# from ._Request import _Request
 from ._Request import _Request
 from ...base.messages._MessageEnums import ElasticMethod, ElasticIndexes, ElasticTasks
 
@@ -83,29 +79,33 @@ class ElasticsearchQuery(BaseModel):
     page_number: int = 1
 
 
-class ElasticData(BaseModel):
-    item_ids: List[str]
-    items: List[Dict]
+# class ElasticData(BaseModel):
+#     item_ids: List[str]
+#     items: List[Dict]
 
-
+# TODO: this is really just a copy from the UI request
 class _ElasticRequest(_Request, extra=Extra.ignore):
-    method: str
     index: str
-    task: str = ElasticTasks.deid.value
-    entity: str
-    data: ElasticData
+    msg_task: str = ElasticTasks.deid.value
+    msg_entity: str
+    _url = f'{os.environ.get("DATA_URL")}/elastic'
+    # data: Optional[Dict[str, List[Dict]]] = None
 
     @property
-    def url(this):
-        query = this.query
-        if this.data.item_ids is not None:
+    def url(self):
+        query = self.query
+        if self.data and "item_ids" in self.data:
             # TODO: currently only handles one id
-            return (
-                f"{os.environ['DATA_URL']}/elastic/{this.index}/{this.data.item_ids[0]}"
-            )
+            return f"{self._url}/{self.index}/{self.data.item_ids[0]}"
         if query is not None:
-            return f"{os.environ['DATA_URL']}/elastic/{this.index}/{query}"
-        return f"{os.environ['DATA_URL']}/elastic/{this.index}"
+            return f"{self._url}/{self.index}/{query}"
+        return f"{self._url}/{self.index}"
+
+    @url.setter
+    def url(self, v):
+        if v is not None:
+            self._url = v
+        return v
 
     @property
     def query(this):
@@ -120,49 +120,18 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
     def map_index(cls, value):
         return ElasticIndexes[value.lower()].value
 
-    @validator("task")
+    @validator("msg_task")
     def map_task(cls, value):
         return ElasticTasks[value.lower()].value
 
     @root_validator(pre=True)
-    def consume_observable(cls, values):
-        # _status = values.pop("status", None)
-        # if _status and _status is not None:
-        #     values["o_status"] = _status
-        # _data = values.pop("data", None)
-        # # _data = values.get("data", None)
-        # if _data and _data is not None:
-        #     values["data"] = {}
-        #     if "item_ids" in _data:
-        #         values["data"]["item_ids"] = values["item_ids"] = _data["item_ids"]
-        #     elif "docs" in _data:
-        #         values["data"]["item_ids"] = values["item_ids"] = [
-        #             doc["uuid"] for doc in _data["docs"]
-        #         ]
-        #         values["data"]["items"] = [doc for doc in _data["docs"]]
-        #     elif "labels" in _data:
-        #         values["data"]["item_ids"] = values["item_ids"] = [
-        #             label["uuid"] for label in _data["labels"]
-        #         ]
-        #         values["data"]["items"] = [label for label in _data["labels"]]
-
-        _action = values.pop("o_action", None)
+    def convert_fields(cls, values):
+        _action = values.pop("msg_action", None)
         if _action is not None:
-            # values["action"] = _action
-            # values["method"] = ElasticMethod[_action]
             values["method"] = _action
 
-        _task = values.pop("task", None)
-        if _task and _task is not None:
-            values["task"] = _task
-
-        _entity = values.pop("entity", None)
+        _entity = values.get("msg_entity", None)
         if _entity and _entity is not None:
-            values["entity"] = _entity
             values["index"] = _entity
-
-        # _entityType = values.pop("entityType", None)
-        # if _entityType and _entityType is not None:
-        #     values["index"] = _entityType
 
         return values

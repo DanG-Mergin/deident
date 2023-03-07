@@ -27,6 +27,6 @@ async def deID(docs: List[Type[_Doc]]) -> List[Type[Doc]]:
             uuid=doc.uuid,
         )
         b_doc = cast_to_class(s_doc, Doc)
-        # b_doc = Doc(**s_doc.dict())
+
         annotated.append(b_doc)
     return annotated

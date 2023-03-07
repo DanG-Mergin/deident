@@ -2,12 +2,12 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from typing import List
 from ..schema.ui import Observable as Observable
 from ..schema.base.messages._MessageEnums import (
-    O_Action,
-    O_Status,
-    O_Type,
-    UI_Entity,
-    UI_EntityType,
-    Job_Task,
+    Msg_Action,
+    Msg_Status,
+    Msg_Type,
+    Entity,
+    Entity_Type,
+    Msg_Task,
     ElasticMethod,
     ElasticIndexes,
     ElasticTasks,
