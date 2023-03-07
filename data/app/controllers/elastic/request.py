@@ -1,6 +1,6 @@
 import asyncio
 
-# from .schema.ElasticRequest import ElasticsearchQuery
+# from .schema._ElasticRequest import ElasticsearchQuery
 
 
 async def create_document(index, document_id, document, es):

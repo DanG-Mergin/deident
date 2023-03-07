@@ -95,9 +95,11 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
     # else:
     _document_id = await update_document(index, document_id, document.dict(), es)
     # TODO: Delete this test
-    _test_doc = await get_document(index, document_id, es)
+    # _test_doc = await get_document(index, document_id, es)
     # _res = _Response(data={"item_ids": [document_id]})
     _res = _Response.parse_obj(_req.dict())
+    _res.data = {"item_ids": [document_id]}
+    _res.msg_status = "success"
     return _res
 
 
@@ -142,7 +144,9 @@ async def search_documents_endpoint(index: str, query: str = None):
 
         cls = get_model(index)
         items = [cls(**doc["_source"]) for doc in documents]
-        res = _Response(data={"items": items})
+        res = _Response(
+            data={"items": items}, msg_status="success", msg_action="search"
+        )
 
         return res
     except Exception as e:

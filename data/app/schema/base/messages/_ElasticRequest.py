@@ -1,3 +1,4 @@
+import os
 from pydantic import BaseModel, ValidationError, validator, root_validator, Extra
 from typing import List, Dict, Union, Optional
 
@@ -84,37 +85,22 @@ class ElasticsearchQuery(BaseModel):
     page_number: int = 1
 
 
-# class ElasticTypes(str, Enum):
-#     label = "label"
-#     substitution = "substitution"
-
-
-# class ElasticData(BaseModel):
-#     item_ids: List[str]
-#     items: List[Dict]
-
-
 class _ElasticRequest(_Request, extra=Extra.ignore):
-    method: str
-    # url: str
     index: str
-    task: str = ElasticTasks.deid.value
-    # the elastic search document ID
-    # item_ids: Optional[List[str]] = None
-    entity: str
-    data: _Data
+    msg_task: str = ElasticTasks.deid.value
+    msg_entity: str
 
-    # @property
-    # def url(this):
-    #     query = this.query
-    #     if this.item_ids is not None:
-    #         # TODO: currently only handles one id
-    #         return (
-    #             f"{os.environ['DATA_URL']}/elastic/{this.index}/{this.data.item_ids[0]}"
-    #         )
-    #     if query is not None:
-    #         return f"{os.environ['DATA_URL']}/elastic/{this.index}/{query}"
-    #     return f"{os.environ['DATA_URL']}/elastic/{this.index}"
+    @property
+    def url(this):
+        query = this.query
+        if this.data.item_ids is not None:
+            # TODO: currently only handles one id
+            return (
+                f"{os.environ['DATA_URL']}/elastic/{this.index}/{this.data.item_ids[0]}"
+            )
+        if query is not None:
+            return f"{os.environ['DATA_URL']}/elastic/{this.index}/{query}"
+        return f"{os.environ['DATA_URL']}/elastic/{this.index}"
 
     @property
     def query(this):
@@ -129,37 +115,19 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
     def map_index(cls, value):
         return ElasticIndexes[value.lower()].value
 
-    @validator("task")
+    @validator("msg_task")
     def map_task(cls, value):
         return ElasticTasks[value.lower()].value
 
     @root_validator(pre=True)
-    def consume_observable(cls, values):
-        # _status = values.pop("status", None)
-        # if _status and _status is not None:
-        #     values["o_status"] = _status
-        # _data = values.get("data", None)
-        # if _data and _data is not None:
-        #     if "item_ids" in _data and values.get("item_ids", None) is None:
-        #         values["item_ids"] = _data["item_ids"]
-
-        _action = values.pop("o_action", None)
+    def convert_fields(cls, values):
+        _action = values.pop("msg_action", None)
         if _action is not None:
-            # values["action"] = _action
-            # values["method"] = ElasticMethod[_action]
+
             values["method"] = _action
 
-        _task = values.pop("task", None)
-        if _task and _task is not None:
-            values["task"] = _task
-
-        _entity = values.pop("entity", None)
+        _entity = values.get("msg_entity", None)
         if _entity and _entity is not None:
-            values["entity"] = _entity
             values["index"] = _entity
-
-        # _entityType = values.pop("entityType", None)
-        # if _entityType and _entityType is not None:
-        #     values["index"] = _entityType
 
         return values

@@ -1,11 +1,15 @@
-from datetime import datetime
-from uuid import UUID, uuid4
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, Extra, ValidationError, validator, root_validator
-from ._Data import _Data
+from pydantic import Extra
+from ._Message import _Message
 
 
-class _Request(BaseModel, extra=Extra.allow):
+class _Request(_Message, extra=Extra.allow):
     method: str = "POST"
-    uuid: str = Field(default_factory=lambda: str(uuid4()))
-    data: Optional[_Data]
+    _url: str = ""
+
+    @property
+    def url(self):
+        return self._url
+
+    @url.setter
+    def url(self, value):
+        self._url = value

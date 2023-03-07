@@ -12,7 +12,7 @@ sys.path.append(".")
 from .schema.base.messages._Request import _Request
 from .schema.base.messages._Response import _Response
 
-from .controllers import spacy as spacy_c, feedback as feedback_c
+from .controllers import document as document_c
 from .services.utils import cast_to_class
 
 app = FastAPI()
@@ -50,7 +50,7 @@ def test():
 async def deID(req: Request):
     req_data = await req.json()
     _req = _Request.parse_obj(req_data)
-    res = await spacy_c.deID(_req)
+    res = await document_c.deID(_req)
 
     return res
 
@@ -61,6 +61,6 @@ async def deID(req: Request):
     req_data = await req.json()
 
     _req = _Request.parse_obj(req_data)
-    _res = await feedback_c.update_deID(_req)
+    _res = await document_c.update_deID(_req)
 
     return _res

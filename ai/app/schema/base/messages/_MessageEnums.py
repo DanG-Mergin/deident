@@ -1,7 +1,7 @@
 from enum import Enum, IntEnum
 
 
-class O_Action(str, Enum):
+class Msg_Action(str, Enum):
     create = "create"
     read = "read"
     update = "update"
@@ -10,7 +10,7 @@ class O_Action(str, Enum):
     search = "search"
 
 
-class O_Status(str, Enum):
+class Msg_Status(str, Enum):
     success = "success"
     error = "error"
     loading = "loading"
@@ -18,30 +18,30 @@ class O_Status(str, Enum):
     pending = "pending"
 
 
-class O_Type(str, Enum):
+class Msg_Type(str, Enum):
     data = "data"
     state = "state"
     index = "index"
 
 
-class Job_Task(str, Enum):
+class Msg_Task(str, Enum):
     deid = "deID"
 
 
-class UI_Entity(str, Enum):
+class Entity(str, Enum):
     doc = "doc"
     label = "label"
     substitution = "substitution"
 
 
 # TODO: rethink this whole idea
-class UI_EntityType(str, Enum):
+class Entity_Type(str, Enum):
     ner = "ner"
     deid = "deID"
     dictionary = "dictionary"
 
 
-# Maps o_action in observable requests to the corresponding Elasticsearch method
+# Maps msg_action in observable requests to the corresponding Elasticsearch method
 class ElasticMethod(str, Enum):
     search = "GET"
     get = "GET"
@@ -54,7 +54,7 @@ class ElasticMethod(str, Enum):
     create = "POST"
 
 
-# maps UI_Entity to the corresponding Elasticsearch index
+# maps Entity to the corresponding Elasticsearch index
 class ElasticIndexes(str, Enum):
     labels = "label"
     label = "label"
@@ -64,6 +64,6 @@ class ElasticIndexes(str, Enum):
     docs = "doc"
 
 
-# maps Job_Task to the corresponding Elasticsearch type
+# maps Msg_Task to the corresponding Elasticsearch type
 class ElasticTasks(str, Enum):
     deid = "deID"

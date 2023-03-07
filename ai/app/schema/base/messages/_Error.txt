@@ -1,0 +1,10 @@
+from pydantic import BaseModel, ValidationError, validator, root_validator, Extra
+from typing import List, Dict, Union, Optional
+from ._Response import _Response
+
+
+class _Error(_Response):
+    message: str
+
+    class Config:
+        extra = Extra.forbid
