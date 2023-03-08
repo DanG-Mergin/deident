@@ -1,9 +1,8 @@
 from typing import Dict, List, Optional, Type
 from pydantic import BaseModel, ValidationError, validator, root_validator
-from ._Token import Token
 
 
-class Entity(BaseModel):
+class _Entity(BaseModel):
     id: str
     uuid: str
     label_id: Optional[str]

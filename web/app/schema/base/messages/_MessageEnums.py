@@ -28,14 +28,16 @@ class Msg_Task(str, Enum):
     deid = "deID"
 
 
-class Entity(str, Enum):
+class Msg_Entity(str, Enum):
     doc = "doc"
     label = "label"
+    entity = "entity"
+    token = "token"
     substitution = "substitution"
 
 
 # TODO: rethink this whole idea
-class Entity_Type(str, Enum):
+class Msg_Entity_Type(str, Enum):
     ner = "ner"
     deid = "deID"
     dictionary = "dictionary"
@@ -54,7 +56,7 @@ class ElasticMethod(str, Enum):
     create = "POST"
 
 
-# maps Entity to the corresponding Elasticsearch index
+# maps Msg_Entity to the corresponding Elasticsearch index
 class ElasticIndexes(str, Enum):
     labels = "label"
     label = "label"

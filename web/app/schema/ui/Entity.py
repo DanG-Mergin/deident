@@ -1,6 +1,6 @@
 from typing import Dict, List, Optional
 from pydantic import BaseModel, Extra, ValidationError, validator, root_validator
-from ..base.entities._Entity import Entity as _Entity
+from ..base.entities._Entity import _Entity
 
 
 class Entity(_Entity):

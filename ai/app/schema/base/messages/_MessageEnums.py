@@ -28,14 +28,16 @@ class Msg_Task(str, Enum):
     deid = "deID"
 
 
-class Entity(str, Enum):
+class Msg_Entity(str, Enum):
     doc = "doc"
     label = "label"
+    entity = "entity"
+    token = "token"
     substitution = "substitution"
 
 
 # TODO: rethink this whole idea
-class Entity_Type(str, Enum):
+class Msg_Entity_Type(str, Enum):
     ner = "ner"
     deid = "deID"
     dictionary = "dictionary"

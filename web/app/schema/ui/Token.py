@@ -1,6 +1,6 @@
 from typing import Any, List, Optional
 from pydantic import BaseModel, Extra, ValidationError, validator, root_validator
-from ..base.entities._Token import Token as _Token
+from ..base.entities._Token import _Token
 
 # from ..nlp.Lemma import Lemma
 

@@ -109,19 +109,22 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
 
     @validator("method")
     def map_method(cls, value):
-        return ElasticMethod[value.lower()].value
+        if value is not None:
+            return ElasticMethod[value.lower()].value
 
     @validator("index")
     def map_index(cls, value):
-        return ElasticIndexes[value.lower()].value
+        if value is not None:
+            return ElasticIndexes[value.lower()].value
 
     @validator("msg_task")
     def map_task(cls, value):
-        return ElasticTasks[value.lower()].value
+        if value is not None:
+            return ElasticTasks[value.lower()].value
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
-        _action = values.pop("msg_action", None)
+        _action = values.get("msg_action", None)
         if _action is not None:
 
             values["method"] = _action

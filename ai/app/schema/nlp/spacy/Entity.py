@@ -12,7 +12,6 @@ class EntityLabel(BaseModel):
 
 
 class SpacyEntityInstance(_Entity):
-
     start_char: int
     end_char: int
     label: EntityLabel

@@ -14,8 +14,8 @@ from ._MessageEnums import (
     Msg_Status,
     Msg_Action,
     Msg_Type,
-    Entity,
-    Entity_Type,
+    Msg_Entity,
+    Msg_Entity_Type,
     Msg_Task,
 )
 
@@ -58,13 +58,13 @@ class _Message(BaseModel, extra=Extra.ignore):
     def map_entity(cls, v):
         if v is None:
             return None
-        return Entity[v.lower()].value
+        return Msg_Entity[v.lower()].value
 
     @validator("msg_entity_type")
     def map_entityType(cls, v):
         if v is None:
             return None
-        return Entity_Type[v.lower()].value
+        return Msg_Entity_Type[v.lower()].value
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

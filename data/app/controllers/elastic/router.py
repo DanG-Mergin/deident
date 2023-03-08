@@ -67,12 +67,31 @@ async def elastic_router_shutdown():
 
 
 @elastic_router.post("/{index}")
-async def create_document_endpoint(index: str, document_id: str, document: dict):
+# async def create_document_endpoint(index: str, document_id: str, document: dict):
+async def create_document_endpoint(index: str, req: Request):
     """
     Creates a new document in Elasticsearch
     """
-    _document_id = await create_document(index, document_id, document, es)
-    return {"document_id": _document_id}
+    req_data = await req.json()
+    _req = _ElasticRequest.parse_obj(req_data)
+    document_id = _req.data.item_ids[0]
+
+    cls = get_model(index)
+    try:
+        document = cls(**_req.data.items[0])
+    except ValidationError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+    _document_id = await create_document(
+        index, _req.data.item_ids[0], document.dict(), es
+    )
+
+    # TODO: consolidate this with update document endpoint
+
+    _res = _Response.parse_obj(_req.dict())
+    _res.data = {"item_ids": [document_id]}
+    _res.msg_status = "success"
+    return _res
 
 
 @elastic_router.put("/{index}/{document_id}")

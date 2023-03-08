@@ -79,10 +79,6 @@ class ElasticsearchQuery(BaseModel):
     page_number: int = 1
 
 
-# class ElasticData(BaseModel):
-#     item_ids: List[str]
-#     items: List[Dict]
-
 # TODO: this is really just a copy from the UI request
 class _ElasticRequest(_Request, extra=Extra.ignore):
     index: str
@@ -96,7 +92,7 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
         query = self.query
         if self.data and "item_ids" in self.data:
             # TODO: currently only handles one id
-            return f"{self._url}/{self.index}/{self.data.item_ids[0]}"
+            return f"{self._url}/{self.index}/{self.data['item_ids'][0]}"
         if query is not None:
             return f"{self._url}/{self.index}/{query}"
         return f"{self._url}/{self.index}"
@@ -126,7 +122,7 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
-        _action = values.pop("msg_action", None)
+        _action = values.get("msg_action", None)
         if _action is not None:
             values["method"] = _action
 

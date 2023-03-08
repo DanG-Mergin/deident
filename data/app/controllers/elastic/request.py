@@ -7,7 +7,7 @@ async def create_document(index, document_id, document, es):
     """
     Creates a new document in Elasticsearch
     """
-    res = await es.index(index=index, id=document_id, body=document)
+    res = await es.index(index=index, id=document_id, body={"doc": document})
     return res["_id"]
 
 

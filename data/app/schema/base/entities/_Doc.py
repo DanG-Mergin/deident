@@ -12,7 +12,7 @@ from ._Entity import _Entity
 
 class _Doc(BaseModel):
     # TODO: need to figure out how we're keeping track of these
-    uuid: Optional[str] = Field(default_factory=uuid4)
+    uuid: str = Field(default_factory=lambda: str(uuid4()))
     text: str
     entities: List[_Entity]
     tokens: List[_Token]
