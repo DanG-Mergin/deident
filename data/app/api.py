@@ -1,13 +1,16 @@
 import logging
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, APIRouter
 from fastapi.responses import Response, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os, sys
 
 sys.path.append(".")
 
-from .controllers.elastic.router import elastic_router
-from .services.utils import cast_to_class
+from .controllers.elastic.router import elastic_router, init as init_elastic
+
+# from .services.utils import cast_to_class
+from .emitter import pubsub_router, emitter
+from .schema.base.messages._Observable import _Observable
 
 
 app = FastAPI()
@@ -39,9 +42,27 @@ if os.environ["ENV"] == "DEV":
 async def init():
     log.info("Starting up data_api")
     app.mount("/elastic/", elastic_router)
+    app.include_router(pubsub_router)
+
+    await init_elastic()
 
 
 @app.get("/")
 def read_root():
-    save_annotations("I'm an annotation")
+    # save_annotations("I'm an annotation")
     return {"Hello": "From data_api"}
+
+
+@app.get("/trigger")
+async def trigger_events():
+    # asyncio.create_task(events())
+    _test_msg = _Observable(
+        msg_action="create",
+        msg_status="success",
+        msg_type="data",
+        msg_task="deID",
+        msg_entity="doc",
+        msg_entity_type="deID",
+        data={},
+    )
+    await emitter.publish(_test_msg)

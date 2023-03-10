@@ -11,9 +11,36 @@ from pydantic import (
 )
 from ..base.messages._Observable import _Observable
 from .Doc import Doc as UIDoc
+from .Entity import Entity as Entity
+from .Token import Token as Token
+from ..base.entities._Change import _Change as Change
+from ..base.entities._Revisions import _Revisions as Revisions
+from ..base.entities._Label import _Label as Label
+
+MODEL_MAP = {
+    "revisions": Revisions,
+    "doc": UIDoc,
+    "entity": Entity,
+    "token": Token,
+    "change": Change,
+    "label": Label,
+}
 
 
-class UIObservableRequest(_Observable, extra=Extra.ignore):
+class UIObservableRequest(_Observable):
+    def __init__(self, **kwargs):
+        # handle docs and revisions
+        kwargs["data"] = self._cast_data(kwargs["data"])
+        super().__init__(**kwargs)
+
+    def _cast_data(self, data):
+        _items = data.items
+        if _items and isinstance(_items, list):
+            _data = {"item_ids": [data.item_ids]}
+            _data["items"] = [MODEL_MAP[item["name"]](**item) for item in _items]
+            return _data
+        return data
+
     @root_validator(pre=True)
     def convert_fields(cls, values):
         _status = values.pop("status", None)
@@ -43,15 +70,39 @@ class UIObservableRequest(_Observable, extra=Extra.ignore):
         return values
 
 
-class UIObservableResponse(_Observable, extra=Extra.ignore):
-    @validator("data")
-    def validate_data(cls, data, values):
-        msg_entity = values.get("msg_entity", None)
+class UIObservableResponse(_Observable):
+    def __init__(self, *args, **kwargs):
+        # handle docs and revisions
+        kwargs["data"] = self._cast_data(kwargs["data"])
+        super().__init__(*args, **kwargs)
 
-        if msg_entity and data.items is not None:
-            if msg_entity == "doc":
-                data.items = [UIDoc(**item) for item in data.items]
+    def _cast_data(self, data):
+        _items = data.items
+        if _items and isinstance(_items, list):
+            _data = {"item_ids": [data.item_ids]}
+            _data["items"] = [MODEL_MAP[item["name"]](**item) for item in _items]
+            return _data
         return data
+
+    # class Config:
+    #     fields = {
+    #         "extra": Extra.ignore,
+    #         "msg_status": "status",
+    #         "msg_action": "action",
+    #         "msg_type": "type",
+    #         "msg_task": "task",
+    #         "msg_entity": "entity",
+    #         "msg_entity_type": "entityType",
+    #     }
+
+    # @validator("data")
+    # def validate_data(cls, data, values):
+    #     msg_entity = values.get("msg_entity", None)
+
+    #     if msg_entity and data.items is not None:
+    #         if msg_entity == "doc":
+    #             data.items = [UIDoc(**item) for item in data.items]
+    #     return data
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

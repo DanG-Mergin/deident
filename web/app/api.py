@@ -5,7 +5,7 @@ from typing import List
 import os, logging, sys, json
 
 sys.path.append(".")
-from .schema.ai.DeIDRequest import DeIDRequest
+# from .schema.ai.DeIDRequest import DeIDRequest
 
 from .schema.ui.Observable import UIObservableRequest, UIObservableResponse
 
@@ -69,13 +69,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     try:
         while True:
             json_data = await websocket.receive_json()
-            # try:
-            #     data = await websocket.receive_text()
-            # except Exception as e:
-            #     print(str(e))  # Starlette has issues with json
-
             try:
-                # json_data = json.loads(data)
                 _req = UIObservableRequest.parse_obj(json_data)
             except json.JSONDecodeError:
                 # Handle the JSONDecodeError exception
@@ -85,7 +79,12 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                 if _req.msg_entity_type == "dictionary":
                     try:
                         res = await dictionary.elastic(_req)
-                        _res = cast_to_class(_req, UIObservableResponse, data=res.data)
+                        _res = cast_to_class(
+                            _req,
+                            UIObservableResponse,
+                            data=res.data,
+                            msg_status="success",
+                        )
                         await websocket.send_json(_res.dict())
                     except Exception as e:
                         print(str(e))

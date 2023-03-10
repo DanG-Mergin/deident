@@ -1,4 +1,4 @@
-from uuid import UUID, uuid4
+from uuid import uuid4
 from typing import Any, Dict, Optional, Type, Union
 from pydantic import (
     BaseModel,

@@ -8,6 +8,7 @@ from ..messages._MessageEnums import Msg_Action, Msg_Entity
 
 
 class _Change(BaseModel):
+    name: str = "change"
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     action: str
     entity: str

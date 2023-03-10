@@ -34,6 +34,7 @@
     "uuid": "d0b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "short_description": "Date of birth",
     "description": "This represents the day someone was born",
+    "text": "D.O.B.",
     "instructions": "Highlight the date",
     "substitutionId": "d0b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "badgeName": "wolf_one"
@@ -53,6 +54,7 @@
     "uuid": "e0b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "short_description": "Death date",
     "description": "This represents the day someone passed away",
+    "text": "D.O.D.",
     "instructions": "Highlight the date",
     "substitutionId": "e0b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "badgeName": "wolf_two"
@@ -72,6 +74,7 @@
     "uuid": "f0b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "short_description": "Admission date",
     "description": "This represents the day someone was admitted to a facility",
+    "text": "D.O.A.",
     "instructions": "Highlight the date",
     "substitutionId": "f0b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "badgeName": "wolf_three"
@@ -89,8 +92,9 @@
     ],
     "kb_id": null,
     "uuid": "49b5a46b-e5f7-4d77-9d13-d137e875adc2",
-    "short_description": "Discharge date",
-    "description": "This represents the day someone was discharged from a facility",
+    "short_description": "Generic date",
+    "description": "This is a date",
+    "text": "Date",
     "instructions": "Highlight the date",
     "substitutionId": "72b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "badgeName": "hammerheadShark_one"
@@ -110,6 +114,7 @@
     "uuid": "10b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "short_description": "Discharge date",
     "description": "This represents the day someone was discharged from a facility",
+    "text": "Discharge date",
     "instructions": "Highlight the date",
     "substitutionId": "10b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "badgeName": "hammerheadShark_one"
@@ -129,6 +134,7 @@
     "uuid": "30b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "short_description": "Encounter date",
     "description": "This represents the day an encounter occurred",
+    "text": "Encounter date",
     "instructions": "Highlight the date",
     "substitutionId": "30b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "badgeName": "hammerheadShark_three"
@@ -148,6 +154,7 @@
     "uuid": "40b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "short_description": "Onset date",
     "description": "This represents the day an onset of a condition occurred",
+    "text": "Onset date",
     "instructions": "Highlight the date",
     "substitutionId": "40b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "badgeName": "hawk_one"
@@ -167,6 +174,7 @@
     "uuid": "50b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "short_description": "End date",
     "description": "This represents the end date of a condition or event",
+    "text": "End date",
     "instructions": "Highlight the date",
     "substitutionId": "50b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "badgeName": "hawk_two"
@@ -186,6 +194,7 @@
     "uuid": "7cf57950-0feb-41cc-ab60-d270e1a3f6e9",
     "short_description": "Patient name",
     "description": "This represents the name of a patient",
+    "text": "Patient name",
     "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
     "substitutionId": "2545a46b-e5f7-4d77-9d13-d137e875adc2",
     "badgeName": "ibex_two"
@@ -205,6 +214,7 @@
     "uuid": "151fc6a4-495a-4c90-8845-03a3aeccb3c7",
     "short_description": "Other name",
     "description": "For use when no more appropriate category exists",
+    "text": "Name",
     "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
     "substitutionId": "91183f07-08e2-406f-9b0b-ba37ea809d03",
     "badgeName": "monitorLizard_one"
@@ -224,6 +234,7 @@
     "uuid": "969fc6a4-495a-4c90-8845-03a3aeccb3c7",
     "short_description": "Provider name",
     "description": "This represents the name of a provider",
+    "text": "Provider name",
     "instructions": "Highlight the full name where first and last cooccur, or highlight first and last separately where they are apart, being careful to avoid streets named after people",
     "substitutionId": "61183f07-08e2-406f-9b0b-ba37ea809d03",
     "badgeName": "monitorLizard_one"
@@ -243,6 +254,7 @@
     "uuid": "1a247450-1747-437c-a25e-4a569927cb4c",
     "short_description": "Username",
     "description": "This represents a username",
+    "text": "Username",
     "instructions": "Highlight the entire username",
     "substitutionId": "a5c2957d-158e-4118-9c80-4103ec680a20",
     "badgeName": "monitorLizard_two"
@@ -262,6 +274,7 @@
     "uuid": "b661b6e3-0872-42b7-8337-d8cf80c5608f",
     "short_description": "Profession",
     "description": "This represents a profession",
+    "text": "Profession",
     "instructions": "Highlight the entire profession",
     "substitutionId": "9b274426-b414-46e7-8506-98f5e32e934a",
     "badgeName": "monitorLizard_three"
@@ -281,6 +294,7 @@
     "uuid": "169fc6a4-495a-4c90-8845-03a3aeccb3c7",
     "short_description": "Other location",
     "description": "For use when no more appropriate category exists",
+    "text": "Location",
     "instructions": "Highlight the location",
     "substitutionId": "5ec93f07-08e2-406f-9b0b-ba37ea809d03",
     "badgeName": "monitorLizard_one"
@@ -300,6 +314,7 @@
     "uuid": "0b0be22c-dd25-4e92-9501-0193730b2e2a",
     "short_description": "Room",
     "description": "This represents a room number",
+    "text": "Room",
     "instructions": "Highlight the entire room number",
     "substitutionId": "dbd715d2-5ec9-4b9f-86af-a65a1a1e9da2",
     "badgeName": "jaguar_one"
@@ -319,6 +334,7 @@
     "uuid": "e85b6604-fb88-46c0-8da9-b60e429b67d2",
     "short_description": "Department",
     "description": "This represents a department name",
+    "text": "Department",
     "instructions": "Highlight the entire department name",
     "substitutionId": "a68d49bb-8239-4be2-a2be-ebdb8ac8e757",
     "badgeName": "jaguar_two"
@@ -338,6 +354,7 @@
     "uuid": "890fbeaf-ac2c-4666-b2c6-da08d33b90bb",
     "short_description": "Hospital",
     "description": "This represents a hospital name",
+    "text": "Hospital",
     "instructions": "Highlight the entire hospital name including spaces",
     "substitutionId": "034bea39-9472-4f58-8975-13494af60571",
     "badgeName": "jaguar_three"
@@ -349,7 +366,7 @@
     "types": [
       "ner"
     ],
-    "tag": "ORGANIZATION",
+    "tag": "ORG",
     "tasks": [
       "deID"
     ],
@@ -357,6 +374,7 @@
     "uuid": "3c89f4dc-54b3-4364-874a-62235262e852",
     "short_description": "Organization",
     "description": "This represents an organization name",
+    "text": "Organization",
     "instructions": "Highlight the entire organization name",
     "substitutionId": "858d8706-c7db-4509-aa8c-7d61cd8d7f66",
     "badgeName": "possum_one"
@@ -376,6 +394,7 @@
     "uuid": "a43128da-ca21-498a-bc7e-3c79c61066c0",
     "short_description": "Street",
     "description": "This represents a street name",
+    "text": "Street",
     "instructions": "Highlight the entire street name, being careful to avoid highlighting names of people",
     "substitutionId": "4ff71f45-4a72-4459-b5d0-dcfc3482c971",
     "badgeName": "possum_two"
@@ -395,6 +414,7 @@
     "uuid": "d47e51df-3f2d-4dc8-a0a7-46ab775a4dec",
     "short_description": "City",
     "description": "This represents a city name",
+    "text": "City",
     "instructions": "Highlight the entire city name",
     "substitutionId": "482bfda6-e828-45c8-97dc-77dec558e6df",
     "badgeName": "possum_three"
@@ -406,7 +426,7 @@
     "types": [
       "ner"
     ],
-    "tag": "STATE",
+    "tag": "ST.",
     "tasks": [
       "deID"
     ],
@@ -414,6 +434,7 @@
     "uuid": "971b3569-48b5-4156-a172-d0968ad3d5a4",
     "short_description": "State",
     "description": "This represents a state name",
+    "text": "State",
     "instructions": "Highlight the entire state name",
     "substitutionId": "3a15e5c5-31f5-418a-941d-c6fcb59654e9",
     "badgeName": "flamingo_one"
@@ -433,6 +454,7 @@
     "uuid": "b9dc1cc4-1182-4196-882c-38546d950419",
     "short_description": "Country",
     "description": "This represents a country name",
+    "text": "Country",
     "instructions": "Highlight the entire country name",
     "substitutionId": "1d7076a6-d490-4731-9ef0-c9ae38896040",
     "badgeName": "flamingo_two"
@@ -452,6 +474,7 @@
     "uuid": "289af975-5366-4d01-ac04-0d394d44fdf6",
     "short_description": "Zip code",
     "description": "This represents a zip code",
+    "text": "Zip code",
     "instructions": "Highlight the entire zip code",
     "substitutionId": "680fca6f-fb92-472d-91b5-6b13a331ad6a",
     "badgeName": "flamingo_three"
@@ -471,6 +494,7 @@
     "uuid": "7613eaf4-7613-4e9f-9b8d-bba653a4e970",
     "short_description": "Other contact",
     "description": "This represents a generic unspecified contact",
+    "text": "Other contact",
     "instructions": "Highlight the entire contact",
     "substitutionId": "ae8b0952-2acc-4945-83a0-072069bb3a3b",
     "badgeName": "antelope_two"
@@ -490,6 +514,7 @@
     "uuid": "b8d6eaf4-7613-4e9f-9b8d-bba653a4e970",
     "short_description": "Phone number",
     "description": "This represents a phone number",
+    "text": "Phone number",
     "instructions": "Highlight the entire phone number",
     "substitutionId": "ea8b0952-2acc-4945-83a0-072069bb3a3b",
     "badgeName": "antelope_two"
@@ -509,6 +534,7 @@
     "uuid": "0ddc3377-b63a-415e-afb4-e4cee8335468",
     "short_description": "Email",
     "description": "This represents an email address",
+    "text": "Email",
     "instructions": "Highlight the entire email address",
     "substitutionId": "6a369c8a-14f8-4853-bd4c-12c94018920e",
     "badgeName": "albatross_one"
@@ -528,6 +554,7 @@
     "uuid": "c426b5f0-6d77-491d-8d1f-59bad7496c11",
     "short_description": "URL",
     "description": "This represents a URL",
+    "text": "URL",
     "instructions": "Highlight the entire URL",
     "substitutionId": "2135e42e-2a84-45ef-a7c1-8b26c161dbf6",
     "badgeName": "albatross_two"
@@ -547,6 +574,7 @@
     "uuid": "ad989a4c-6f42-460f-9dbc-73923a8cf2d2",
     "short_description": "IP address",
     "description": "This represents an IP address",
+    "text": "IP address",
     "instructions": "Highlight the entire IP address",
     "substitutionId": "a6d9a27a-1382-49ed-aaa1-3e51d516da5c",
     "badgeName": "albatross_three"
@@ -566,6 +594,7 @@
     "uuid": "c42381eb-3baf-4df9-9f83-8d34a2c7e631",
     "short_description": "Other ID",
     "description": "This represents an ID that isn't otherwise specified",
+    "text": "Other ID",
     "instructions": "Highlight the entire ID",
     "substitutionId": "4bf6b4f6-9e81-4c6d-b1f7-930a2a2bb7ab",
     "badgeName": "albatross_four"
@@ -585,6 +614,7 @@
     "uuid": "554f15a1-908b-4761-98ea-d184a79cceb4",
     "short_description": "Social Security Number",
     "description": "This represents a Social Security Number",
+    "text": "Social Security Number",
     "instructions": "Highlight the entire Social Security Number",
     "substitutionId": "04f77069-9837-419c-9645-f3d0bb8d641d",
     "badgeName": "albatross_four"
@@ -604,6 +634,7 @@
     "uuid": "ed12dcd7-c94b-4319-b742-fbfcbbd3ed94",
     "short_description": "Medical record number",
     "description": "This represents a medical record number",
+    "text": "Medical record number",
     "instructions": "Highlight the entire medical record number",
     "substitutionId": "211a8eef-36f6-4253-8d0f-9dc06200183d",
     "badgeName": "cobra_one"
@@ -623,6 +654,7 @@
     "uuid": "6e209a68-8ebd-4589-b409-1b75e3c959da",
     "short_description": "Health plan number",
     "description": "This represents a health plan number",
+    "text": "Health plan number",
     "instructions": "Highlight the entire health plan number",
     "substitutionId": "6c7ee287-02ea-4227-abe6-2e32de9f9ea8",
     "badgeName": "cobra_two"
@@ -661,6 +693,7 @@
     "uuid": "68985b26-1ad0-4a90-b550-3f15b96d3130",
     "short_description": "License number",
     "description": "This represents a license number",
+    "text": "License number",
     "instructions": "Highlight the entire license number",
     "substitutionId": "807fde68-5105-4be4-b8a4-df2a724bab4d",
     "badgeName": "alligator_one"
@@ -680,6 +713,7 @@
     "uuid": "1f5ed142-1a4a-46e0-bf2b-6aed46cc4a8c",
     "short_description": "Vehicle number",
     "description": "This represents a vehicle number",
+    "text": "Vehicle number",
     "instructions": "Highlight the entire vehicle number",
     "substitutionId": "0616cff7-1029-4614-b156-3a0567076986",
     "badgeName": "alligator_two"
@@ -699,6 +733,7 @@
     "uuid": "41eeb658-4306-411e-ae47-4d8adf3580e2",
     "short_description": "Device ID",
     "description": "This represents a device ID",
+    "text": "Device ID",
     "instructions": "Highlight the entire device ID",
     "substitutionId": "672500f4-6c49-44e1-ae83-feeeb11d1674",
     "badgeName": "alligator_three"
@@ -718,6 +753,7 @@
     "uuid": "f829c62c-4a83-4e09-adb8-5ef76deb6334",
     "short_description": "Biometric ID",
     "description": "This represents a biometric ID",
+    "text": "Biometric ID",
     "instructions": "Highlight the entire biometric ID",
     "substitutionId": "71900358-d0ad-42ae-b8ac-5bec979d7119",
     "badgeName": "bull_one"
@@ -729,7 +765,7 @@
     "types": [
       "ner"
     ],
-    "tag": "ID_NUMBER",
+    "tag": "ID_NUM",
     "tasks": [
       "deID"
     ],
@@ -737,6 +773,7 @@
     "uuid": "64d5194b-d2ac-4b74-b21c-d95e75b8546a",
     "short_description": "ID number",
     "description": "This represents an ID number",
+    "text": "ID number",
     "instructions": "Highlight the entire ID number",
     "substitutionId": "537f1720-947c-4d2e-9b1b-0e78392e3e91",
     "badgeName": "bull_two"

@@ -1,5 +1,7 @@
 import logging
 from fastapi import APIRouter, HTTPException, Request
+from ...emitter import emitter
+
 from .create_indexes import init_indexes
 from pydantic import BaseModel, ValidationError
 from typing import Type
@@ -12,7 +14,7 @@ from ...schema.base.entities._Doc import _Doc as Doc
 from ...schema.base.messages._ElasticRequest import _ElasticRequest
 
 from ...schema.base.messages._Response import _Response
-
+from ...schema.base.messages._MessageEnums import Msg_Action
 
 # from .labels import router as labels_router
 from elasticsearch import AsyncElasticsearch
@@ -50,13 +52,11 @@ def get_model(model_name: str) -> Type[BaseModel]:
         raise ValueError(f"Unknown model name: {model_name}")
 
 
-@elastic_router.on_event("startup")
+# @elastic_router.on_event("startup")
 async def init():
-    elastic_router.app.state.es = es
-    await init_indexes(es)
-
+    # elastic_router.app.state.es = es
     # initialize elastic indexes if they aren't already
-
+    await init_indexes(es)
     log.info("Elasticsearch router started")
     print("Elasticsearch router started")
 
@@ -91,6 +91,8 @@ async def create_document_endpoint(index: str, req: Request):
     _res = _Response.parse_obj(_req.dict())
     _res.data = {"item_ids": [document_id]}
     _res.msg_status = "success"
+
+    await emitter.publish(_res)
     return _res
 
 
@@ -119,6 +121,8 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
     _res = _Response.parse_obj(_req.dict())
     _res.data = {"item_ids": [document_id]}
     _res.msg_status = "success"
+
+    await emitter.publish(_res)
     return _res
 
 
