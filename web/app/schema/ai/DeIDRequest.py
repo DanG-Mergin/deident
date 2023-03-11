@@ -17,6 +17,8 @@ class DeIDRequest(_Request, extra=Extra.ignore):
         _action = values.get("msg_action", None)
         if _action is not None:
             values["method"] = cls._set_method(_action)
+            # if _action == "update":
+            #     values["msg_entity"]
         return values
 
     def _set_method(action):

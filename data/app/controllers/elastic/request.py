@@ -7,7 +7,8 @@ async def create_document(index, document_id, document, es):
     """
     Creates a new document in Elasticsearch
     """
-    res = await es.index(index=index, id=document_id, body={"doc": document})
+    # res = await es.index(index=index, id=document_id, body={"doc": document})
+    res = await es.index(index=index, id=document_id, body=document)
     return res["_id"]
 
 
@@ -16,7 +17,7 @@ async def update_document(index, document_id, document, es):
     Updates an existing document in Elasticsearch
     """
     res = await es.update(
-        index=index, id=document_id, body={"doc": document, "doc_as_upsert": True}
+        index=index, id=document_id, body={"document": document, "doc_as_upsert": True}
     )
     return res["_id"]
 
@@ -89,7 +90,7 @@ async def bulk_update_documents(index, documents, es):
     Updates multiple documents in Elasticsearch using the update API
     """
     tasks = [
-        es.update(index=index, id=document["uuid"], body={"doc": document})
+        es.update(index=index, id=document["uuid"], body={"document": document})
         for document in documents
     ]
     return await asyncio.gather(*tasks)

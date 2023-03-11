@@ -11,6 +11,7 @@ from ...schema.base.entities._Label import _Label as Label
 
 # from .schema.Doc import Doc
 from ...schema.base.entities._Doc import _Doc as Doc
+from ...schema.base.entities._Annotation import _Annotation as Annotation
 from ...schema.base.messages._ElasticRequest import _ElasticRequest
 
 from ...schema.base.messages._Response import _Response
@@ -42,7 +43,7 @@ def get_es_client():
 
 
 # Dictionary that maps model names to Pydantic classes
-MODEL_MAP = {"label": Label, "doc": Doc}
+MODEL_MAP = {"annotation": Annotation, "label": Label, "doc": Doc}
 
 
 def get_model(model_name: str) -> Type[BaseModel]:

@@ -1,5 +1,5 @@
 from typing import List, Dict, Union
-from pydantic import BaseModel, root_validator
+from pydantic import BaseModel, root_validator, validator
 from ..entities._Doc import _Doc
 from ..entities._Label import _Label
 from ..entities._Entity import _Entity
@@ -11,6 +11,12 @@ from ..entities._Revisions import _Revisions
 class _Data(BaseModel):
     item_ids: List[str]
     items: List[Union[Dict, _Doc, _Label, _Entity, _Token, _Change, _Revisions]]
+
+    @validator("items", "item_ids", pre=True, always=True)
+    def ensure_list(cls, value):
+        if not isinstance(value, list):
+            return [value]
+        return value
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

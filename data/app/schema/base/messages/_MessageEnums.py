@@ -29,6 +29,7 @@ class Msg_Task(str, Enum):
 
 
 class Msg_Entity(str, Enum):
+    annotation = "annotation"
     doc = "doc"
     label = "label"
     entity = "entity"
@@ -64,6 +65,8 @@ class ElasticIndexes(str, Enum):
     substitution = "substitution"
     doc = "doc"
     docs = "doc"
+    annotation = "annotation"
+    annotations = "annotation"
 
 
 # maps Msg_Task to the corresponding Elasticsearch type

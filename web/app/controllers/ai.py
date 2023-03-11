@@ -14,8 +14,11 @@ async def deID(req: _Observable) -> _Response:
     return res
 
 
-async def update_deID(req: _Observable) -> _Response:
-    _req = cast_to_class(req, DeIDRequest)
-    res = await request.make_request(_req, res_cls=_Response)
+# Deprecated
+# async def update_deID(req: _Observable) -> _Response:
+#     # TODO: push new annotations up to data, have ai listen for changes
+#     # and do something if criteria are met
+#     _req = cast_to_class(req, DeIDRequest)
+#     res = await request.make_request(_req, res_cls=_Response)
 
-    return res
+#     return res

@@ -10,7 +10,7 @@ sys.path.append(".")
 from .schema.ui.Observable import UIObservableRequest, UIObservableResponse
 
 # from .schema.base.messages._MessageEnums import Msg_Action, Msg_Type, Msg_Status, Msg_Entity
-from .controllers import ai, dictionary
+from .controllers import ai, dictionary, data
 from .services.utils import cast_to_class
 from .services.SocketManager import SocketManager
 
@@ -88,10 +88,10 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                         await websocket.send_json(_res.dict())
                     except Exception as e:
                         print(str(e))
-            elif _req.msg_entity == "doc":
-                if _req.msg_action == "update":
+            elif _req.msg_entity == "annotation":
+                if _req.msg_action == "create":
                     try:
-                        res = await ai.update_deID(_req)
+                        res = await data.update_deID(_req)
                         _res = cast_to_class(
                             _req,
                             UIObservableResponse,
@@ -101,7 +101,8 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                         await websocket.send_json(_res.dict())
                     except Exception as e:
                         print(str(e))
-                elif _req.msg_action == "create":
+            elif _req.msg_entity == "doc":
+                if _req.msg_action == "create":
                     try:
                         res = await ai.deID(_req)
                         _res = cast_to_class(
@@ -113,7 +114,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                         await websocket.send_json(_res.dict())
                     except Exception as e:
                         print(str(e))
-            print(json_data)
+            # print(json_data)
 
     except WebSocketDisconnect:
         socket_mgr.disconnect(websocket)

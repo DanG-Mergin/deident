@@ -11,11 +11,20 @@ class _Revisions(BaseModel):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     doc_id: str
     changes: List[_Change]
-    submitted: datetime
+    timestamp: datetime
     author_id: str
 
-    class Config:
-        fields = {
-            "doc_id": "docID",
-            "author_id": "authorID",
-        }
+    @validator("changes", pre=True)
+    def _convert_changes(cls, v):
+        if v is None:
+            return None
+        return [_Change(**c) for c in v]
+
+    @root_validator(pre=True)
+    def convert_fields(cls, values):
+        if "docID" in values:
+            values["doc_id"] = values.pop("docID")
+        if "authorID" in values:
+            values["author_id"] = values.pop("authorID")
+
+        return values

@@ -13,6 +13,7 @@ class _Change(BaseModel):
     action: str
     entity: str
     timestamp: datetime = datetime.utcnow
+    # TODO: for now only handles _Entity, but should be able to handle any
     object: _Entity
 
     @validator("action")

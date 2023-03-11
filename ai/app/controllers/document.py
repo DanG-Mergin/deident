@@ -97,19 +97,3 @@ async def save_document(req: _Request) -> _Response:
         return e
         # TODO: robust error handling
     return _res
-
-
-# async def handle_doc_updated(data, topic):
-#     print("doc updated")
-#     print(data)
-#     print(topic)
-#     return data
-
-
-# async def subscribe():
-#     client = PubSubClient(keep_alive=True)
-#     client.start_client("ws://data-service:8082/pubsub")
-#     client.subscribe("steel", handle_doc_updated)
-#     client.subscribe("doc", handle_doc_updated)
-#     # await client.wait_until_done()
-#     return client
