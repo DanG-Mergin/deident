@@ -73,14 +73,17 @@ class UIObservableRequest(_Observable):
 class UIObservableResponse(_Observable):
     def __init__(self, *args, **kwargs):
         # handle docs and revisions
-        kwargs["data"] = self._cast_data(kwargs["data"])
+        kwargs["data"] = self._cast_data(kwargs["data"], kwargs["msg_type"])
         super().__init__(*args, **kwargs)
 
-    def _cast_data(self, data):
+    def _cast_data(self, data, msg_type):
         _items = data.items
         if _items and isinstance(_items, list):
-            _data = {"item_ids": [data.item_ids]}
-            _data["items"] = [MODEL_MAP[item["name"]](**item) for item in _items]
+            _data = {"item_ids": data.item_ids}
+            if msg_type == "index":
+                _data["totalItems"] = len(data.item_ids)
+            else:
+                _data["items"] = [MODEL_MAP[item["name"]](**item) for item in _items]
             return _data
         return data
 

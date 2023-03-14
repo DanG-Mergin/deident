@@ -14,5 +14,5 @@ class _Doc(BaseModel):
     name: str = "doc"
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     text: str
-    entities: List[_Entity]
-    tokens: List[_Token]
+    entities: Optional[List[_Entity]]
+    tokens: Optional[List[_Token]]

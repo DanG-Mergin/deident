@@ -90,9 +90,14 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
     @property
     def url(self):
         query = self.query
-        if self.data and "item_ids" in self.data:
+        d = self.data
+        isIds = d and "item_ids" in d
+        gIds = d.item_ids
+        # gIds = d.get("item_ids", None)
+        # if self.data and "item_ids" in self.data:
+        if self.data and self.data.item_ids:
             # TODO: currently only handles one id
-            return f"{self._url}/{self.index}/{self.data['item_ids'][0]}"
+            return f"{self._url}/{self.index}/{self.data.item_ids[0]}"
         if query is not None:
             return f"{self._url}/{self.index}/{query}"
         return f"{self._url}/{self.index}"

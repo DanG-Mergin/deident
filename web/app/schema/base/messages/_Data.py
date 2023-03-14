@@ -6,15 +6,18 @@ from ..entities._Entity import _Entity
 from ..entities._Token import _Token
 from ..entities._Change import _Change
 from ..entities._Revisions import _Revisions
+from ..entities._Annotation import _Annotation
 
 
 class _Data(BaseModel):
     item_ids: List[str]
-    items: List[Union[Dict, _Doc, _Label, _Entity, _Token, _Change, _Revisions]]
+    items: List[
+        Union[Dict, _Doc, _Label, _Entity, _Token, _Change, _Revisions, _Annotation]
+    ] = None
 
     @validator("items", "item_ids", pre=True, always=True)
     def ensure_list(cls, value):
-        if not isinstance(value, list):
+        if value and not isinstance(value, list):
             return [value]
         return value
 

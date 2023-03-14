@@ -11,7 +11,7 @@ class _Revisions(BaseModel):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     doc_id: str
     changes: List[_Change]
-    timestamp: datetime
+    timestamp: datetime = datetime.utcnow()
     author_id: str
 
     @validator("changes", pre=True)

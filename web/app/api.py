@@ -75,19 +75,32 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                 # Handle the JSONDecodeError exception
                 pass
             # TODO: move this into a socket controller
-            if _req.msg_type == "index":
-                if _req.msg_entity_type == "dictionary":
-                    try:
-                        res = await dictionary.elastic(_req)
-                        _res = cast_to_class(
-                            _req,
-                            UIObservableResponse,
-                            data=res.data,
-                            msg_status="success",
-                        )
-                        await websocket.send_json(_res.dict())
-                    except Exception as e:
-                        print(str(e))
+            if _req.msg_action == "read":
+                try:
+                    res = await data.read(_req)
+                    _res = cast_to_class(
+                        _req,
+                        UIObservableResponse,
+                        data=res.data,
+                        msg_status="success",
+                    )
+                    await websocket.send_json(_res.dict())
+                except Exception as e:
+                    print(str(e))
+
+            elif _req.msg_action == "search":
+                try:
+                    res = await data.search(_req)
+                    # TODO: handle specific search types
+                    _res = cast_to_class(
+                        _req,
+                        UIObservableResponse,
+                        data=res.data,
+                        msg_status="success",
+                    )
+                    await websocket.send_json(_res.dict())
+                except Exception as e:
+                    print(str(e))
             elif _req.msg_entity == "annotation":
                 if _req.msg_action == "create":
                     try:
@@ -101,10 +114,24 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                         await websocket.send_json(_res.dict())
                     except Exception as e:
                         print(str(e))
+                # TODO: why is this "read" calling update
+                # if _req.msg_action == "read":
+                #     try:
+                #         res = await data.update_deID(_req)
+                #         _res = cast_to_class(
+                #             _req,
+                #             UIObservableResponse,
+                #             data=res.data,
+                #             msg_status="success",
+                #         )
+                #         await websocket.send_json(_res.dict())
+                #     except Exception as e:
+                #         print(str(e))
             elif _req.msg_entity == "doc":
                 if _req.msg_action == "create":
                     try:
-                        res = await ai.deID(_req)
+                        res = await data.create_doc(_req)
+                        # res = await ai.deID(_req)
                         _res = cast_to_class(
                             _req,
                             UIObservableResponse,
@@ -114,6 +141,19 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                         await websocket.send_json(_res.dict())
                     except Exception as e:
                         print(str(e))
+            # elif _req.msg_entity == "doc":
+            #     if _req.msg_action == "create":
+            #         try:
+            #             res = await ai.deID(_req)
+            #             _res = cast_to_class(
+            #                 _req,
+            #                 UIObservableResponse,
+            #                 data=res.data,
+            #                 msg_status="success",
+            #             )
+            #             await websocket.send_json(_res.dict())
+            #         except Exception as e:
+            #             print(str(e))
             # print(json_data)
 
     except WebSocketDisconnect:

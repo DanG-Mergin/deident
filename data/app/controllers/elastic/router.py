@@ -67,6 +67,7 @@ async def elastic_router_shutdown():
     await es.close()
 
 
+@elastic_router.post("/{index}/{document_id}")
 @elastic_router.post("/{index}")
 # async def create_document_endpoint(index: str, document_id: str, document: dict):
 async def create_document_endpoint(index: str, req: Request):
@@ -79,7 +80,7 @@ async def create_document_endpoint(index: str, req: Request):
 
     cls = get_model(index)
     try:
-        document = cls(**_req.data.items[0])
+        document = cls(**_req.data.items[0].dict())
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
@@ -107,7 +108,7 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
 
     cls = get_model(index)
     try:
-        document = cls(**_req.data.items[0])
+        document = cls(**_req.data.items[0].dict())
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
@@ -143,7 +144,16 @@ async def get_document_endpoint(index: str, document_id: str):
     document = await get_document(index, document_id, es)
     if not document:
         raise HTTPException(status_code=404, detail="Document not found")
-    return document
+
+    cls = get_model(index)
+    document = cls(**document)
+    res = _Response(
+        data={"items": [document]},
+        msg_status="success",
+        msg_action="read",
+        msg_entity=index,
+    )
+    return res
 
 
 @elastic_router.delete("/{index}/{document_id}")
@@ -169,7 +179,10 @@ async def search_documents_endpoint(index: str, query: str = None):
         cls = get_model(index)
         items = [cls(**doc["_source"]) for doc in documents]
         res = _Response(
-            data={"items": items}, msg_status="success", msg_action="search"
+            data={"items": items},
+            msg_status="success",
+            msg_action="search",
+            msg_entity=index,
         )
 
         return res

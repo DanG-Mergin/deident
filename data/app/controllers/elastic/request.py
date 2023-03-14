@@ -17,7 +17,7 @@ async def update_document(index, document_id, document, es):
     Updates an existing document in Elasticsearch
     """
     res = await es.update(
-        index=index, id=document_id, body={"document": document, "doc_as_upsert": True}
+        index=index, id=document_id, body={"doc": document, "doc_as_upsert": True}
     )
     return res["_id"]
 

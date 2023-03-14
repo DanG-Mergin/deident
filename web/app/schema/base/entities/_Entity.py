@@ -9,7 +9,7 @@ class _Entity(BaseModel):
     label_id: Optional[str]
     start_index: int
     end_index: int
-    text: str
+    text: Optional[str]
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

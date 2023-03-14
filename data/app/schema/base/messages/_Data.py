@@ -2,11 +2,14 @@ from typing import List, Dict, Union
 from pydantic import BaseModel, root_validator
 from ..entities._Doc import _Doc
 from ..entities._Label import _Label
+from ..entities._Entity import _Entity
+from ..entities._Annotation import _Annotation
+from ..entities._Token import _Token
 
 
 class _Data(BaseModel):
     item_ids: List[str]
-    items: List[Union[Dict, _Doc, _Label]]
+    items: List[Union[_Doc, _Label, _Annotation, _Entity, _Token, Dict]]
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
