@@ -64,20 +64,6 @@ async def annotate_document(doc_id: str) -> _Response:
 #     return _res
 
 
-# async def compare_annotations(req: _Request):
-#     doc = req.data.items[0]
-#     _res = await get_document(req.data.item_ids[0])
-#     prev_doc = _Doc(_res.data.items[0])
-
-#     # compare the two documents for changes
-#     # for ent in doc.ents:
-#     #     for prev_ent in prev_doc.ents:
-#     #         if ent.label_ == prev_ent.label_:
-#     #             if ent.text != prev_ent.text:
-
-#     return _res
-
-
 async def get_document(docID: str) -> _Response:
     _res = None
     try:

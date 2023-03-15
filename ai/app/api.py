@@ -74,12 +74,14 @@ async def deID(req: Request):
     return res
 
 
+# no longer supported.  Handled with websockets
 @app.put("/deID", response_class=JSONResponse)
 async def deID(req: Request):
     # TODO: logic to utilize deidentification updates from the UI via a controller
-    req_data = await req.json()
+    # req_data = await req.json()
 
-    _req = _Request.parse_obj(req_data)
-    _res = await document_c.update_deID(_req)
+    # _req = _Request.parse_obj(req_data)
+    # _res = await document_c.update_deID(_req)
 
-    return _res
+    # return _res
+    return {"message": "no longer supported"}
