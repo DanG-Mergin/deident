@@ -28,6 +28,7 @@ async def make_request(req: _Request, res_cls: _Response) -> _Response:
         raise ValueError(f"Unsupported method: {req.method}")
 
     res_data = res.json()
+    # req.data = None
     # TODO: handle all of this in the class
     _res = cast_to_class(req, res_cls, **res_data)
     # _res = res_cls(

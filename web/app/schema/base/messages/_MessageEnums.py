@@ -28,14 +28,17 @@ class Msg_Task(str, Enum):
     deid = "deID"
 
 
-class Entity(str, Enum):
+class Msg_Entity(str, Enum):
+    annotation = "annotation"
     doc = "doc"
     label = "label"
+    entity = "entity"
+    token = "token"
     substitution = "substitution"
 
 
 # TODO: rethink this whole idea
-class Entity_Type(str, Enum):
+class Msg_Entity_Type(str, Enum):
     ner = "ner"
     deid = "deID"
     dictionary = "dictionary"
@@ -43,7 +46,8 @@ class Entity_Type(str, Enum):
 
 # Maps msg_action in observable requests to the corresponding Elasticsearch method
 class ElasticMethod(str, Enum):
-    search = "GET"
+    # search = "GET"
+    search = "POST"
     get = "GET"
     read = "GET"
     delete = "DELETE"
@@ -54,7 +58,7 @@ class ElasticMethod(str, Enum):
     create = "POST"
 
 
-# maps Entity to the corresponding Elasticsearch index
+# maps Msg_Entity to the corresponding Elasticsearch index
 class ElasticIndexes(str, Enum):
     labels = "label"
     label = "label"
@@ -62,6 +66,8 @@ class ElasticIndexes(str, Enum):
     substitution = "substitution"
     doc = "doc"
     docs = "doc"
+    annotation = "annotation"
+    annotations = "annotation"
 
 
 # maps Msg_Task to the corresponding Elasticsearch type

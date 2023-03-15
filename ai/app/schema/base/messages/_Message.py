@@ -14,8 +14,8 @@ from ._MessageEnums import (
     Msg_Status,
     Msg_Action,
     Msg_Type,
-    Entity,
-    Entity_Type,
+    Msg_Entity,
+    Msg_Entity_Type,
     Msg_Task,
 )
 
@@ -23,12 +23,12 @@ from ._MessageEnums import (
 class _Message(BaseModel, extra=Extra.ignore):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     msg_action: str
-    msg_status: str
+    msg_status: str = Field(default=Msg_Status.pending.value)
     msg_type: Optional[str]
     msg_task: Optional[str]
     msg_entity: Optional[str]
     msg_entity_type: Optional[str]
-    # data: Optional[_Data]
+    query: Optional[Dict] = None
     data: Union[_Data, Dict[str, Any], None, Dict]
 
     @validator("msg_action")
@@ -59,13 +59,13 @@ class _Message(BaseModel, extra=Extra.ignore):
     def map_entity(cls, v):
         if v is None:
             return None
-        return Entity[v.lower()].value
+        return Msg_Entity[v.lower()].value
 
     @validator("msg_entity_type")
     def map_entityType(cls, v):
         if v is None:
             return None
-        return Entity_Type[v.lower()].value
+        return Msg_Entity_Type[v.lower()].value
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

@@ -6,16 +6,17 @@ import os
 import sys
 
 sys.path.append(".")
-# from .schema.messages.inbound.DeIDRequest import DeIDRequest
-# from .schema.messages.outbound.DeIDResponse import DeIDResponse
 
 from .schema.base.messages._Request import _Request
 from .schema.base.messages._Response import _Response
 
 from .controllers import document as document_c
 from .services.utils import cast_to_class
+from .emitter import emitter
+from pyee import EventEmitter
 
 app = FastAPI()
+# ee = emitter
 log = logging.getLogger(__name__)
 
 # ---------------------------------------------------#
@@ -38,6 +39,24 @@ if os.environ["ENV"] == "DEV":
 # ---------------------------------------------------#
 # END DEV
 # ---------------------------------------------------#
+
+from fastapi_websocket_pubsub import PubSubClient
+import asyncio
+
+
+async def on_events(data, topic):
+    print(f"running callback for {topic}!")
+
+
+async def _init():
+
+    # await document_c.subscribe()
+    return True
+
+
+@app.on_event("startup")
+async def startup():
+    await _init()
 
 
 @app.get("/")

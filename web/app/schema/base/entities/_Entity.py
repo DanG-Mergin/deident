@@ -1,15 +1,15 @@
 from typing import Dict, List, Optional, Type
 from pydantic import BaseModel, ValidationError, validator, root_validator
-from ._Token import Token
 
 
-class Entity(BaseModel):
+class _Entity(BaseModel):
+    name: str = "entity"
     id: str
     uuid: str
     label_id: Optional[str]
     start_index: int
     end_index: int
-    text: str
+    text: Optional[str]
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

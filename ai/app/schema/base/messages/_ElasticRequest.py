@@ -5,7 +5,7 @@ from ._Request import _Request
 from ...base.messages._MessageEnums import ElasticMethod, ElasticIndexes, ElasticTasks
 
 
-class ElasticsearchFilter(BaseModel):
+class _ElasticsearchFilter(BaseModel):
     """
     A Pydantic model representing a filter to be applied to an Elasticsearch query.
 
@@ -37,9 +37,9 @@ class ElasticsearchFilter(BaseModel):
     exists: dict = None
     missing: dict = None
     bool: dict = None
-    must: Union[List[dict], List["ElasticsearchFilter"]] = []
-    should: Union[List[dict], List["ElasticsearchFilter"]] = []
-    must_not: Union[List[dict], List["ElasticsearchFilter"]] = []
+    must: Union[List[dict], List["_ElasticsearchFilter"]] = []
+    should: Union[List[dict], List["_ElasticsearchFilter"]] = []
+    must_not: Union[List[dict], List["_ElasticsearchFilter"]] = []
 
     @validator("must", "should", "must_not", pre=True)
     def unpack_nested_filters(cls, value):
@@ -47,14 +47,14 @@ class ElasticsearchFilter(BaseModel):
         Unpacks nested ElasticsearchFilter models to dicts.
         """
         if isinstance(value, list) and all(
-            isinstance(item, ElasticsearchFilter) for item in value
+            isinstance(item, _ElasticsearchFilter) for item in value
         ):
             return [item.dict() for item in value]
         else:
             return value
 
 
-class ElasticsearchQuery(BaseModel):
+class _ElasticsearchQuery(BaseModel):
     """
     query to be executed against an Elasticsearch index.
 
@@ -73,15 +73,11 @@ class ElasticsearchQuery(BaseModel):
     """
 
     query: str
-    filters: List[ElasticsearchFilter] = []
+    filters: List[_ElasticsearchFilter] = []
     sort_by: str = None
     page_size: int = 10
     page_number: int = 1
 
-
-# class ElasticData(BaseModel):
-#     item_ids: List[str]
-#     items: List[Dict]
 
 # TODO: this is really just a copy from the UI request
 class _ElasticRequest(_Request, extra=Extra.ignore):
@@ -89,12 +85,14 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
     msg_task: str = ElasticTasks.deid.value
     msg_entity: str
     _url = f'{os.environ.get("DATA_URL")}/elastic'
-    # data: Optional[Dict[str, List[Dict]]] = None
+    query: Union[_ElasticsearchQuery, Dict, None] = None
 
     @property
     def url(self):
         query = self.query
-        if self.data and "item_ids" in self.data:
+        if query is not None:
+            return f"{self._url}/search/{self.index}"
+        if self.data and self.data.item_ids:
             # TODO: currently only handles one id
             return f"{self._url}/{self.index}/{self.data.item_ids[0]}"
         if query is not None:
@@ -126,7 +124,7 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
-        _action = values.pop("msg_action", None)
+        _action = values.get("msg_action", None)
         if _action is not None:
             values["method"] = _action
 

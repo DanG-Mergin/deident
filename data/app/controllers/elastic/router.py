@@ -1,5 +1,7 @@
 import logging
 from fastapi import APIRouter, HTTPException, Request
+from ...emitter import emitter
+
 from .create_indexes import init_indexes
 from pydantic import BaseModel, ValidationError
 from typing import Type
@@ -9,10 +11,11 @@ from ...schema.base.entities._Label import _Label as Label
 
 # from .schema.Doc import Doc
 from ...schema.base.entities._Doc import _Doc as Doc
+from ...schema.base.entities._Annotation import _Annotation as Annotation
 from ...schema.base.messages._ElasticRequest import _ElasticRequest
 
 from ...schema.base.messages._Response import _Response
-
+from ...schema.base.messages._MessageEnums import Msg_Action
 
 # from .labels import router as labels_router
 from elasticsearch import AsyncElasticsearch
@@ -40,7 +43,7 @@ def get_es_client():
 
 
 # Dictionary that maps model names to Pydantic classes
-MODEL_MAP = {"label": Label, "doc": Doc}
+MODEL_MAP = {"annotation": Annotation, "label": Label, "doc": Doc}
 
 
 def get_model(model_name: str) -> Type[BaseModel]:
@@ -50,13 +53,11 @@ def get_model(model_name: str) -> Type[BaseModel]:
         raise ValueError(f"Unknown model name: {model_name}")
 
 
-@elastic_router.on_event("startup")
+# @elastic_router.on_event("startup")
 async def init():
-    elastic_router.app.state.es = es
-    await init_indexes(es)
-
+    # elastic_router.app.state.es = es
     # initialize elastic indexes if they aren't already
-
+    await init_indexes(es)
     log.info("Elasticsearch router started")
     print("Elasticsearch router started")
 
@@ -66,13 +67,66 @@ async def elastic_router_shutdown():
     await es.close()
 
 
+# for testing only
+@elastic_router.get("/search/{index}")
+async def test_search(index: str):
+    query = {
+        "query": {"range": {"timestamp": {"gte": "now-1y", "lte": "now"}}},
+        "sort": {"timestamp": {"order": "asc"}},
+        "from": 0,
+        "size": 10,
+    }
+    res = await search_documents(index, query, es)
+    return res
+
+
+@elastic_router.post("/search/{index}")
+async def search_documents_endpoint(index: str, req: Request):
+    req_data = await req.json()
+    _req = _ElasticRequest.parse_obj(req_data)
+
+    # cls = get_model(index)
+    # try:
+    #     document = cls(**_req.data.items[0].dict())
+    # except ValidationError as e:
+    #     raise HTTPException(status_code=422, detail=str(e))
+
+    _res = _Response.parse_obj(_req.dict())
+    _es_res = await search_documents(index, _req.data, es)
+    _res.data = {"items": _es_res}
+    _res.msg_status = "success"
+
+    await emitter.publish(_res)
+    return _res
+
+
+@elastic_router.post("/{index}/{document_id}")
 @elastic_router.post("/{index}")
-async def create_document_endpoint(index: str, document_id: str, document: dict):
-    """
-    Creates a new document in Elasticsearch
-    """
-    _document_id = await create_document(index, document_id, document, es)
-    return {"document_id": _document_id}
+# async def create_document_endpoint(index: str, document_id: str, document: dict):
+async def create_document_endpoint(index: str, req: Request):
+
+    req_data = await req.json()
+    _req = _ElasticRequest.parse_obj(req_data)
+    document_id = _req.data.item_ids[0]
+
+    cls = get_model(index)
+    try:
+        document = cls(**_req.data.items[0].dict())
+    except ValidationError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+    _document_id = await create_document(
+        index, _req.data.item_ids[0], document.dict(), es
+    )
+
+    # TODO: consolidate this with update document endpoint
+
+    _res = _Response.parse_obj(_req.dict())
+    _res.data = {"item_ids": [document_id]}
+    _res.msg_status = "success"
+
+    await emitter.publish(_res)
+    return _res
 
 
 @elastic_router.put("/{index}/{document_id}")
@@ -85,7 +139,7 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
 
     cls = get_model(index)
     try:
-        document = cls(**_req.data.items[0])
+        document = cls(**_req.data.items[0].dict())
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
@@ -94,12 +148,12 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
     #     # raise HTTPException(status_code=404, detail="Document not found")
     # else:
     _document_id = await update_document(index, document_id, document.dict(), es)
-    # TODO: Delete this test
-    # _test_doc = await get_document(index, document_id, es)
-    # _res = _Response(data={"item_ids": [document_id]})
+
     _res = _Response.parse_obj(_req.dict())
     _res.data = {"item_ids": [document_id]}
     _res.msg_status = "success"
+
+    await emitter.publish(_res)
     return _res
 
 
@@ -119,7 +173,16 @@ async def get_document_endpoint(index: str, document_id: str):
     document = await get_document(index, document_id, es)
     if not document:
         raise HTTPException(status_code=404, detail="Document not found")
-    return document
+
+    cls = get_model(index)
+    document = cls(**document)
+    res = _Response(
+        data={"items": [document]},
+        msg_status="success",
+        msg_action="read",
+        msg_entity=index,
+    )
+    return res
 
 
 @elastic_router.delete("/{index}/{document_id}")
@@ -145,7 +208,10 @@ async def search_documents_endpoint(index: str, query: str = None):
         cls = get_model(index)
         items = [cls(**doc["_source"]) for doc in documents]
         res = _Response(
-            data={"items": items}, msg_status="success", msg_action="search"
+            data={"items": items},
+            msg_status="success",
+            msg_action="search",
+            msg_entity=index,
         )
 
         return res

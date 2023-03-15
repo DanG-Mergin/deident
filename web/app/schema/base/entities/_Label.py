@@ -1,16 +1,16 @@
-from typing import List
+from typing import List, Union
 from uuid import UUID, uuid4
 from pydantic import BaseModel, Field
 
 
 class _Label(BaseModel):
+    name: str = "label"
     uuid: str = Field(default_factory=lambda: str(uuid4()))
-    kb_id: str
+    kb_id: Union[str, None] = None
     description: str
-    text: str
     types: List[str]
     tasks: List[str]
-    substitutionId: UUID
+    substitutionId: Union[str, None] = None
     category: str
     subCategory: str
     tag: str

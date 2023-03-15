@@ -1,19 +1,21 @@
 from typing import Any, List, Optional
 from pydantic import BaseModel, ValidationError, validator, root_validator
-from ._Lemma import Lemma
+from ._Lemma import _Lemma
 
 # from .Lemma import Lemma
 
 # An individual token — i.e. a word, punctuation symbol, whitespace, etc.
 # https://spacy.io/api/token
-class Token(BaseModel):
+class _Token(BaseModel):
+    name: str = "token"
+    name: str = "token"
     text: str
     start_char: int
     end_char: int
     index: int
     # TODO: the id is an index
     id: str
-    lemma: Optional[Lemma]
+    lemma: Optional[_Lemma]
     whitespace: Optional[str]
 
     @root_validator(pre=True)
