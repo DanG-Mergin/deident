@@ -11,7 +11,7 @@ from ._MessageEnums import (
 from ._Data import _Data
 
 
-class ElasticsearchFilter(BaseModel):
+class _ElasticsearchFilter(BaseModel):
     """
     A Pydantic model representing a filter to be applied to an Elasticsearch query.
 
@@ -43,24 +43,24 @@ class ElasticsearchFilter(BaseModel):
     exists: dict = None
     missing: dict = None
     bool: dict = None
-    must: Union[List[dict], List["ElasticsearchFilter"]] = []
-    should: Union[List[dict], List["ElasticsearchFilter"]] = []
-    must_not: Union[List[dict], List["ElasticsearchFilter"]] = []
+    must: Union[List[dict], List["_ElasticsearchFilter"]] = []
+    should: Union[List[dict], List["_ElasticsearchFilter"]] = []
+    must_not: Union[List[dict], List["_ElasticsearchFilter"]] = []
 
     @validator("must", "should", "must_not", pre=True)
     def unpack_nested_filters(cls, value):
         """
-        Unpacks nested ElasticsearchFilter models to dicts.
+        Unpacks nested _ElasticsearchFilter models to dicts.
         """
         if isinstance(value, list) and all(
-            isinstance(item, ElasticsearchFilter) for item in value
+            isinstance(item, _ElasticsearchFilter) for item in value
         ):
             return [item.dict() for item in value]
         else:
             return value
 
 
-class ElasticsearchQuery(BaseModel):
+class _ElasticsearchQuery(BaseModel):
     """
     query to be executed against an Elasticsearch index.
 
@@ -79,33 +79,46 @@ class ElasticsearchQuery(BaseModel):
     """
 
     query: str
-    filters: List[ElasticsearchFilter] = []
+    filters: List[_ElasticsearchFilter] = []
     sort_by: str = None
     page_size: int = 10
     page_number: int = 1
+
+    # def dict(self, *args, **kwargs):
+    #     """
+    #     Overrides the default dict() method to unpack nested filters.
+    #     """
+    #     # json_out = super().dict(*args, **kwargs, exclude_none=True)
+    #     json_out = {"query": {"match_all": {}}}
+    #     # json_out['query']['match_all'] = [self.filters]
+
+    #     # for f in self.filters:
+    #     #     # json_out["query"]["bool"] = f.dict()
+    #     #     if f.term is not None:
+    #     #         json_out["query"]["match_all"]["bool"] = f.term
+    #     #     elif f.terms is not None:
+    #     return json_out
 
 
 class _ElasticRequest(_Request, extra=Extra.ignore):
     index: str
     msg_task: str = ElasticTasks.deid.value
     msg_entity: str
+    # query: Union[_ElasticsearchQuery, Dict, None] = None
+    query: Optional[Dict] = None
+    # data: Optional[Dict[str, List[Dict]]] = None
 
     @property
     def url(this):
         query = this.query
-        if this.data.item_ids is not None:
+        if query is not None:
+            return f"{this._url}/search/{this.index}"
+        elif this.data.item_ids is not None:
             # TODO: currently only handles one id
             return (
                 f"{os.environ['DATA_URL']}/elastic/{this.index}/{this.data.item_ids[0]}"
             )
-        if query is not None:
-            return f"{os.environ['DATA_URL']}/elastic/{this.index}/{query}"
         return f"{os.environ['DATA_URL']}/elastic/{this.index}"
-
-    @property
-    def query(this):
-        # TODO: add support for filters
-        return None
 
     @validator("method")
     def map_method(cls, value):

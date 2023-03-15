@@ -46,7 +46,8 @@ class Msg_Entity_Type(str, Enum):
 
 # Maps msg_action in observable requests to the corresponding Elasticsearch method
 class ElasticMethod(str, Enum):
-    search = "GET"
+    # search = "GET"
+    search = "POST"
     get = "GET"
     read = "GET"
     delete = "DELETE"

@@ -28,6 +28,7 @@ class _Message(BaseModel, extra=Extra.ignore):
     msg_task: Optional[str]
     msg_entity: Optional[str]
     msg_entity_type: Optional[str]
+    query: Optional[Dict] = None
     data: Union[_Data, Dict[str, Any], None, Dict]
 
     @validator("msg_action")

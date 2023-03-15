@@ -59,8 +59,9 @@ async def search_documents(index, query, es):
     """
     Searches for documents in Elasticsearch
     """
-    body = {"query": {"match": query}}
-    res = await es.search(index=index, body=body)
+    # _query = query.dict()
+
+    res = await es.search(index=index, body=query)
     return [hit["_source"] for hit in res["hits"]["hits"]]
 
 

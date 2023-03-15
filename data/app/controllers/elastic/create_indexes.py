@@ -73,6 +73,7 @@ async def create_doc_index(es):
                 "properties": {
                     "uuid": {"type": "keyword"},
                     "text": {"type": "text"},
+                    "created_at": {"type": "date"},
                     "entities": {
                         "type": "nested",
                         "properties": {

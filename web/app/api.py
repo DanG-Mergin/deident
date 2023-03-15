@@ -114,19 +114,6 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                         await websocket.send_json(_res.dict())
                     except Exception as e:
                         print(str(e))
-                # TODO: why is this "read" calling update
-                # if _req.msg_action == "read":
-                #     try:
-                #         res = await data.update_deID(_req)
-                #         _res = cast_to_class(
-                #             _req,
-                #             UIObservableResponse,
-                #             data=res.data,
-                #             msg_status="success",
-                #         )
-                #         await websocket.send_json(_res.dict())
-                #     except Exception as e:
-                #         print(str(e))
             elif _req.msg_entity == "doc":
                 if _req.msg_action == "create":
                     try:
@@ -141,20 +128,6 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                         await websocket.send_json(_res.dict())
                     except Exception as e:
                         print(str(e))
-            # elif _req.msg_entity == "doc":
-            #     if _req.msg_action == "create":
-            #         try:
-            #             res = await ai.deID(_req)
-            #             _res = cast_to_class(
-            #                 _req,
-            #                 UIObservableResponse,
-            #                 data=res.data,
-            #                 msg_status="success",
-            #             )
-            #             await websocket.send_json(_res.dict())
-            #         except Exception as e:
-            #             print(str(e))
-            # print(json_data)
 
     except WebSocketDisconnect:
         socket_mgr.disconnect(websocket)

@@ -67,13 +67,44 @@ async def elastic_router_shutdown():
     await es.close()
 
 
+# for testing only
+@elastic_router.get("/search/{index}")
+async def test_search(index: str):
+    query = {
+        "query": {"range": {"timestamp": {"gte": "now-1y", "lte": "now"}}},
+        "sort": {"timestamp": {"order": "asc"}},
+        "from": 0,
+        "size": 10,
+    }
+    res = await search_documents(index, query, es)
+    return res
+
+
+@elastic_router.post("/search/{index}")
+async def search_documents_endpoint(index: str, req: Request):
+    req_data = await req.json()
+    _req = _ElasticRequest.parse_obj(req_data)
+
+    # cls = get_model(index)
+    # try:
+    #     document = cls(**_req.data.items[0].dict())
+    # except ValidationError as e:
+    #     raise HTTPException(status_code=422, detail=str(e))
+
+    _res = _Response.parse_obj(_req.dict())
+    _es_res = await search_documents(index, _req.data, es)
+    _res.data = {"items": _es_res}
+    _res.msg_status = "success"
+
+    await emitter.publish(_res)
+    return _res
+
+
 @elastic_router.post("/{index}/{document_id}")
 @elastic_router.post("/{index}")
 # async def create_document_endpoint(index: str, document_id: str, document: dict):
 async def create_document_endpoint(index: str, req: Request):
-    """
-    Creates a new document in Elasticsearch
-    """
+
     req_data = await req.json()
     _req = _ElasticRequest.parse_obj(req_data)
     document_id = _req.data.item_ids[0]
@@ -117,9 +148,7 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
     #     # raise HTTPException(status_code=404, detail="Document not found")
     # else:
     _document_id = await update_document(index, document_id, document.dict(), es)
-    # TODO: Delete this test
-    # _test_doc = await get_document(index, document_id, es)
-    # _res = _Response(data={"item_ids": [document_id]})
+
     _res = _Response.parse_obj(_req.dict())
     _res.data = {"item_ids": [document_id]}
     _res.msg_status = "success"
