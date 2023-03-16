@@ -13,7 +13,7 @@ class _RequestCtrl:
 
     @classmethod
     async def update_document(self, index, document_id, document, es=_es):
-        return await request.update_document(index, document_id, document, es)
+        return await request.update_document(index, document_id, document.dict(), es)
 
     @classmethod
     async def get_index(self, index, es=_es):

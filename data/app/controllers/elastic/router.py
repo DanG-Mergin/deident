@@ -168,11 +168,13 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
+    controller = get_controller(index)
+
     # if not await get_document(index, document_id, es):
     #     _document_id = await create_document(index, document_id, document, es)
     #     # raise HTTPException(status_code=404, detail="Document not found")
     # else:
-    _document_id = await update_document(index, document_id, document.dict(), es)
+    _document_id = await controller.update_document(index, document_id, document)
 
     _res = _Response.parse_obj(_req.dict())
     _res.data = {"item_ids": [document_id]}
@@ -215,7 +217,8 @@ async def delete_document_endpoint(index: str, document_id: str):
     """
     Deletes a document from Elasticsearch by ID
     """
-    result = await delete_document(index, document_id)
+    controller = get_controller(index)
+    result = await controller.delete_document(index, document_id)
     return {"result": result}
 
 

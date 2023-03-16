@@ -22,6 +22,8 @@ class _Data(BaseModel):
         _item_ids = values.get("item_ids", None)
         _items = values.get("items", None)
         if not _item_ids and _items:
-            values["item_ids"] = [item.uuid for item in _items]
+            values["item_ids"] = [
+                item["uuid"] if isinstance(item, dict) else item.uuid for item in _items
+            ]
 
         return values

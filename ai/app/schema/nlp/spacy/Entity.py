@@ -32,12 +32,14 @@ class SpacyEntityInstance(_Entity):
     start_char: int
     end_char: int
     label: EntityLabel
+    label_id: Optional[str]
     model_type: str = "spacy"
 
     class Config:
         fields = {
             "start_index": "start",
             "end_index": "end",
+            "extra": Extra.ignore,
         }
 
     @root_validator(pre=True)
