@@ -14,12 +14,15 @@ from ._Entity import _Entity
 
 class _Doc(BaseModel):
     name: str = "doc"
+    title: Optional[str]
     # TODO: need to figure out how we're keeping track of these
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     created_at: str = Field(default_factory=lambda: str(datetime.utcnow()))
     text: str
     entities: List[_Entity]
     tokens: List[_Token]
+    doc_types: Optional[List[str]]
+    patient_classes: Optional[List[str]]
 
     @property
     def label_ids(self):

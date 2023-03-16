@@ -67,10 +67,6 @@ def get_controller(index: str):
     if index in CTRL_MAP:
         return CTRL_MAP[index]
     return request_c
-    # try:
-    #     return CTRL_MAP[index]
-    # except KeyError:
-    #     raise ValueError(f"Unknown controller name: {index}")
 
 
 # @elastic_router.on_event("startup")

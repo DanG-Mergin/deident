@@ -14,6 +14,16 @@ from ..schema.base.messages._MessageEnums import Msg_Entity, Msg_Action, Msg_Tas
 from ..schema.base.entities._Annotation import _Annotation
 
 
+# TODO: this should be a service
+async def groom_corpus():
+    # first we need to determine if a corpus needs to be updated
+    # 1. a document is created, updated, or deleted
+    # if created: the user enters meta data which is tied to corpus types
+    # the data server should update corpora based on the meta data
+
+    pass
+
+
 # takes a previously unannotated text, backs it up in the database, and returns the annotated text
 async def deID(req: _Request) -> _Response:
     # First we need to save the unannotated text to the database

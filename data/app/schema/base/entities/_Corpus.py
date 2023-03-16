@@ -14,7 +14,9 @@ class _Corpus(BaseModel, extra=Extra.ignore):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     created_at: str = Field(default_factory=lambda: str(datetime.utcnow()))
     name = "_corpus"
-    types: List[str] = ["all"]
+    doc_types: List[str] = ["all"]
+    tasks: List[str] = ["all"]
+    patient_classes: Optional[List[str]]
     doc_ids: Optional[List[str]]
     docs: Optional[List[_Doc]]
     # label_ids: Optional[List[str]]

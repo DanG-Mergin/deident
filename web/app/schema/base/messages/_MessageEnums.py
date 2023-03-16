@@ -6,7 +6,6 @@ class Msg_Action(str, Enum):
     read = "read"
     update = "update"
     delete = "delete"
-    # index = "index"
     search = "search"
 
 

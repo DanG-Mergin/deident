@@ -77,7 +77,9 @@ async def create_corpus_index(es=_es):
                 "properties": {
                     "uuid": {"type": "keyword"},
                     "created_at": {"type": "date"},
-                    "types": {"type": "keyword"},
+                    "doc_types": {"type": "keyword"},
+                    "tasks": {"type": "keyword"},
+                    "patient_classes": {"type": "keyword"},
                     "doc_ids": {"type": "text"},
                 }
             }
@@ -91,6 +93,9 @@ async def create_doc_index(es=_es):
             "mappings": {
                 "properties": {
                     "uuid": {"type": "keyword"},
+                    "title": {"type": "text"},
+                    "doc_types": {"type": "keyword"},
+                    "patient_classes": {"type": "keyword"},
                     "text": {"type": "text"},
                     "created_at": {"type": "date"},
                     "entities": {
