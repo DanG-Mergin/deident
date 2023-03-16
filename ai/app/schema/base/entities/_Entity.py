@@ -7,10 +7,10 @@ class _Entity(BaseModel):
     name: str = "entity"
     id: str
     uuid: str = Field(default_factory=lambda: str(uuid4()))
-    label_id: Optional[str]
+    label_id: str
     start_index: int
     end_index: int
-    text: str
+    text: Optional[str]
 
     @validator("id")
     def validate_id(cls, v):

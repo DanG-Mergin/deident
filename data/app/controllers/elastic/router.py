@@ -2,7 +2,7 @@ import logging
 from fastapi import APIRouter, HTTPException, Request
 from ...emitter import emitter
 
-from .create_indexes import init_indexes
+from ...services.elastic.create_indexes import init_indexes
 from pydantic import BaseModel, ValidationError
 from typing import Type
 
@@ -13,6 +13,7 @@ from ...schema.base.entities._Label import _Label as Label
 from ...schema.base.entities._Doc import _Doc as Doc
 from ...schema.base.entities._Annotation import _Annotation as Annotation
 from ...schema.base.messages._ElasticRequest import _ElasticRequest
+from ...schema.base.entities._Corpus import _Corpus as Corpus
 
 from ...schema.base.messages._Response import _Response
 from ...schema.base.messages._MessageEnums import Msg_Action
@@ -22,7 +23,7 @@ from elasticsearch import AsyncElasticsearch
 
 elastic_router = APIRouter()
 
-from .request import (
+from ...services.elastic.request import (
     create_document,
     update_document,
     get_document,
@@ -32,18 +33,27 @@ from .request import (
     search_documents,
     # complex_query,
 )
+from ...services.elastic.dependencies import get_elasticsearch_client
 
+# from . import CorpusCtrl.CorpusCtrl as corpus_c, DocCtrl as doc_c, _RequestCtrl as request_c
+from .CorpusCtrl import CorpusCtrl as corpus_c
+from .DocCtrl import DocCtrl as doc_c
+from ._RequestCtrl import _RequestCtrl as request_c
 
-es = AsyncElasticsearch(hosts=["http://elasticsearch:9200"])
+_es = get_elasticsearch_client()
+
+# es = AsyncElasticsearch(hosts=["http://elasticsearch:9200"])
 log = logging.getLogger(__name__)
 
 
-def get_es_client():
-    return es
-
-
 # Dictionary that maps model names to Pydantic classes
-MODEL_MAP = {"annotation": Annotation, "label": Label, "doc": Doc}
+MODEL_MAP = {
+    "annotation": Annotation,
+    "corpus": Corpus,
+    "doc": Doc,
+    "label": Label,
+}
+CTRL_MAP = {"doc": doc_c, "corpus": corpus_c}
 
 
 def get_model(model_name: str) -> Type[BaseModel]:
@@ -53,18 +63,28 @@ def get_model(model_name: str) -> Type[BaseModel]:
         raise ValueError(f"Unknown model name: {model_name}")
 
 
+def get_controller(index: str):
+    if index in CTRL_MAP:
+        return CTRL_MAP[index]
+    return request_c
+    # try:
+    #     return CTRL_MAP[index]
+    # except KeyError:
+    #     raise ValueError(f"Unknown controller name: {index}")
+
+
 # @elastic_router.on_event("startup")
 async def init():
-    # elastic_router.app.state.es = es
+
     # initialize elastic indexes if they aren't already
-    await init_indexes(es)
+    await init_indexes()
     log.info("Elasticsearch router started")
     print("Elasticsearch router started")
 
 
 @elastic_router.on_event("shutdown")
 async def elastic_router_shutdown():
-    await es.close()
+    await _es.close()
 
 
 # for testing only
@@ -76,7 +96,7 @@ async def test_search(index: str):
         "from": 0,
         "size": 10,
     }
-    res = await search_documents(index, query, es)
+    res = await search_documents(index, query)
     return res
 
 
@@ -92,7 +112,7 @@ async def search_documents_endpoint(index: str, req: Request):
     #     raise HTTPException(status_code=422, detail=str(e))
 
     _res = _Response.parse_obj(_req.dict())
-    _es_res = await search_documents(index, _req.data, es)
+    _es_res = await search_documents(index, _req.query)
     _res.data = {"items": _es_res}
     _res.msg_status = "success"
 
@@ -115,8 +135,13 @@ async def create_document_endpoint(index: str, req: Request):
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
-    _document_id = await create_document(
-        index, _req.data.item_ids[0], document.dict(), es
+    controller = get_controller(index)
+
+    # _document_id = await controller.create_document(
+    #     index, _req.data.item_ids[0], document.dict()
+    # )
+    _document_id = await controller.create_document(
+        index, _req.data.item_ids[0], document
     )
 
     # TODO: consolidate this with update document endpoint
@@ -161,7 +186,7 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
 async def test_indexing():
     # for testing purposes only
     # TODO: delete this
-    await init_indexes(es)
+    await init_indexes()
     return {"message": "success"}
 
 
@@ -170,7 +195,7 @@ async def get_document_endpoint(index: str, document_id: str):
     """
     Retrieves a document from Elasticsearch by ID
     """
-    document = await get_document(index, document_id, es)
+    document = await get_document(index, document_id)
     if not document:
         raise HTTPException(status_code=404, detail="Document not found")
 
@@ -190,7 +215,7 @@ async def delete_document_endpoint(index: str, document_id: str):
     """
     Deletes a document from Elasticsearch by ID
     """
-    result = await delete_document(index, document_id, es)
+    result = await delete_document(index, document_id)
     return {"result": result}
 
 
@@ -201,9 +226,9 @@ async def search_documents_endpoint(index: str, query: str = None):
     """
     try:
         if query is not None:
-            documents = await search_documents(index, query, es)
+            documents = await search_documents(index, query)
         else:
-            documents = await get_index(index, es)
+            documents = await get_index(index)
 
         cls = get_model(index)
         items = [cls(**doc["_source"]) for doc in documents]
@@ -225,5 +250,5 @@ async def search_documents_endpoint(index: str, query: str = None):
 #     """
 #     Searches for documents in Elasticsearch
 #     """
-#     documents = await complex_query(index, query, es)
+#     documents = await complex_query(index, query)
 #     return documents

@@ -1,5 +1,6 @@
 from uuid import uuid4
 from datetime import datetime
+from dateutil.parser import isoparse
 from typing import Optional, List
 
 from pydantic import BaseModel, Field, ValidationError, validator, root_validator
@@ -17,3 +18,11 @@ class _Annotation(BaseModel):
     @root_validator(pre=True)
     def convert_fields(cls, values):
         return values
+
+    @validator("timestamp")
+    def iso8601_date(cls, v):
+        """
+        Converts the timestamp string to an ISO 8601 formatted string.
+        """
+        dt = isoparse(v)
+        return dt.isoformat()

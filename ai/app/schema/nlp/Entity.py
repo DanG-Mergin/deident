@@ -3,9 +3,6 @@ from pydantic import BaseModel, ValidationError, validator, root_validator, Extr
 from uuid import uuid4
 from ..base.entities._Entity import _Entity
 
-# from .Span import Span
-# from .Token import Token
-
 
 class EntityLabel(BaseModel, extra=Extra.ignore):
     kb_id: str  # points to a description of the entity

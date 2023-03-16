@@ -1,9 +1,11 @@
 import asyncio
+from .dependencies import get_elasticsearch_client
 
+_es = get_elasticsearch_client()
 # from .schema._ElasticRequest import ElasticsearchQuery
 
 
-async def create_document(index, document_id, document, es):
+async def create_document(index, document_id, document, es=_es):
     """
     Creates a new document in Elasticsearch
     """
@@ -12,7 +14,7 @@ async def create_document(index, document_id, document, es):
     return res["_id"]
 
 
-async def update_document(index, document_id, document, es):
+async def update_document(index, document_id, document, es=_es):
     """
     Updates an existing document in Elasticsearch
     """
@@ -22,7 +24,7 @@ async def update_document(index, document_id, document, es):
     return res["_id"]
 
 
-async def get_index(index, es):
+async def get_index(index, es=_es):
     """
     Retrieves an index from Elasticsearch
     """
@@ -31,7 +33,7 @@ async def get_index(index, es):
     return res["hits"]["hits"]
 
 
-async def get_document(index, document_id, es):
+async def get_document(index, document_id, es=_es):
     """
     Retrieves a document from Elasticsearch by ID
     """
@@ -39,7 +41,7 @@ async def get_document(index, document_id, es):
     return res["_source"]
 
 
-async def get_document_by_id(index, document_id, es):
+async def get_document_by_id(index, document_id, es=_es):
     """
     Retrieves a document from Elasticsearch by ID
     """
@@ -47,7 +49,7 @@ async def get_document_by_id(index, document_id, es):
     return res["_source"]
 
 
-async def delete_document(index, document_id, es):
+async def delete_document(index, document_id, es=_es):
     """
     Deletes a document from Elasticsearch by ID
     """
@@ -55,7 +57,7 @@ async def delete_document(index, document_id, es):
     return res["result"]
 
 
-async def search_documents(index, query, es):
+async def search_documents(index, query, es=_es):
     """
     Searches for documents in Elasticsearch
     """
@@ -65,7 +67,7 @@ async def search_documents(index, query, es):
     return [hit["_source"] for hit in res["hits"]["hits"]]
 
 
-async def bulk_create_documents(index, documents, es):
+async def bulk_create_documents(index, documents, es=_es):
     """
     Creates multiple documents in Elasticsearch using the bulk API
     """
@@ -77,7 +79,7 @@ async def bulk_create_documents(index, documents, es):
     return res
 
 
-async def bulk_get_documents(index, document_ids, es):
+async def bulk_get_documents(index, document_ids, es=_es):
     """
     Retrieves multiple documents from Elasticsearch by ID using the mget API
     """
@@ -86,7 +88,7 @@ async def bulk_get_documents(index, document_ids, es):
     return [hit["_source"] for hit in res["docs"]]
 
 
-async def bulk_update_documents(index, documents, es):
+async def bulk_update_documents(index, documents, es=_es):
     """
     Updates multiple documents in Elasticsearch using the update API
     """
@@ -97,7 +99,7 @@ async def bulk_update_documents(index, documents, es):
     return await asyncio.gather(*tasks)
 
 
-async def bulk_delete_documents(index, document_ids, es):
+async def bulk_delete_documents(index, document_ids, es=_es):
     """
     Deletes multiple documents from Elasticsearch by ID using the delete API
     """
@@ -105,7 +107,7 @@ async def bulk_delete_documents(index, document_ids, es):
     return await asyncio.gather(*tasks)
 
 
-# async def complex_query(index: str, query: ElasticsearchQuery, es):
+# async def complex_query(index: str, query: ElasticsearchQuery, es=_es):
 #     # Construct Elasticsearch query
 #     body = {
 #         "query": {

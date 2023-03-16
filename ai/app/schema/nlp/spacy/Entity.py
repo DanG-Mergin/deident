@@ -11,6 +11,23 @@ class EntityLabel(BaseModel):
     text: str
 
 
+class NER_Entity(BaseModel, extra=Extra.ignore):
+    start_char: int
+    end_char: int
+    tag: str
+
+    def to_training_data(self):
+        return (self.start_char, self.end_char, self.tag)
+
+    # @root_validator(pre=True)
+    # def convert_fields(cls, values):
+    #     label_txt = values.pop("label_", None)
+    #     if label_txt:
+    #         values["label"] = EntityLabel(kb_id=values["kb_id"], text=label_txt)
+
+    #     return values
+
+
 class SpacyEntityInstance(_Entity):
     start_char: int
     end_char: int

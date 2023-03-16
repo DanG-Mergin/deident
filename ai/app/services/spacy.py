@@ -29,3 +29,6 @@ async def deID(docs: List[Type[_Doc]]) -> List[Type[Doc]]:
 
         annotated.append(b_doc)
     return annotated
+
+
+# async def collect_corpus()

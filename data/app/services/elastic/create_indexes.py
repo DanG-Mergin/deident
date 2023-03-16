@@ -1,4 +1,6 @@
 # For creating elasticsearch indexes.  Should only be run once if the volumes are working properly
+
+from .dependencies import get_elasticsearch_client
 import json, logging, asyncio
 from pathlib import Path
 from .request import (
@@ -11,12 +13,14 @@ from .request import (
 )
 
 log = logging.getLogger(__name__)
+_es = get_elasticsearch_client()
 
 
-async def init_indexes(es):
+async def init_indexes(es=_es):
     return (
         await create_labels_index(es),
         await create_substitutions_index(es),
+        await create_corpus_index(es),
         await create_doc_index(es),
         await create_annotation_index(es),
         await init_data(es),
@@ -24,7 +28,7 @@ async def init_indexes(es):
 
 
 # labels index mapping
-async def create_labels_index(es):
+async def create_labels_index(es=_es):
     if not await es.indices.exists(index="label"):
         mapping = {
             "mappings": {
@@ -50,7 +54,7 @@ async def create_labels_index(es):
         return await es.indices.create(index="label", body=mapping)
 
 
-async def create_substitutions_index(es):
+async def create_substitutions_index(es=_es):
     if not await es.indices.exists(index="substitution"):
         mapping = {
             "mappings": {
@@ -66,7 +70,22 @@ async def create_substitutions_index(es):
         return await es.indices.create(index="substitution", body=mapping)
 
 
-async def create_doc_index(es):
+async def create_corpus_index(es=_es):
+    if not await es.indices.exists(index="corpus"):
+        mapping = {
+            "mappings": {
+                "properties": {
+                    "uuid": {"type": "keyword"},
+                    "created_at": {"type": "date"},
+                    "types": {"type": "keyword"},
+                    "doc_ids": {"type": "text"},
+                }
+            }
+        }
+        return await es.indices.create(index="corpus", body=mapping)
+
+
+async def create_doc_index(es=_es):
     if not await es.indices.exists(index="doc"):
         mapping = {
             "mappings": {
@@ -116,7 +135,7 @@ async def create_doc_index(es):
         return await es.indices.create(index="doc", body=mapping)
 
 
-async def create_annotation_index(es):
+async def create_annotation_index(es=_es):
     if not await es.indices.exists(index="annotation"):
         mapping = {
             "mappings": {
@@ -158,7 +177,7 @@ def get_index(name):
     return data
 
 
-async def init_data(es):
+async def init_data(es=_es):
     labels_count = await es.count(index="label")
     if labels_count["count"] == 0:
         await _create_labels(es)
@@ -176,7 +195,7 @@ async def init_data(es):
     return None
 
 
-async def _create_labels(es):
+async def _create_labels(es=_es):
     try:
         labels = get_index("labels")
         return await bulk_create_documents("label", labels, es)
@@ -184,7 +203,7 @@ async def _create_labels(es):
         log.error(e)
 
 
-async def _create_ids(es):
+async def _create_ids(es=_es):
     responses = []
     try:
         ids = get_index("ids")
@@ -196,7 +215,7 @@ async def _create_ids(es):
         log.error(e)
 
 
-async def _create_contacts(es):
+async def _create_contacts(es=_es):
     responses = []
     try:
         contacts = get_index("contacts")
@@ -208,7 +227,7 @@ async def _create_contacts(es):
         log.error(e)
 
 
-async def _create_locations(es):
+async def _create_locations(es=_es):
     responses = []
     try:
         locations = get_index("locations")
@@ -220,7 +239,7 @@ async def _create_locations(es):
         log.error(e)
 
 
-async def _create_professions(es):
+async def _create_professions(es=_es):
     responses = []
     try:
         professions = get_index("professions")
@@ -234,7 +253,7 @@ async def _create_professions(es):
         log.error(e)
 
 
-async def _create_names(es):
+async def _create_names(es=_es):
     responses = []
     try:
         names = get_index("names")
