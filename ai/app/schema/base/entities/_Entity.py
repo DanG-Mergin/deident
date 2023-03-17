@@ -4,7 +4,7 @@ from uuid import uuid4
 
 
 class _Entity(BaseModel):
-    name: str = "entity"
+    model_name: str = "entity"
     id: str
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     label_id: str

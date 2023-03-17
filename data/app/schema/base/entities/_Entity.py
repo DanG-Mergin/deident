@@ -3,7 +3,7 @@ from pydantic import BaseModel, ValidationError, validator, root_validator
 
 
 class _Entity(BaseModel):
-    name: str = "entity"
+    model_name: str = "entity"
     id: str
     uuid: str
     label_id: Optional[str]

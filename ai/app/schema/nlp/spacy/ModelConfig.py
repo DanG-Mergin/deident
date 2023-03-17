@@ -7,7 +7,7 @@ from pydantic import BaseModel
 # TODO: move optional/not into validator
 # TODO: currently just a thought experiment... not in use
 class Model(BaseModel):
-    name: str
+    model_name: str
     # TODO: rethink this classification
     type: str
     application: str

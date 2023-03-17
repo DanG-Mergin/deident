@@ -13,7 +13,7 @@ from ._Label import _Label
 class _Corpus(BaseModel, extra=Extra.ignore):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     created_at: str = Field(default_factory=lambda: str(datetime.utcnow()))
-    name = "_corpus"
+    model_name = "_corpus"
     doc_types: List[str] = ["all"]
     tasks: List[str] = ["all"]
     patient_classes: Optional[List[str]]

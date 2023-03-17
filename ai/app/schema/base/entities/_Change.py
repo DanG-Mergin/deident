@@ -8,7 +8,7 @@ from ..messages._MessageEnums import Msg_Action, Msg_Entity
 
 # TODO: not currently in use on ai server, and may not need to be
 class _Change(BaseModel):
-    name: str = "change"
+    model_name: str = "change"
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     action: str
     entity: str

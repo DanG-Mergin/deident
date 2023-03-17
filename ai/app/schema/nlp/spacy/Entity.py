@@ -11,6 +11,7 @@ class EntityLabel(BaseModel):
     text: str
 
 
+# For training spaCy
 class NER_Entity(BaseModel, extra=Extra.ignore):
     start_char: int
     end_char: int

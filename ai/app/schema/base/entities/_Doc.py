@@ -7,7 +7,7 @@ from ._Entity import _Entity
 
 
 class _Doc(BaseModel):
-    name: str = "doc"
+    model_name: str = "doc"
     title: Optional[str]
     # TODO: need to figure out how we're keeping track of these
     uuid: str = Field(default_factory=lambda: str(uuid4()))

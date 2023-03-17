@@ -7,8 +7,8 @@ from ._Lemma import _Lemma
 # An individual token — i.e. a word, punctuation symbol, whitespace, etc.
 # https://spacy.io/api/token
 class _Token(BaseModel):
-    name: str = "token"
-    name: str = "token"
+    model_name: str = "token"
+    model_name: str = "token"
     text: str
     start_char: int
     end_char: int

@@ -3,6 +3,6 @@ from pydantic import BaseModel, Field, Json, ValidationError, validator, root_va
 
 
 class _Lemma(BaseModel):
-    name: str = "lemma"
+    model_name: str = "lemma"
     id: Optional[str]
     text: str

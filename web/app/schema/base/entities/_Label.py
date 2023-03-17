@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 
 
 class _Label(BaseModel):
-    name: str = "label"
+    model_name: str = "label"
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     kb_id: Union[str, None] = None
     description: str

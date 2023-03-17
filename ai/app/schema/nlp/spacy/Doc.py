@@ -16,6 +16,7 @@ from .Token import Token
 
 
 class NER_Doc(BaseModel, extra=Extra.ignore):
+    model_name = "ner_doc"
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     created_at: str = Field(default_factory=lambda: str(datetime.utcnow()))
     name = "ner_doc"

@@ -7,7 +7,7 @@ from ._Entity import _Entity
 
 
 class _Annotation(BaseModel):
-    name: str = "annotation"
+    model_name: str = "annotation"
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     doc_id: str
     author_id: str = "spaCy"

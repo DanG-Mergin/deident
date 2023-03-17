@@ -10,6 +10,7 @@ from ..base.entities._Annotation import _Annotation
 
 
 class Annotation(_Annotation):
+    model_name = "ui_annotation"
     # entities: List[_Entity] = []
 
     @root_validator(pre=True)

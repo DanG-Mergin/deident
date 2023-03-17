@@ -5,7 +5,7 @@ from ..messages._MessageEnums import Msg_Task
 
 
 class _Label(BaseModel):
-    name: str = "label"
+    model_name: str = "label"
     uuid: str
     description: str
     types: List[str]
