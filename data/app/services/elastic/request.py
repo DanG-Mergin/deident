@@ -16,10 +16,27 @@ async def create_document(index, document_id, document, es=_es):
 
 async def update_document(index, document_id, document, es=_es):
     """
-    Updates an existing document in Elasticsearch
+    Updates an existing document in Elasticsearch with only the fields present in the 'document' object
     """
+    # Prepare the script to update only the fields present in the 'document' object
+    script_lines = []
+    for field in document:
+        script_lines.append(f"ctx._source.{field} = params.{field};")
+
+    script = " ".join(script_lines)
+
+    # Update the document in Elasticsearch using the prepared script
     res = await es.update(
-        index=index, id=document_id, body={"doc": document, "doc_as_upsert": True}
+        index=index,
+        id=document_id,
+        body={
+            "script": {
+                "source": script,
+                "lang": "painless",
+                "params": document,
+            },
+            # "upsert": document, # this would create the document if it doesn't exist, but would effectively sidestep required fields
+        },
     )
     return res["_id"]
 

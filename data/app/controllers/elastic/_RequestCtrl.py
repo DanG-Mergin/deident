@@ -1,3 +1,4 @@
+import json
 from ...services.elastic.dependencies import get_elasticsearch_client
 
 _es = get_elasticsearch_client()
@@ -7,13 +8,21 @@ from ...services.elastic import request
 # generic request controller to provide middleware for entity specific operations
 # - such as updating a corpus document_ids when a document is created or deleted
 class _RequestCtrl:
+    # @staticmethod
+    def _filter_none_values(document):
+        _document = {k: v for k, v in document.items() if v is not None}
+        return _document
+
     @classmethod
     async def create_document(self, index, document_id, document, es=_es):
         return await request.create_document(index, document_id, document.dict(), es)
 
     @classmethod
     async def update_document(self, index, document_id, document, es=_es):
-        return await request.update_document(index, document_id, document.dict(), es)
+        # remove None values from the document so we aren't nulling out fields
+        _document = {k: v for k, v in document.dict().items() if v is not None}
+        # json_doc = json.dumps(_document)
+        return await request.update_document(index, document_id, _document, es)
 
     @classmethod
     async def get_index(self, index, es=_es):

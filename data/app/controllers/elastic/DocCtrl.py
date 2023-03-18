@@ -11,7 +11,8 @@ class DocCtrl(_RequestCtrl):
     @classmethod
     async def update_document(self, index, document_id, document: _Doc, es=_es):
         print("DocCtrl might want to update the corpus here")
-        res = await request.update_document(index, document_id, document.dict(), es)
+        # res = await request.update_document(index, document_id, document.dict(), es)
+        res = await super().update_document(index, document_id, document, es)
         return res
 
     @classmethod

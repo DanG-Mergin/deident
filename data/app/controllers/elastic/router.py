@@ -16,7 +16,7 @@ from ...schema.base.messages._ElasticRequest import _ElasticRequest
 from ...schema.base.entities._Corpus import _Corpus as Corpus
 
 from ...schema.base.messages._Response import _Response
-from ...schema.base.messages._MessageEnums import Msg_Action
+from ...schema.base.messages._MessageEnums import MsgAction
 
 # from .labels import router as labels_router
 from elasticsearch import AsyncElasticsearch
@@ -112,7 +112,7 @@ async def search_documents_endpoint(index: str, req: Request):
     _res.data = {"items": _es_res}
     _res.msg_status = "success"
 
-    await emitter.publish(_res)
+    # await emitter.publish(_res)
     return _res
 
 

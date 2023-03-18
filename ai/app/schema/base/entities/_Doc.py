@@ -4,6 +4,7 @@ from pydantic import BaseModel, Field, Json, ValidationError, validator, root_va
 from datetime import datetime
 from ._Token import _Token
 from ._Entity import _Entity
+from ._EntityEnums import DocType, PatientClass
 
 
 class _Doc(BaseModel):
@@ -17,3 +18,15 @@ class _Doc(BaseModel):
     tokens: Optional[List[_Token]]
     doc_types: Optional[List[str]]
     patient_classes: Optional[List[str]]
+
+    @validator("doc_types")
+    def map_doc_types(cls, v):
+        if v is None:
+            return None
+        return [DocType[t.lower()].value for t in v]
+
+    @validator("patient_classes")
+    def map_patient_classes(cls, v):
+        if v is None:
+            return None
+        return [PatientClass[p.lower()].value for p in v]

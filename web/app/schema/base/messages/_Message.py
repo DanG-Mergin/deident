@@ -11,12 +11,12 @@ from pydantic import (
 )
 from ._Data import _Data
 from ._MessageEnums import (
-    Msg_Status,
-    Msg_Action,
-    Msg_Type,
-    Msg_Entity,
-    Msg_Entity_Type,
-    Msg_Task,
+    MsgStatus,
+    MsgAction,
+    MsgType,
+    MsgEntity,
+    MsgEntity_Type,
+    MsgTask,
 )
 
 
@@ -35,37 +35,37 @@ class _Message(BaseModel, extra=Extra.ignore):
     def map_action(cls, v):
         if v is None:
             return None
-        return Msg_Action[v.lower()].value
+        return MsgAction[v.lower()].value
 
     @validator("msg_status")
     def map_status(cls, v):
         if v is None:
             return None
-        return Msg_Status[v.lower()].value
+        return MsgStatus[v.lower()].value
 
     @validator("msg_type")
     def map_type(cls, v):
         if v is None:
             return None
-        return Msg_Type[v.lower()].value
+        return MsgType[v.lower()].value
 
     @validator("msg_task")
     def map_task(cls, v):
         if v is None:
             return None
-        return Msg_Task[v.lower()].value
+        return MsgTask[v.lower()].value
 
     @validator("msg_entity")
     def map_entity(cls, v):
         if v is None:
             return None
-        return Msg_Entity[v.lower()].value
+        return MsgEntity[v.lower()].value
 
     @validator("msg_entity_type")
     def map_entityType(cls, v):
         if v is None:
             return None
-        return Msg_Entity_Type[v.lower()].value
+        return MsgEntity_Type[v.lower()].value
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

@@ -1,7 +1,7 @@
 from enum import Enum, IntEnum
 
 
-class Msg_Action(str, Enum):
+class MsgAction(str, Enum):
     create = "create"
     read = "read"
     update = "update"
@@ -9,7 +9,7 @@ class Msg_Action(str, Enum):
     search = "search"
 
 
-class Msg_Status(str, Enum):
+class MsgStatus(str, Enum):
     success = "success"
     error = "error"
     loading = "loading"
@@ -17,17 +17,17 @@ class Msg_Status(str, Enum):
     pending = "pending"
 
 
-class Msg_Type(str, Enum):
+class MsgType(str, Enum):
     data = "data"
     state = "state"
     index = "index"
 
 
-class Msg_Task(str, Enum):
+class MsgTask(str, Enum):
     deid = "deID"
 
 
-class Msg_Entity(str, Enum):
+class MsgEntity(str, Enum):
     annotation = "annotation"
     doc = "doc"
     label = "label"
@@ -37,7 +37,7 @@ class Msg_Entity(str, Enum):
 
 
 # TODO: rethink this whole idea
-class Msg_Entity_Type(str, Enum):
+class MsgEntity_Type(str, Enum):
     ner = "ner"
     deid = "deID"
     dictionary = "dictionary"
@@ -57,7 +57,7 @@ class ElasticMethod(str, Enum):
     create = "POST"
 
 
-# maps Msg_Entity to the corresponding Elasticsearch index
+# maps MsgEntity to the corresponding Elasticsearch index
 class ElasticIndexes(str, Enum):
     labels = "label"
     label = "label"
@@ -69,6 +69,6 @@ class ElasticIndexes(str, Enum):
     annotations = "annotation"
 
 
-# maps Msg_Task to the corresponding Elasticsearch type
+# maps MsgTask to the corresponding Elasticsearch type
 class ElasticTasks(str, Enum):
     deid = "deID"

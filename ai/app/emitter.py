@@ -1,7 +1,7 @@
 from pyee import AsyncIOEventEmitter
 from fastapi_websocket_pubsub import PubSubClient
 import asyncio
-from .schema.base.messages._MessageEnums import Msg_Entity, Msg_Action, Msg_Task
+from .schema.base.messages._MessageEnums import MsgEntity, MsgAction, MsgTask
 from .schema.base.messages._Observable import _Observable
 
 ee = AsyncIOEventEmitter()

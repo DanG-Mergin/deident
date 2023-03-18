@@ -1,7 +1,7 @@
 from typing import List, Optional, Union
 from uuid import uuid4
 from pydantic import BaseModel, root_validator, validator
-from ..messages._MessageEnums import Msg_Task
+from ..messages._MessageEnums import MsgTask
 
 
 class _Label(BaseModel):
@@ -22,4 +22,4 @@ class _Label(BaseModel):
 
     @validator("tasks")
     def map_task(cls, tasks):
-        return [Msg_Task[t.lower()].value for t in tasks]
+        return [MsgTask[t.lower()].value for t in tasks]

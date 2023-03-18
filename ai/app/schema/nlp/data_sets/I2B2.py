@@ -5,6 +5,7 @@ from pydantic import BaseModel
 # TODO: evaluate if this is the standard base case for entities
 # TODO: unoptional this ish
 class I2B2_Entity(BaseModel):
+    model_name = "i2b2_entity"
     category: Optional[str] = None  # TODO: enum or class
     type: Optional[str] = None  # TODO: enum or class
     id: Optional[str] = None

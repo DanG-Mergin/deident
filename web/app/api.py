@@ -9,7 +9,7 @@ sys.path.append(".")
 
 from .schema.ui.Observable import UIObservableRequest, UIObservableResponse
 
-# from .schema.base.messages._MessageEnums import Msg_Action, Msg_Type, Msg_Status, Msg_Entity
+# from .schema.base.messages._MessageEnums import MsgAction, MsgType, MsgStatus, MsgEntity
 from .controllers import ai, dictionary, data
 from .services.utils import cast_to_class
 from .services.SocketManager import SocketManager

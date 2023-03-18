@@ -4,7 +4,7 @@ from typing import Optional
 
 from pydantic import BaseModel, Field, ValidationError, validator, root_validator
 from ._Entity import _Entity
-from ..messages._MessageEnums import Msg_Action, Msg_Entity
+from ..messages._MessageEnums import MsgAction, MsgEntity
 
 
 class _Change(BaseModel):
@@ -19,10 +19,10 @@ class _Change(BaseModel):
     def map_action(cls, v):
         if v is None:
             return None
-        return Msg_Action[v.lower()].value
+        return MsgAction[v.lower()].value
 
     @validator("entity")
     def map_entity(cls, v):
         if v is None:
             return None
-        return Msg_Entity[v.lower()].value
+        return MsgEntity[v.lower()].value

@@ -3,13 +3,9 @@ from datetime import datetime
 from dateutil.parser import isoparse
 from typing import Any, Dict, Optional, Type, List
 from pydantic import BaseModel, Field, Json, ValidationError, validator, root_validator
-import sys
-
-sys.path.append("..")
-
-from pydantic import BaseModel, ValidationError, validator, root_validator
 from ._Token import _Token
 from ._Entity import _Entity
+from ._EntityEnums import DocType, PatientClass
 
 
 class _Doc(BaseModel):
@@ -37,6 +33,18 @@ class _Doc(BaseModel):
         """
         dt = isoparse(v)
         return dt.isoformat()
+
+    @validator("doc_types")
+    def map_doc_types(cls, v):
+        if v is None:
+            return None
+        return [DocType[t.lower()].value for t in v]
+
+    @validator("patient_classes")
+    def map_patient_classes(cls, v):
+        if v is None:
+            return None
+        return [PatientClass[p.lower()].value for p in v]
 
     # def dict(self, *args, **kwargs):
     #     json_out = super().dict(*args, **kwargs)

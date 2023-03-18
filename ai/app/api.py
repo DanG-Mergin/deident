@@ -64,6 +64,12 @@ def test():
     return {"Hello": "From ml_app"}
 
 
+@app.get("/test_training")
+async def test_training():
+    _res = await document_c.train_model()
+    return _res
+
+
 # TODO: log the round trip on this server
 @app.post("/deID", response_class=JSONResponse)
 async def deID(req: Request):
