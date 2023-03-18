@@ -10,12 +10,11 @@ from ..base.entities._Annotation import _Annotation
 
 
 class Annotation(_Annotation):
-    model_name = "ui_annotation"
     # entities: List[_Entity] = []
 
     @root_validator(pre=True)
     def _convert_fields(cls, values):
-        values["name"] = "annotation"
+        values["model_name"] = "ui_annotation"
         _changes = values.pop("changes", None)
         if _changes:
             values["entities"] = []

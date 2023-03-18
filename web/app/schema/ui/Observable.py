@@ -37,7 +37,7 @@ class UIObservableRequest(_Observable):
         _items = data.items
         if _items and isinstance(_items, list):
             _data = {"item_ids": [data.item_ids]}
-            _data["items"] = [MODEL_MAP[item["name"]](**item) for item in _items]
+            _data["items"] = [MODEL_MAP[item["model_name"]](**item) for item in _items]
             return _data
         return data
 
@@ -83,7 +83,9 @@ class UIObservableResponse(_Observable):
             if msg_type == "index":
                 _data["totalItems"] = len(data.item_ids)
             else:
-                _data["items"] = [MODEL_MAP[item["name"]](**item) for item in _items]
+                _data["items"] = [
+                    MODEL_MAP[item["model_name"]](**item) for item in _items
+                ]
             return _data
         return data
 
