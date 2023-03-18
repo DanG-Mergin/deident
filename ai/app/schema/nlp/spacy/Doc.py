@@ -13,6 +13,7 @@ from ....schema.base.entities._Entity import _Entity
 from ....schema.base.entities._Token import _Token
 from .Entity import SpacyEntityInstance, NER_Entity
 from .Token import Token
+from ....services import label as label_svc
 
 
 class NER_Doc(BaseModel, extra=Extra.ignore):
@@ -26,15 +27,13 @@ class NER_Doc(BaseModel, extra=Extra.ignore):
 
     def __init__(self, **kwargs):
         _ents = []
-        if kwargs["tokens"] is not None and len(kwargs["tokens"]) > 0:
-            _ents = self._map_tokens_to_ents(kwargs["tokens"], kwargs["ents"])
-        else:
-            raise ValueError("tokens must be a list of Token objects")
+        if self.model_name == "ner_doc":
+            if kwargs["tokens"] is not None and len(kwargs["tokens"]) > 0:
+                _ents = self._map_tokens_to_ents(kwargs["tokens"], kwargs["ents"])
+            else:
+                raise ValueError("tokens must be a list of Token objects")
 
-        if kwargs["labels"] is not None and len(kwargs["labels"]) > 0:
-            _ents = self._map_labels_to_ents(kwargs["labels"], kwargs["ents"])
-        else:
-            raise ValueError("labels must be a list of Label objects")
+        _ents = self._map_labels_to_ents(kwargs["ents"])
 
         kwargs["entities"] = [NER_Entity(e) for e in _ents]
 
@@ -63,14 +62,17 @@ class NER_Doc(BaseModel, extra=Extra.ignore):
 
         return _ents
 
-    def _map_labels_to_ents(self, labels: List[Dict], ents: List[Dict]):
+    def _map_labels_to_ents(self, ents: List[Dict]):
         for e in ents:
             if e["tag"] is None:
-                for l in labels:
-                    if l["uuid"] == e["label_id"]:
-                        # NOTE: ignoring subcategories for now
-                        e["tag"] = l["category"]
-                        break
+                if e["label_id"]:
+                    lbl = label_svc.get_label_by_id(e["label_id"])
+                    e["tag"] = lbl["category"]
+                # for l in labels:
+                #     if l["uuid"] == e["label_id"]:
+                #         # NOTE: ignoring subcategories for now
+                #         e["tag"] = l["category"]
+                #         break
 
         return ents
 

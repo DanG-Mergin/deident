@@ -5,16 +5,16 @@ from uuid import uuid4
 
 class _Entity(BaseModel):
     model_name: str = "entity"
-    id: str
+    # id: str
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     label_id: str
     start_index: int
     end_index: int
     text: Optional[str]
 
-    @validator("id")
-    def validate_id(cls, v):
-        return str(v)
+    # @validator("id")
+    # def validate_id(cls, v):
+    #     return str(v)
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

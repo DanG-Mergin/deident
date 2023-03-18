@@ -20,13 +20,17 @@ class NER_Entity(BaseModel, extra=Extra.ignore):
     def to_training_data(self):
         return (self.start_char, self.end_char, self.tag)
 
-    # @root_validator(pre=True)
-    # def convert_fields(cls, values):
-    #     label_txt = values.pop("label_", None)
-    #     if label_txt:
-    #         values["label"] = EntityLabel(kb_id=values["kb_id"], text=label_txt)
+    @root_validator(pre=True)
+    def convert_fields(cls, values):
+        _start = values.pop("start", None)
+        if _start is not None:
+            values["start_char"] = int(values["start"])
 
-    #     return values
+        _end = values.pop("end", None)
+        if _end is not None:
+            values["end_char"] = int(values["end"])
+
+        return values
 
 
 class SpacyEntityInstance(_Entity):

@@ -19,62 +19,6 @@ from ..schema.base.messages._MessageEnums import (
 from ..schema.base.entities._Annotation import _Annotation
 
 
-# first we need to determine if a corpus needs to be updated
-# 1. a document is created, updated, or deleted
-# if created: the user enters meta data which is tied to corpus types
-# the data server should update corpora based on the meta data, or use views
-# to check against rules
-# we first need rules for when a model should be trained
-
-# TODO: this should be a service?
-async def gather_corpus(doc_types: List[str], tasks: List[str]):
-    _doc_query = {
-        "query": {
-            "bool": {
-                "must": [
-                    {
-                        "terms": {
-                            "doc_types": [
-                                "discharge_notes",
-                                "discharge_summary",
-                                "admission_notes",
-                            ]
-                        }
-                    },
-                    # {"terms": {"tasks": ["ner", "deid"]}},
-                ]
-            }
-        }
-    }
-    # 1. get all documents that match the doc_types and tasks
-    _docs_req = _ElasticRequest(
-        msg_entity=MsgEntity.doc,
-        msg_entity_type=MsgEntity_Type.ner,
-        msg_action=MsgAction.search,
-        query=_doc_query,
-    )
-    _docs_res = await request.make_request(_docs_req, res_cls=_Response)
-
-    print(_docs_res.data.items)
-    return _docs_res
-
-
-# TODO: this should probably be a service
-# TODO: this should likely consume a config object
-async def train_model():
-    # 1 get the corpus
-    _res = await gather_corpus(
-        ["discharge notes", "discharge summary", "admission notes"], ["ner", "deid"]
-    )
-    return _res
-
-
-async def should_train_model():
-    # 1 get num relevant changes since last training
-    # 2 compare against threshold
-    pass
-
-
 # takes a previously unannotated text, backs it up in the database, and returns the annotated text
 async def deID(req: _Request) -> _Response:
     # First we need to save the unannotated text to the database
