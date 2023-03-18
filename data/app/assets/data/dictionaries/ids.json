@@ -3,7 +3,7 @@
     "name": "mac",
     "uuid": "672500f4-6c49-44e1-ae83-feeeb11d1674",
     "category": "ID",
-    "subCategory": "DEVICE",
+    "subcategory": "DEVICE",
     "items": [
       "06-28-56-CD-3E-86",
       "B4-0A-F4-22-BC-40",
@@ -1011,7 +1011,7 @@
     "name": "mrn",
     "uuid": "211a8eef-36f6-4253-8d0f-9dc06200183d",
     "category": "ID",
-    "subCategory": "MEDICAL RECORD",
+    "subcategory": "MEDICAL RECORD",
     "items": [
       "18974245",
       "50025302",
@@ -2019,7 +2019,7 @@
     "name": "vin",
     "uuid": "0616cff7-1029-4614-b156-3a0567076986",
     "category": "ID",
-    "subCategory": "VEHICLE",
+    "subcategory": "VEHICLE",
     "items": [
       "5TDBKRFH0FS028729",
       "3VW1K7AJ6DM208088",
@@ -3027,7 +3027,7 @@
     "name": "license",
     "uuid": "807fde68-5105-4be4-b8a4-df2a724bab4d",
     "category": "ID",
-    "subCategory": "LICENSE",
+    "subcategory": "LICENSE",
     "items": [
       "YB-299-8179",
       "159-7935",
@@ -4035,7 +4035,7 @@
     "name": "policy",
     "uuid": "6c7ee287-02ea-4227-abe6-2e32de9f9ea8",
     "category": "ID",
-    "subCategory": "HEALTH PLAN",
+    "subcategory": "HEALTH PLAN",
     "items": [
       "7777992147",
       "6991491616",
@@ -5043,7 +5043,7 @@
     "name": "ssn",
     "uuid": "04f77069-9837-419c-9645-f3d0bb8d641d",
     "category": "ID",
-    "subCategory": "SSN",
+    "subcategory": "SSN",
     "items": [
       "584-62-4539",
       "241-79-9989",

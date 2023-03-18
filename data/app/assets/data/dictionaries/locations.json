@@ -3,7 +3,7 @@
     "name": "organization",
     "uuid": "858d8706-c7db-4509-aa8c-7d61cd8d7f66",
     "category": "LOCATION",
-    "subCategory": "ORGANIZATION",
+    "subcategory": "ORGANIZATION",
     "items": [
       "Wordware",
       "Jetwire",
@@ -1011,7 +1011,7 @@
     "name": "hospitals",
     "uuid": "034bea39-9472-4f58-8975-13494af60571",
     "category": "LOCATION",
-    "subCategory": "HOSPITAL",
+    "subcategory": "HOSPITAL",
     "items": [
       "AdCare Hospital",
       "Amesbury Health Center",
@@ -1164,7 +1164,7 @@
     "name": "street",
     "uuid": "4ff71f45-4a72-4459-b5d0-dcfc3482c971",
     "category": "LOCATION",
-    "subCategory": "STREET",
+    "subcategory": "STREET",
     "items": [
       "107 Lincoln Street",
       "24 Morrill Place",
@@ -1317,7 +1317,7 @@
     "name": "city",
     "uuid": "482bfda6-e828-45c8-97dc-77dec558e6df",
     "category": "LOCATION",
-    "subCategory": "CITY",
+    "subcategory": "CITY",
     "items": [
       "Worcester",
       "Amesbury",
@@ -1470,7 +1470,7 @@
     "name": "state",
     "uuid": "3a15e5c5-31f5-418a-941d-c6fcb59654e9",
     "category": "LOCATION",
-    "subCategory": "STATE",
+    "subcategory": "STATE",
     "items": [
       "Florida",
       "Louisiana",
@@ -3483,7 +3483,7 @@
     "name": "postal",
     "uuid": "680fca6f-fb92-472d-91b5-6b13a331ad6a",
     "category": "LOCATION",
-    "subCategory": "ZIP CODE",
+    "subcategory": "ZIP CODE",
     "items": [
       "34949",
       "70505",
@@ -5496,7 +5496,7 @@
     "name": "departments",
     "uuid": "a68d49bb-8239-4be2-a2be-ebdb8ac8e757",
     "category": "LOCATION",
-    "subCategory": "DEPARTMENT",
+    "subcategory": "DEPARTMENT",
     "items": [
       {
         "meta_lemma": "Acute assessment unit",

@@ -1,4 +1,5 @@
 import os
+import json
 from typing import List
 from ..emitter import ee
 
@@ -26,9 +27,15 @@ from ..schema.base.entities._Annotation import _Annotation
 # to check against rules
 # we first need rules for when a model should be trained
 
+base_path = "../../../private/i2b2"
+
 
 async def gather_external_data():
     async def get_i2b2_data():
+        with open(
+            f"{base_path}/training-PHI-Gold-Set1-txt-json/i2b2_data.json", "r"
+        ) as f:
+            return json.load(f)
         pass
 
 
@@ -52,6 +59,7 @@ async def gather_corpus(doc_types: List[str], tasks: List[str]):
         query=_doc_query,
     )
     _docs_res = await request.make_request(_docs_req, res_cls=_Response)
+    _external_data = await gather_external_data()
 
     print(_docs_res.data.items)
     return _docs_res

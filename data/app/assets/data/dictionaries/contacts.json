@@ -3,7 +3,7 @@
     "name": "ipv4",
     "uuid": "a6d9a27a-1382-49ed-aaa1-3e51d516da5c",
     "category": "CONTACT",
-    "subCategory": "IPADDRESS",
+    "subcategory": "IPADDRESS",
     "items": [
       "169.181.54.216",
       "70.51.5.139",
@@ -1011,7 +1011,7 @@
     "name": "phone",
     "uuid": "ea8b0952-2acc-4945-83a0-072069bb3a3b",
     "category": "CONTACT",
-    "subCategory": "PHONE",
+    "subcategory": "PHONE",
     "items": [
       "(508) 799-9000",
       "(978) 388-5353",
@@ -1164,7 +1164,7 @@
     "name": "email",
     "uuid": "6a369c8a-14f8-4853-bd4c-12c94018920e",
     "category": "CONTACT",
-    "subCategory": "EMAIL",
+    "subcategory": "EMAIL",
     "items": [
       "dcattrall0@nasa.gov",
       "nfoltin1@yandex.ru",
@@ -2171,7 +2171,7 @@
   {
     "uuid": "2135e42e-2a84-45ef-a7c1-8b26c161dbf6",
     "category": "CONTACT",
-    "subCategory": "URL",
+    "subcategory": "URL",
     "name": "url",
     "items": [
       "https://apache.org/amet/sapien/dignissim/vestibulum.jsp",

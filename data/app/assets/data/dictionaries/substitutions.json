@@ -2,55 +2,55 @@
   {
     "uuid": "3bdd63aa-f182-480a-bea4-b39ac2648d50",
     "category": "PERSON",
-    "subCategory": "NAME",
+    "subcategory": "NAME",
     "dictionary": "name"
   },
   {
     "uuid": "d0b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "DATE",
-    "subCategory": "BIRTH DATE",
+    "subcategory": "BIRTH DATE",
     "dictionary": "birthDate"
   },
   {
     "uuid": "e0b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "DATE",
-    "subCategory": "DEATH DATE",
+    "subcategory": "DEATH DATE",
     "dictionary": "deathDate"
   },
   {
     "uuid": "f0b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "DATE",
-    "subCategory": "ADMISSION DATE",
+    "subcategory": "ADMISSION DATE",
     "dictionary": "admissionDate"
   },
   {
     "uuid": "10b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "DATE",
-    "subCategory": "DISCHARGE DATE",
+    "subcategory": "DISCHARGE DATE",
     "dictionary": "dischargeDate"
   },
   {
     "uuid": "20b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "DATE",
-    "subCategory": "SERVICE DATE",
+    "subcategory": "SERVICE DATE",
     "dictionary": "serviceDate"
   },
   {
     "uuid": "30b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "DATE",
-    "subCategory": "ENCOUNTER DATE",
+    "subcategory": "ENCOUNTER DATE",
     "dictionary": "encounterDate"
   },
   {
     "uuid": "40b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "DATE",
-    "subCategory": "ONSET DATE",
+    "subcategory": "ONSET DATE",
     "dictionary": "onsetDate"
   },
   {
     "uuid": "50b5a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "DATE",
-    "subCategory": "END DATE",
+    "subcategory": "END DATE",
     "dictionary": "endDate"
   },
   {
@@ -59,180 +59,180 @@
   {
     "uuid": "2545a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "NAME",
-    "subCategory": "PATIENT",
+    "subcategory": "PATIENT",
     "dictionary": "computed-name"
   },
   {
     "uuid": "3545a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "NAME",
-    "subCategory": "LAST NAME",
+    "subcategory": "LAST NAME",
     "dictionary": "lastName"
   },
   {
     "uuid": "1545a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "NAME",
-    "subCategory": "FIRST NAME",
+    "subcategory": "FIRST NAME",
     "dictionary": "firstName"
   },
   {
     "uuid": "61183f07-08e2-406f-9b0b-ba37ea809d03",
     "category": "NAME",
-    "subCategory": "DOCTOR",
+    "subcategory": "DOCTOR",
     "dictionary": "computed-nonPatientName"
   },
   {
     "uuid": "a5c2957d-158e-4118-9c80-4103ec680a20",
     "category": "NAME",
-    "subCategory": "USERNAME",
+    "subcategory": "USERNAME",
     "dictionary": "username"
   },
   {
     "uuid": "9b274426-b414-46e7-8506-98f5e32e934a",
     "category": "PROFESSION",
-    "subCategory": "PROFESSION",
+    "subcategory": "PROFESSION",
     "dictionary": "profession"
   },
   {
     "uuid": "dbd715d2-5ec9-4b9f-86af-a65a1a1e9da2",
     "category": "LOCATION",
-    "subCategory": "ROOM",
+    "subcategory": "ROOM",
     "dictionary": "computed-room"
   },
   {
     "uuid": "a68d49bb-8239-4be2-a2be-ebdb8ac8e757",
     "category": "LOCATION",
-    "subCategory": "DEPARTMENT",
+    "subcategory": "DEPARTMENT",
     "dictionary": "computed-department"
   },
   {
     "uuid": "034bea39-9472-4f58-8975-13494af60571",
     "category": "LOCATION",
-    "subCategory": "HOSPITAL",
+    "subcategory": "HOSPITAL",
     "dictionary": "hospitals"
   },
   {
     "uuid": "858d8706-c7db-4509-aa8c-7d61cd8d7f66",
     "category": "LOCATION",
-    "subCategory": "ORGANIZATION",
+    "subcategory": "ORGANIZATION",
     "dictionary": "organizations"
   },
   {
     "uuid": "4ff71f45-4a72-4459-b5d0-dcfc3482c971",
     "category": "LOCATION",
-    "subCategory": "STREET",
+    "subcategory": "STREET",
     "dictionary": "street"
   },
   {
     "uuid": "482bfda6-e828-45c8-97dc-77dec558e6df",
     "category": "LOCATION",
-    "subCategory": "CITY",
+    "subcategory": "CITY",
     "dictionary": "city"
   },
   {
     "uuid": "3a15e5c5-31f5-418a-941d-c6fcb59654e9",
     "category": "LOCATION",
-    "subCategory": "STATE",
+    "subcategory": "STATE",
     "dictionary": "state"
   },
   {
     "uuid": "1d7076a6-d490-4731-9ef0-c9ae38896040",
     "category": "LOCATION",
-    "subCategory": "COUNTRY",
+    "subcategory": "COUNTRY",
     "dictionary": "computed-country"
   },
   {
     "uuid": "680fca6f-fb92-472d-91b5-6b13a331ad6a",
     "category": "LOCATION",
-    "subCategory": "ZIP CODE",
+    "subcategory": "ZIP CODE",
     "dictionary": "postal"
   },
   {
     "uuid": "bfcb8d10-52f3-4626-96e7-02f1cdfc745c",
     "category": "LOCATION",
-    "subCategory": "OTHER"
+    "subcategory": "OTHER"
   },
   {
     "uuid": "ea8b0952-2acc-4945-83a0-072069bb3a3b",
     "category": "CONTACT",
-    "subCategory": "PHONE",
+    "subcategory": "PHONE",
     "dictionary": "phone"
   },
   {
     "uuid": "c2687a5b-ce67-46d1-a5eb-e0bf20b1bcd5",
     "category": "CONTACT",
-    "subCategory": "FAX",
+    "subcategory": "FAX",
     "dictionary": "phone"
   },
   {
     "uuid": "6a369c8a-14f8-4853-bd4c-12c94018920e",
     "category": "CONTACT",
-    "subCategory": "EMAIL",
+    "subcategory": "EMAIL",
     "dictionary": "email"
   },
   {
     "uuid": "2135e42e-2a84-45ef-a7c1-8b26c161dbf6",
     "category": "CONTACT",
-    "subCategory": "URL",
+    "subcategory": "URL",
     "dictionary": "url"
   },
   {
     "uuid": "a6d9a27a-1382-49ed-aaa1-3e51d516da5c",
     "category": "CONTACT",
-    "subCategory": "IPADDRESS",
+    "subcategory": "IPADDRESS",
     "dictionary": "ipv4"
   },
   {
     "uuid": "04f77069-9837-419c-9645-f3d0bb8d641d",
     "category": "ID",
-    "subCategory": "SSN",
+    "subcategory": "SSN",
     "dictionary": "ssn"
   },
   {
     "uuid": "211a8eef-36f6-4253-8d0f-9dc06200183d",
     "category": "ID",
-    "subCategory": "MEDICAL RECORD",
+    "subcategory": "MEDICAL RECORD",
     "dictionary": "mrn"
   },
   {
     "uuid": "6c7ee287-02ea-4227-abe6-2e32de9f9ea8",
     "category": "ID",
-    "subCategory": "HEALTH PLAN",
+    "subcategory": "HEALTH PLAN",
     "dictionary": "policy"
   },
   {
     "uuid": "ac54a9bf-fa76-487b-be27-be77efc45764",
     "category": "ID",
-    "subCategory": "ACCOUNT",
+    "subcategory": "ACCOUNT",
     "dictionary": "policy"
   },
   {
     "uuid": "807fde68-5105-4be4-b8a4-df2a724bab4d",
     "category": "ID",
-    "subCategory": "LICENSE",
+    "subcategory": "LICENSE",
     "dictionary": "license"
   },
   {
     "uuid": "0616cff7-1029-4614-b156-3a0567076986",
     "category": "ID",
-    "subCategory": "VEHICLE",
+    "subcategory": "VEHICLE",
     "dictionary": "vin"
   },
   {
     "uuid": "672500f4-6c49-44e1-ae83-feeeb11d1674",
     "category": "ID",
-    "subCategory": "DEVICE",
+    "subcategory": "DEVICE",
     "dictionary": "mac"
   },
   {
     "uuid": "71900358-d0ad-42ae-b8ac-5bec979d7119",
     "category": "ID",
-    "subCategory": "BIO ID",
+    "subcategory": "BIO ID",
     "dictionary": "computed-uuid"
   },
   {
     "uuid": "537f1720-947c-4d2e-9b1b-0e78392e3e91",
     "category": "ID",
-    "subCategory": "ID NUMBER",
+    "subcategory": "ID NUMBER",
     "dictionary": "mrn"
   }
 ]

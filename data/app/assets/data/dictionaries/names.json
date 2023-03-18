@@ -3,7 +3,7 @@
     "name": "lastName",
     "uuid": "3545a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "NAME",
-    "subCategory": "LAST NAME",
+    "subcategory": "LAST NAME",
     "items": [
       "Cattrall",
       "Foltin",
@@ -1011,7 +1011,7 @@
     "name": "firstName",
     "uuid": "1545a46b-e5f7-4d77-9d13-d137e875adc2",
     "category": "NAME",
-    "subCategory": "FIRST NAME",
+    "subcategory": "FIRST NAME",
     "items": [
       "Dar",
       "Nicolina",
@@ -2019,7 +2019,7 @@
     "name": "username",
     "uuid": "a5c2957d-158e-4118-9c80-4103ec680a20",
     "category": "NAME",
-    "subCategory": "USERNAME",
+    "subcategory": "USERNAME",
     "items": [
       "lbruyns0",
       "drangall1",

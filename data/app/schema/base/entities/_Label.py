@@ -11,7 +11,7 @@ class _Label(BaseModel):
     types: List[str]
     tasks: List[str]
     category: str
-    subCategory: str
+    subcategory: str
     tag: str
     short_description: str
     instructions: str

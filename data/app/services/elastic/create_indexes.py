@@ -39,7 +39,7 @@ async def create_labels_index(es=_es):
                     "tasks": {"type": "keyword"},
                     "substitutionId": {"type": "keyword"},
                     "category": {"type": "keyword"},
-                    "subCategory": {"type": "keyword"},
+                    "subcategory": {"type": "keyword"},
                     "tag": {"type": "text"},
                     "description": {"type": "text"},
                     "text": {"type": "text"},
@@ -62,7 +62,7 @@ async def create_substitutions_index(es=_es):
                     "name": {"type": "keyword"},
                     "uuid": {"type": "keyword"},
                     "category": {"type": "keyword"},
-                    "subCategory": {"type": "keyword"},
+                    "subcategory": {"type": "keyword"},
                     "items": {"type": "text"},
                 }
             }

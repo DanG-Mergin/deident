@@ -13,7 +13,7 @@ class _Label(BaseModel):
     tasks: List[str]
     substitutionId: UUID
     category: str
-    subCategory: str
+    subcategory: str
     tag: str
     short_description: str
     instructions: str

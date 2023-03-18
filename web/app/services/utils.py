@@ -28,7 +28,7 @@ def get_matching_objects(**kwargs):
     # index = [
     #     {
     #         "category": "NAME",
-    #         "subCategory": "PATIENT",
+    #         "subcategory": "PATIENT",
     #         "types": ["ner"],
     #         "tasks": ["deID"],
     #         "kb_id": '1',

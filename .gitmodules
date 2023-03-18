@@ -1,0 +1,3 @@
+[submodule "private/i2b2"]
+	path = private/i2b2
+	url = https://github.com/dlonergan-harvard/i2b2_2014_data.git

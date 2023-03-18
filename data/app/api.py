@@ -7,11 +7,12 @@ import os, sys
 sys.path.append(".")
 
 from .controllers.elastic.router import elastic_router, init as init_elastic
+from .services import i2b2 as i2b2_svc
 
 # from .services.utils import cast_to_class
 from .emitter import pubsub_router, emitter
 from .schema.base.messages._Observable import _Observable
-
+from .schema.base.messages._Response import _Response
 
 app = FastAPI()
 log = logging.getLogger(__name__)
@@ -51,6 +52,17 @@ async def init():
 def read_root():
     # save_annotations("I'm an annotation")
     return {"Hello": "From data_api"}
+
+
+@app.get("/i2b2")
+async def i2b2():
+    _res = await i2b2_svc.get_i2b2()
+    res = _Response(
+        msg_action="read",
+        msg_status="success",
+        data={"items": _res},
+    )
+    return res
 
 
 @app.get("/trigger")
