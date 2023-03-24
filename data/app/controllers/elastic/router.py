@@ -127,7 +127,7 @@ async def create_document_endpoint(index: str, req: Request):
 
     cls = get_model(index)
     try:
-        document = cls(**_req.data.items[0].dict())
+        document = cls(**_req.data.items[0])
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
@@ -160,7 +160,7 @@ async def update_document_endpoint(index: str, document_id: str, req: Request):
 
     cls = get_model(index)
     try:
-        document = cls(**_req.data.items[0].dict())
+        document = cls(**_req.data.items[0])
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 

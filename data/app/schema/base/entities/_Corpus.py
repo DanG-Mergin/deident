@@ -12,7 +12,7 @@ from ._Label import _Label
 
 class _Corpus(BaseModel, extra=Extra.ignore):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
-    created_at: str = Field(default_factory=lambda: str(datetime.utcnow()))
+    created_at: str = Field(default_factory=lambda: str(datetime.utcnow().isoformat()))
     model_name = "_corpus"
     doc_types: List[str] = ["all"]
     tasks: List[str] = ["all"]
@@ -21,7 +21,6 @@ class _Corpus(BaseModel, extra=Extra.ignore):
     docs: Optional[List[_Doc]]
     # label_ids: Optional[List[str]]
     labels: Optional[List[_Label]]
-    should_hydrate: bool = False
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

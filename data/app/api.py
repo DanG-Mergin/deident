@@ -65,6 +65,7 @@ async def i2b2():
     return res
 
 
+# TODO: for testing only
 @app.get("/trigger")
 async def trigger_events():
     # asyncio.create_task(events())

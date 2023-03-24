@@ -29,6 +29,7 @@ class MsgTask(str, Enum):
 
 
 class MsgEntity(str, Enum):
+    corpus = "corpus"
     annotation = "annotation"
     doc = "doc"
     label = "label"

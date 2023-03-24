@@ -17,12 +17,14 @@ async def get_i2b2(subdirectory: str = "train"):
 
             with open(os.path.join(directory_path, filename), "r") as json_file:
                 _doc = json.load(json_file)
-                _doc["annotations"] = await label_svc.get_labels_by_props(
+                _doc["entities"] = await label_svc.get_labels_by_props(
                     _doc["annotations"]
                 )
+                _doc.pop("annotations", None)
                 _doc["uuid"] = str(uuid4())
                 i2b2_docs.append(_doc)
-    return i2b2_docs
+    _res_obj = [{"docs": i2b2_docs, "uuid": str(uuid4())}]
+    return _res_obj
 
 
 def get_base_path():

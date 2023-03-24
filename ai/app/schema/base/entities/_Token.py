@@ -22,23 +22,23 @@ class _Token(BaseModel):
         if spacesAfter is not None and spacesAfter > 0:
             values["whitespace"] = " " * spacesAfter
 
-        if "text" not in values:
-            raise ValueError("text is a required field")
-        if not isinstance(values["text"], str):
-            raise ValueError("text must be a string")
-        if "start_char" not in values:
-            raise ValueError("start_char is a required field")
-        if not isinstance(values["start_char"], int):
-            raise ValueError("start_char must be an integer")
-        if "end_char" not in values:
-            raise ValueError("end_char is a required field")
-        if not isinstance(values["end_char"], int):
-            raise ValueError("end_char must be an integer")
-        if "index" not in values:
-            raise ValueError("index is a required field")
-        if not isinstance(values["index"], int):
-            raise ValueError("index must be an integer")
-        if "id" not in values:
-            raise ValueError("id is a required field")
+        # if "text" not in values:
+        #     raise ValueError("text is a required field")
+        # if not isinstance(values["text"], str):
+        #     raise ValueError("text must be a string")
+        # if "start_char" not in values:
+        #     raise ValueError("start_char is a required field")
+        # if not isinstance(values["start_char"], int):
+        #     raise ValueError("start_char must be an integer")
+        # if "end_char" not in values:
+        #     raise ValueError("end_char is a required field")
+        # if not isinstance(values["end_char"], int):
+        #     raise ValueError("end_char must be an integer")
+        # if "index" not in values:
+        #     raise ValueError("index is a required field")
+        # if not isinstance(values["index"], int):
+        #     raise ValueError("index must be an integer")
+        # if "id" not in values:
+        #     raise ValueError("id is a required field")
 
         return values

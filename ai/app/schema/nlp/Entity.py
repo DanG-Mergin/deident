@@ -15,8 +15,9 @@ class EntityInstance(_Entity, extra=Extra.ignore):
     # converting it here to be the last token in the entity
     @root_validator(pre=True)
     def convert_fields(cls, values):
-        if "model_type" in values and values["model_type"] == "spacy":
-            values.pop("model_type", None)
+        if "model_name" in values and values["model_name"] == "spacy":
+            # values.pop("model_name", None)
             if "end_index" in values:
                 values["end_index"] -= 1
+
         return values

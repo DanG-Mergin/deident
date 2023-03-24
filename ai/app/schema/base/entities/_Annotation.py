@@ -11,7 +11,7 @@ class _Annotation(BaseModel):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     doc_id: str
     author_id: str = "spaCy"
-    timestamp: str = Field(default_factory=lambda: str(datetime.utcnow()))
+    timestamp: str = Field(default_factory=lambda: str(datetime.utcnow().isoformat()))
     entities: List[_Entity]
 
     # @validator("entities", pre=True)

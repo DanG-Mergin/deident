@@ -107,6 +107,8 @@ async def create_doc_index(es=_es):
                             "id": {"type": "text"},
                             "start_index": {"type": "integer"},
                             "end_index": {"type": "integer"},
+                            "start_char": {"type": "integer"},
+                            "end_char": {"type": "integer"},
                         },
                     },
                     "tokens": {
@@ -158,6 +160,8 @@ async def create_annotation_index(es=_es):
                             "id": {"type": "text"},
                             "start_index": {"type": "integer"},
                             "end_index": {"type": "integer"},
+                            "start_char": {"type": "integer"},
+                            "end_char": {"type": "integer"},
                         },
                     },
                 },

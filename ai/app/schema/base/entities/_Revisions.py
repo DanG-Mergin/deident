@@ -11,5 +11,5 @@ class _Revisions(BaseModel):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     doc_id: str
     changes: List[_Change]
-    timestamp: str = Field(default_factory=lambda: str(datetime.utcnow()))
+    timestamp: str = Field(default_factory=lambda: str(datetime.utcnow().isoformat()))
     author_id: str

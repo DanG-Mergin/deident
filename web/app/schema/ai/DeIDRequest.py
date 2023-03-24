@@ -6,7 +6,7 @@ from ..base.messages._Request import _Request
 
 
 class DeIDRequest(_Request, extra=Extra.ignore):
-    _url = f"{os.environ['AI_DEIDENT_URL']}"
+    base_url = f"{os.environ['AI_DEIDENT_URL']}"
     msg_entity = "doc"
 
     # def __init__(self, *args, **kwargs):

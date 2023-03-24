@@ -9,7 +9,8 @@ from ..entities._Token import _Token
 
 class _Data(BaseModel):
     item_ids: List[str]
-    items: List[Union[_Doc, _Label, _Annotation, _Entity, _Token, Dict]] = None
+    # items: List[Union[_Doc, _Label, _Annotation, _Entity, _Token, Dict]] = None
+    items: List[Dict] = None
 
     @root_validator(pre=True)
     def convert_fields(cls, values):

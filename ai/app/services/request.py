@@ -14,16 +14,17 @@ from ..schema.base.messages._Response import _Response
 client = httpx.AsyncClient()
 
 
-async def make_request(req: _Request, res_cls: _Response) -> _Response:
+async def make_request(
+    req: _Request, res_cls: _Response, timeout: int = 5
+) -> _Response:
     if req.method == "POST":
-        res = await client.post(req.url, json=jsonable_encoder(req))
+        res = await client.post(req.url, json=jsonable_encoder(req), timeout=timeout)
     elif req.method == "GET":
-        res = await client.get(req.url)
+        res = await client.get(req.url, timeout=timeout)
     elif req.method == "PUT":
-        bleh = req.url
-        res = await client.put(req.url, json=jsonable_encoder(req))
+        res = await client.put(req.url, json=jsonable_encoder(req), timeout=timeout)
     elif req.method == "DELETE":
-        res = await client.delete(req.url, json=jsonable_encoder(req))
+        res = await client.delete(req.url, json=jsonable_encoder(req), timeout=timeout)
     else:
         raise ValueError(f"Unsupported method: {req.method}")
 

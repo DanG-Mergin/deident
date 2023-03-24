@@ -5,6 +5,7 @@ from .utils import cast_to_class
 from ..schema.base.entities._Doc import _Doc
 from ..schema.nlp.spacy.Doc import Doc as SpacyDoc
 from ..schema.nlp.Doc import Doc
+from . import label as label_svc
 from typing import List, Type
 
 # TODO: inject the pipeline
@@ -17,18 +18,18 @@ async def deID(docs: List[Type[_Doc]]) -> List[Type[Doc]]:
 
     for doc in docs:
         # TODO: handle failure conditions.  One is text with no entities
-        _doc = nlp(doc.text)
+        _doc = nlp(doc["text"])
 
         s_doc = SpacyDoc(
             ents=_doc.doc.ents,
             text=_doc.doc.text,
             tokens=[token for token in _doc],
-            uuid=doc.uuid,
+            uuid=doc["uuid"],
         )
+        # mapping labels from db to spacy output
+        s_doc.entities = await s_doc.map_labels(s_doc.entities)
+
         b_doc = cast_to_class(s_doc, Doc)
 
         annotated.append(b_doc)
     return annotated
-
-
-# async def collect_corpus()

@@ -86,7 +86,7 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
     index: str
     msg_task: str = ElasticTasks.deid.value
     msg_entity: str
-    _url = f'{os.environ.get("DATA_URL")}/elastic'
+    base_url = f'{os.environ.get("DATA_URL")}/elastic'
     # query: Union[_ElasticsearchQuery, Dict, None] = None
     query: Optional[Dict] = None
     # data: Optional[Dict[str, List[Dict]]] = None
@@ -95,18 +95,18 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
     def url(self):
         query = self.query
         if query is not None:
-            return f"{self._url}/search/{self.index}"
+            return f"{self.base_url}/search/{self.index}"
         elif self.data and self.data.item_ids:
             # TODO: currently only handles one id
-            return f"{self._url}/{self.index}/{self.data.item_ids[0]}"
+            return f"{self.base_url}/{self.index}/{self.data.item_ids[0]}"
 
-        return f"{self._url}/{self.index}"
+        return f"{self.base_url}/{self.index}"
 
-    @url.setter
-    def url(self, v):
-        if v is not None:
-            self._url = v
-        return v
+    # @url.setter
+    # def url(self, v):
+    #     if v is not None:
+    #         self._url = v
+    #     return v
 
     # @property
     # def query(this):

@@ -3,12 +3,13 @@ from pydantic import BaseModel, Extra, Field, ValidationError, validator, root_v
 
 # from uuid import uuid4
 from ...base.entities._Entity import _Entity
+from ....services import label as label_svc
 
 
 class EntityLabel(BaseModel):
     # TODO: we need an actual knowledge base with user defined and supplied descriptions
     kb_id: Optional[str]
-    text: str
+    tag: str
 
 
 # For training spaCy
@@ -22,6 +23,11 @@ class NER_Entity(BaseModel, extra=Extra.ignore):
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
+        _category = values.get("category", None)
+        _tag = values.get("tag", None)
+        if _category and _tag is None:
+            values["tag"] = _category
+
         _start = values.pop("start", None)
         if _start is not None:
             values["start_char"] = int(values["start"])
@@ -34,11 +40,14 @@ class NER_Entity(BaseModel, extra=Extra.ignore):
 
 
 class SpacyEntityInstance(_Entity):
-    start_char: int
-    end_char: int
-    label: EntityLabel
-    label_id: Optional[str]
+    # start_char: int
+    # end_char: int
+    # label: EntityLabel
+    # label_id: str
     model_type: str = "spacy"
+    # category: str
+    label_: str
+    label_id: Optional[str]
 
     class Config:
         fields = {
@@ -49,8 +58,10 @@ class SpacyEntityInstance(_Entity):
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
-        label_txt = values.pop("label_", None)
-        if label_txt:
-            values["label"] = EntityLabel(kb_id=values["kb_id"], text=label_txt)
+        # label_txt = values.pop("label_", None)
+        # if label_txt:
+        #     # values["label"] = EntityLabel(kb_id=values["kb_id"], tag=label_txt)
+        #     values["tag"] = label_txt
+        # values["label_id"] = label_svc.get_label_by_props(label_txt)
 
         return values

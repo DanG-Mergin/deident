@@ -4,12 +4,16 @@ from ..entities._Doc import _Doc
 from ..entities._Label import _Label
 from ..entities._Entity import _Entity
 from ..entities._Annotation import _Annotation
+from ..entities._Corpus import _Corpus
+
+# from ...nlp.spacy.Corpus import NER_Corpus
 from ..entities._Token import _Token
 
 
 class _Data(BaseModel):
     item_ids: List[str]
-    items: List[Union[_Doc, _Label, _Annotation, _Entity, _Token, Dict]] = None
+    # items: List[Union[_Doc, _Label, _Annotation, _Entity, _Token, _Corpus, Dict]] = None
+    items: List[Dict] = None
 
     @validator("items", "item_ids", pre=True, always=True)
     def ensure_list(cls, value):

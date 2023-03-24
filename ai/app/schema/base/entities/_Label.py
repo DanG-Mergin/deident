@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional, Union
 from uuid import UUID, uuid4
 from pydantic import BaseModel, Field
 
@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 class _Label(BaseModel):
     model_name: str = "label"
     uuid: str = Field(default_factory=lambda: str(uuid4()))
-    kb_id: str
+    kb_id: Union[str, None] = None
     description: str
     text: str
     types: List[str]

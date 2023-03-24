@@ -4,11 +4,12 @@ from pydantic import BaseModel, ValidationError, validator, root_validator
 
 class _Entity(BaseModel):
     model_name: str = "entity"
-    # id: str
     uuid: str
     label_id: Optional[str]
     start_index: int
     end_index: int
+    start_char: Optional[int]
+    end_char: Optional[int]
     text: Optional[str]
 
     @root_validator(pre=True)
@@ -24,6 +25,14 @@ class _Entity(BaseModel):
         startIndex = values.pop("startIndex", None)
         if startIndex:
             values["start_index"] = startIndex
+
+        startChar = values.pop("startChar", None)
+        if startChar:
+            values["start_char"] = startChar
+
+        endChar = values.pop("endChar", None)
+        if endChar:
+            values["end_char"] = endChar
 
         labelId = values.pop("labelId", None)
         if labelId:

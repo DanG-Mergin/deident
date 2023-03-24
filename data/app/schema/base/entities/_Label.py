@@ -13,6 +13,7 @@ class _Label(BaseModel):
     category: str
     subcategory: str
     tag: str
+    text: str
     short_description: str
     instructions: str
     kb_id: Union[str, None] = None

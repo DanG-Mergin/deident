@@ -112,7 +112,7 @@ class _ElasticRequest(_Request, extra=Extra.ignore):
     def url(this):
         query = this.query
         if query is not None:
-            return f"{this._url}/search/{this.index}"
+            return f"{this.base_url}/search/{this.index}"
         elif this.data.item_ids is not None:
             # TODO: currently only handles one id
             return (

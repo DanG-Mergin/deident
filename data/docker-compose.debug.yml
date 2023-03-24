@@ -7,12 +7,12 @@ volumes:
 services:
   data-service:
     env_file:
-      - ../.env.dev
-      - ../.env.secret.dev
-      - ../.env
+      - ${PWD:-.}/.env.dev
+      - ${PWD:-.}/.env.secret.dev
+      - ${PWD:-.}/.env
     image: data
     build:
-      context: .
+      context: ${PWD:-.}/data
       dockerfile: ./Dockerfile.dev
     volumes:
       - deidentdata:/code/data/volume
@@ -20,10 +20,14 @@ services:
       [
         "sh",
         "-c",
-        "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:3002 -m uvicorn app.api:app --host 0.0.0.0 --port 8082 --reload"
+        "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3002 -m uvicorn app.api:app --host 0.0.0.0 --port 8082 --reload"
       ]
     environment:
       - APP_MESSAGE=Hello debugger
+    networks:
+      medi-net:
+        aliases:
+          - deID-data-service
     ports:
       - "8082:8082"
       - "3002:3002"

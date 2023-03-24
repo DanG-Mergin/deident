@@ -12,7 +12,7 @@ class _Change(BaseModel):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     action: str
     entity: str
-    timestamp: str = Field(default_factory=lambda: str(datetime.utcnow()))
+    timestamp: str = Field(default_factory=lambda: str(datetime.utcnow().isoformat()))
     object: _Entity
 
     @validator("action")

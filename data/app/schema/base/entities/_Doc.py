@@ -13,7 +13,7 @@ class _Doc(BaseModel):
     title: Optional[str]
     # TODO: need to figure out how we're keeping track of these
     uuid: str = Field(default_factory=lambda: str(uuid4()))
-    created_at: str = Field(default_factory=lambda: str(datetime.utcnow()))
+    created_at: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
     text: str
     entities: List[_Entity]
     tokens: List[_Token]

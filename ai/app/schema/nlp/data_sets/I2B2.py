@@ -63,7 +63,7 @@ class I2B2_Doc(NER_Doc):
     # not the UI/db as i2b2 shouldn't show up in the UI, and we aren't saving it
     async def _ingest_entities(self, entities: List[I2B2_Entity]):
         _ents = [e.dict() for e in entities]
-        labeled_ents = await label_svc.get_labels_by_props(_ents)
+        labeled_ents = await label_svc.set_labels_by_props(_ents)
         return labeled_ents
 
 

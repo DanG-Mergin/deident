@@ -12,7 +12,7 @@ class _Doc(BaseModel):
     model_name: str = "doc"
     title: Optional[str]
     uuid: str = Field(default_factory=lambda: str(uuid4()))
-    created_at: str = Field(default_factory=lambda: str(datetime.utcnow()))
+    created_at: str = Field(default_factory=lambda: str(datetime.utcnow().isoformat()))
     text: str
     entities: Optional[List[_Entity]]
     tokens: Optional[List[_Token]]

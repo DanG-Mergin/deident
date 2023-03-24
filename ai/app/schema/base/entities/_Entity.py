@@ -10,7 +10,9 @@ class _Entity(BaseModel):
     label_id: str
     start_index: int
     end_index: int
-    text: Optional[str]
+    start_char: int
+    end_char: int
+    # text: Optional[str]
 
     # @validator("id")
     # def validate_id(cls, v):

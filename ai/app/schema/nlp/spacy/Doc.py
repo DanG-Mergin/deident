@@ -3,7 +3,7 @@
 from __future__ import annotations
 from uuid import uuid4
 from datetime import datetime
-from typing import Any, List, Optional, Dict
+from typing import Any, List, Optional, Dict, Union
 from pydantic import BaseModel, Extra, Field, ValidationError, validator, root_validator
 
 # import spacy
@@ -19,23 +19,29 @@ from ....services import label as label_svc
 class NER_Doc(BaseModel, extra=Extra.ignore):
     model_name = "ner_doc"
     uuid: str = Field(default_factory=lambda: str(uuid4()))
-    created_at: str = Field(default_factory=lambda: str(datetime.utcnow()))
+    created_at: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
     name = "ner_doc"
     text: str  # the text of the document
     entities: List[NER_Entity]
-    tokens: List[_Token]
+    tokens: Optional[List[_Token]]
 
     def __init__(self, **kwargs):
         _ents = []
-        if self.model_name == "ner_doc":
+        _model_name = kwargs.get("model_name", None)
+        if _model_name and _model_name == "ner_doc":
             if kwargs["tokens"] is not None and len(kwargs["tokens"]) > 0:
                 _ents = self._map_tokens_to_ents(kwargs["tokens"], kwargs["ents"])
             else:
                 raise ValueError("tokens must be a list of Token objects")
 
-        _ents = self._map_labels_to_ents(kwargs["ents"])
+        _ents = kwargs.get("ents", [])
+        if _ents and len(_ents) > 0:
+            _ents = self._map_labels_to_ents(kwargs["ents"])
 
-        kwargs["entities"] = [NER_Entity(e) for e in _ents]
+            kwargs["entities"] = [NER_Entity(**e) for e in _ents]
+
+        elif kwargs.get("entities", None):
+            kwargs["entities"] = [NER_Entity(**e) for e in kwargs["entities"]]
 
         super().__init__(**kwargs)
 
@@ -68,11 +74,6 @@ class NER_Doc(BaseModel, extra=Extra.ignore):
                 if e["label_id"]:
                     lbl = label_svc.get_label_by_id(e["label_id"])
                     e["tag"] = lbl["category"]
-                # for l in labels:
-                #     if l["uuid"] == e["label_id"]:
-                #         # NOTE: ignoring subcategories for now
-                #         e["tag"] = l["category"]
-                #         break
 
         return ents
 
@@ -102,12 +103,13 @@ class Doc(_Doc, extra=Extra.ignore):
     def convert_fields(cls, values):
         ents = values.pop("ents", None)
         if ents:
-            values["entities"] = [
+            ents = [
                 SpacyEntityInstance(
                     label_=e.label_,
-                    id=e.id,
-                    kb_id=e.kb_id,
-                    text=e.text,
+                    # category=e.label_,
+                    # id=e.id,
+                    # kb_id=e.kb_id,
+                    # text=e.text,
                     start=e.start,
                     end=e.end,
                     start_char=e.start_char,
@@ -115,6 +117,7 @@ class Doc(_Doc, extra=Extra.ignore):
                 )
                 for e in ents
             ]
+            values["entities"] = ents
         tokens = values.pop("tokens", None)
         if tokens:
             values["tokens"] = [
@@ -130,42 +133,13 @@ class Doc(_Doc, extra=Extra.ignore):
                 )
                 for t in tokens
             ]
-            # values["tokens"] = cls._map_tokens(cls, values["entities"])
         return values
 
-    # These methods are not used, but I'm keeping them here for now
-    # they work but I'm handling this in the UI for now as entities are meant to change
-    # which tokens they are associated with
+    async def map_labels(self, ents: List[Dict]):
+        for e in ents:
+            _label_txt = e.label_
+            if _label_txt is not None:
+                lbl_id = await label_svc.get_label_id_by_props(category=_label_txt)
+                e.label_id = lbl_id
 
-    # def _split_entity(e: SpacyEntityInstance):
-    #     tokens = []
-    #     words = e.text.split(" ")
-    #     start_char = e.start_char
-    #     id = e.start
-    #     for w in words:
-    #         # if w.isalnum():
-    #         end_char = start_char + len(w)
-    #         tokens.append(
-    #             Token(text=w, start_char=start_char, end_char=end_char, id=id)
-    #         )
-    #         start_char = end_char + 1
-    #         id = id + 1
-    #     return tokens
-
-    # def _map_tokens(cls, ents: list):
-    #     tokens = []
-    #     for e in ents:
-    #         if e.end - e.start == 1:
-    #             # there is only one token in this entity
-    #             tokens.append(
-    #                 Token(
-    #                     text=e.text,
-    #                     start_char=e.start_char,
-    #                     end_char=e.end_char,
-    #                     id=e.start,
-    #                 )
-    #             )
-    #         else:
-    #             # There are multiple tokens in this entity
-    #             tokens = tokens + cls._split_entity(e)
-    #     return tokens
+        return ents

@@ -7,6 +7,8 @@ class Entity(_Entity):
     labelId: Optional[str]  # TODO: this should just be IDs
     startIndex: int
     endIndex: int
+    startChar: Optional[int]
+    endChar: Optional[int]
 
     class Config:
         fields = {
@@ -14,4 +16,6 @@ class Entity(_Entity):
             "labelId": "label_id",
             "startIndex": "start_index",
             "endIndex": "end_index",
+            "startChar": "start_char",
+            "endChar": "end_char",
         }

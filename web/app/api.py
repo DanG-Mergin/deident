@@ -5,13 +5,16 @@ from typing import List
 import os, logging, sys, json
 
 sys.path.append(".")
-# from .schema.ai.DeIDRequest import DeIDRequest
+from .schema.ai.DeIDRequest import DeIDRequest
 
 from .schema.ui.Observable import UIObservableRequest, UIObservableResponse
+from .schema.base.messages._Request import _Request
+from .schema.base.messages._Response import _Response
 
 # from .schema.base.messages._MessageEnums import MsgAction, MsgType, MsgStatus, MsgEntity
 from .controllers import ai, dictionary, data
 from .services.utils import cast_to_class
+from .services import request
 from .services.SocketManager import SocketManager
 
 app = FastAPI()
@@ -37,27 +40,44 @@ if os.environ["ENV"] == "DEV":
 # ---------------------------------------------------#
 # END DEV
 # ---------------------------------------------------#
+import httpx
+
+client = httpx.AsyncClient()
 
 
 @app.get("/")
-def read_root():
+async def read_root():
+    # _res = await client.get(
+    #     f"http://{os.environ['AI_SERVICE_DOMAIN']}:{os.environ['AI_SERVICE_PORT']}/testTraining"
+    # )
+    # return _res
+    # _req = _Request(
+    #     method="GET",
+    #     msg_action="read",
+    #     msg_status="pending",
+    # )
+    # _req.url = f"http://{os.environ['AI_SERVICE_DOMAIN']}:{os.environ['AI_SERVICE_PORT']}/test_training"
+    # _res = await request.make_request(_req, res_cls=_Response)
+    # return _res
     return {"Hello": "Fromweb_api"}
 
 
 # TODO: the api should use models to validate requests - define in webfirst
-# @app.post("/deID/", response_class=JSONResponse)
-# async def deID(req: Request):
-#     _req = cast_to_class(
-#         req,
-#         DeIDRequest,
-#         data={
-#             "docs": [
-#                 "The words “dog”, “cat” and “banana” are all pretty common in English, so they’re part of the pipeline’s vocabulary, and come with a vector. The word “afskfsd” on the other hand is a lot less common and out-of-vocabulary – so its vector representation consists of 300 dimensions of 0, which means it’s practically nonexistent. If your application will benefit from a large vocabulary with more vectors, you should consider using one of the larger pipeline packages or loading in a full vector package, for example, en_core_web_lg, which includes 685k unique vectors. spaCy is able to compare two objects, and make a prediction of how similar they are. Predicting similarity is useful for building recommendation systems or flagging duplicates. For example, you can suggest a user content that’s similar to what they’re currently looking at, or label a support ticket as a duplicate if it’s very similar to an already existing one. Each Doc, Span, Token and Lexeme comes with a .similarity method that lets you compare it with another object, and determine the similarity. Of course similarity is always subjective – whether two words, spans or documents are similar really depends on how you’re looking at it. spaCy’s similarity implementation usually assumes a pretty general-purpose definition of similarity."
-#             ]
-#         },
-#     )
-#     res = await ai.deID(_req)
-#     return res
+@app.post("/deID/", response_class=JSONResponse)
+async def deID(req: Request):
+    _req = cast_to_class(
+        req,
+        DeIDRequest,
+        data={
+            "docs": [
+                "The words “dog”, “cat” and “banana” are all pretty common in English, so they’re part of the pipeline’s vocabulary, and come with a vector. The word “afskfsd” on the other hand is a lot less common and out-of-vocabulary – so its vector representation consists of 300 dimensions of 0, which means it’s practically nonexistent. If your application will benefit from a large vocabulary with more vectors, you should consider using one of the larger pipeline packages or loading in a full vector package, for example, en_core_web_lg, which includes 685k unique vectors. spaCy is able to compare two objects, and make a prediction of how similar they are. Predicting similarity is useful for building recommendation systems or flagging duplicates. For example, you can suggest a user content that’s similar to what they’re currently looking at, or label a support ticket as a duplicate if it’s very similar to an already existing one. Each Doc, Span, Token and Lexeme comes with a .similarity method that lets you compare it with another object, and determine the similarity. Of course similarity is always subjective – whether two words, spans or documents are similar really depends on how you’re looking at it. spaCy’s similarity implementation usually assumes a pretty general-purpose definition of similarity."
+            ]
+        },
+        msg_status="pending",
+        msg_action="create",
+    )
+    res = await ai.deID(_req)
+    return res
 
 
 socket_mgr = SocketManager()
