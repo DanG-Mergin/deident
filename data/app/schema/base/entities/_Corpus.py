@@ -7,8 +7,6 @@ from pydantic import BaseModel, Extra, Field, ValidationError, validator, root_v
 from ._Doc import _Doc
 from ._Label import _Label
 
-# from ....services.request import bulk_get_documents
-
 
 class _Corpus(BaseModel, extra=Extra.ignore):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
@@ -40,17 +38,3 @@ class _Corpus(BaseModel, extra=Extra.ignore):
         """
         dt = isoparse(v)
         return dt.isoformat()
-
-    # async def hydrate(self):
-    #     _docs_req = await bulk_get_documents("doc", self.doc_ids)
-    #     self.docs = [_Doc(d) for d in _docs_req]
-    #     # label_ids = self.label_ids
-    #     _labels_req = await bulk_get_documents("label", self.label_ids)
-    #     self.labels = [_Label(l) for l in _labels_req]
-
-    #     # get the doc_ids from the corpus
-
-    #     # get the docs from the doc_ids
-    #     # get the labels from the docs
-    #     # return a new corpus with the docs and labels
-    #     pass

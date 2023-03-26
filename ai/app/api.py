@@ -66,7 +66,7 @@ def read_root():
 
 @app.get("/testTraining")
 async def test_training():
-    _res = await train_c.train_model()
+    _res = await train_c.train_ner()
     return _res
     return {"message": "hello from testTraining"}
 

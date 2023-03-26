@@ -41,8 +41,8 @@ class _RequestCtrl:
         return await request.delete_document(index, document_id, es)
 
     @classmethod
-    async def search_documents(self, index, query, es=_es):
-        return await request.search_documents(index, query, es)
+    async def search_documents(self, index, req, es=_es):
+        return await request.search_documents(index, req.query, es)
 
     @classmethod
     async def bulk_create_documents(self, index, documents, es=_es):

@@ -4,21 +4,31 @@ _es = get_elasticsearch_client()
 
 from ...services.elastic import request
 from ._RequestCtrl import _RequestCtrl
-from ...schema.base.entities._Corpus import _Corpus
+
+# from ...schema.base.entities._Corpus import NER_Corpus
+from ...schema.ai.Corpus import NER_Corpus
+from ...schema.base.entities._Doc import _Doc
+from ...services import i2b2 as i2b2_svc
+
+# from ...schema.base.messages._MessageEnums import MsgEntity
 
 
 class CorpusCtrl(_RequestCtrl):
     @classmethod
-    async def update_document(self, index, document_id, document: _Corpus, es=_es):
-        res = await request.update_document(index, document_id, document.dict(), es)
-        return res
+    async def search_documents(self, index, req, es=_es):
 
-    @classmethod
-    async def create_document(self, index, document_id, document: _Corpus, es=_es):
-        res = await request.create_document(index, document_id, document.dict(), es)
-        return res
+        _res = await request.search_documents("doc", req.query, es)
+        if req.msg_entity_type == "deID":
+            # 1. get internal docs
+            _docs = [_Doc(**doc) for doc in _res]
+            ner_docs = await NER_Corpus.convert_docs(_docs)
+            _corpus = NER_Corpus(docs=ner_docs)
+            # 2. get external docs
+            train = await i2b2_svc.get_i2b2("train")
+            test = await i2b2_svc.get_i2b2("test")
+            i2b2_docs = train[0]["docs"] + test[0]["docs"]
 
-    @classmethod
-    async def delete_document(self, index, document_id, es=_es):
-        res = await request.delete_document(index, document_id, es)
-        return res
+            _corpus.add_docs(i2b2_docs)
+
+            return [_corpus]
+        return _res

@@ -30,6 +30,7 @@ class MsgTask(str, Enum):
 
 class MsgEntity(str, Enum):
     annotation = "annotation"
+    corpus = "corpus"
     doc = "doc"
     label = "label"
     entity = "entity"
@@ -67,6 +68,7 @@ class ElasticIndexes(str, Enum):
     docs = "doc"
     annotation = "annotation"
     annotations = "annotation"
+    corpus = "corpus"
 
 
 # maps MsgTask to the corresponding Elasticsearch type

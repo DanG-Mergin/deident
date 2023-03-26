@@ -15,6 +15,8 @@ from .Entity import SpacyEntityInstance, NER_Entity
 from .Token import Token
 from ....services import label as label_svc
 
+import asyncio
+
 
 class NER_Doc(BaseModel, extra=Extra.ignore):
     model_name = "ner_doc"
@@ -26,53 +28,53 @@ class NER_Doc(BaseModel, extra=Extra.ignore):
     tokens: Optional[List[_Token]]
 
     def __init__(self, **kwargs):
-        _ents = []
-        _model_name = kwargs.get("model_name", None)
-        if _model_name and _model_name == "ner_doc":
-            if kwargs["tokens"] is not None and len(kwargs["tokens"]) > 0:
-                _ents = self._map_tokens_to_ents(kwargs["tokens"], kwargs["ents"])
-            else:
-                raise ValueError("tokens must be a list of Token objects")
+        # _ents = []
+        # _model_name = kwargs.get("model_name", None)
 
-        _ents = kwargs.get("ents", [])
-        if _ents and len(_ents) > 0:
-            _ents = self._map_labels_to_ents(kwargs["ents"])
+        # if _model_name and _model_name == "doc":
+        #     # need to map labels to e
+        #     _ents = self._map_labels_to_ents(kwargs["entities"])
 
-            kwargs["entities"] = [NER_Entity(**e) for e in _ents]
+        #     kwargs["entities"] = [NER_Entity(**e) for e in _ents]
 
-        elif kwargs.get("entities", None):
+        #  _entities = kwargs.get("entities", [])
+        # elif _entities and len(_entities) > 0:
+        #     for
+        #     kwargs["entities"] = [NER_Entity(**e) for e in kwargs["entities"]]
+        if kwargs.get("entities", None):
             kwargs["entities"] = [NER_Entity(**e) for e in kwargs["entities"]]
 
         super().__init__(**kwargs)
 
-    def _map_tokens_to_ents(self, tokens: List[_Token], ents: List[_Entity]):
-        _ents = []
-        _sorted_tokens = sorted(tokens, key=lambda t: t.start_char)
+    # def _map_tokens_to_ents(self, tokens: List[_Token], ents: List[_Entity]):
+    #     _ents = []
+    #     _sorted_tokens = sorted(tokens, key=lambda t: t.start_char)
 
-        for e in ents:
-            new_e = {
-                "start_char": None,
-                "end_char": None,
-                "tag": None,
-                "label_id": e.label_id,
-            }
-            for t in _sorted_tokens:
-                if e.start_index == t.index:
-                    new_e["start_char"] = t["start_char"]
-                if e.end_index == t.index:
-                    new_e["end_char"] = t["end_char"]
-                    break
-                elif e.end_index > t.index:
-                    break
-            _ents.append(new_e)
+    #     for e in ents:
+    #         new_e = {
+    #             "start_char": None,
+    #             "end_char": None,
+    #             "tag": None,
+    #             "label_id": e.label_id,
+    #         }
+    #         for t in _sorted_tokens:
+    #             if e.start_index == t.index:
+    #                 new_e["start_char"] = t["start_char"]
+    #             if e.end_index == t.index:
+    #                 new_e["end_char"] = t["end_char"]
+    #                 break
+    #             elif e.end_index > t.index:
+    #                 break
+    #         _ents.append(new_e)
 
-        return _ents
+    #     return _ents
 
+    # TODO: if this is going to be used, it needs to be a static method because of pydantic
     def _map_labels_to_ents(self, ents: List[Dict]):
         for e in ents:
             if e["tag"] is None:
                 if e["label_id"]:
-                    lbl = label_svc.get_label_by_id(e["label_id"])
+                    lbl = asyncio.run(label_svc.get_label_by_id(e["label_id"]))
                     e["tag"] = lbl["category"]
 
         return ents

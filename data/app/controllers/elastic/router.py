@@ -13,7 +13,8 @@ from ...schema.base.entities._Label import _Label as Label
 from ...schema.base.entities._Doc import _Doc as Doc
 from ...schema.base.entities._Annotation import _Annotation as Annotation
 from ...schema.base.messages._ElasticRequest import _ElasticRequest
-from ...schema.base.entities._Corpus import _Corpus as Corpus
+
+# from ...schema.base.entities._Corpus import _Corpus as Corpus
 
 from ...schema.base.messages._Response import _Response
 from ...schema.base.messages._MessageEnums import MsgAction
@@ -49,7 +50,7 @@ log = logging.getLogger(__name__)
 # Dictionary that maps model names to Pydantic classes
 MODEL_MAP = {
     "annotation": Annotation,
-    "corpus": Corpus,
+    # "corpus": Corpus,
     "doc": Doc,
     "label": Label,
 }
@@ -101,14 +102,10 @@ async def search_documents_endpoint(index: str, req: Request):
     req_data = await req.json()
     _req = _ElasticRequest.parse_obj(req_data)
 
-    # cls = get_model(index)
-    # try:
-    #     document = cls(**_req.data.items[0].dict())
-    # except ValidationError as e:
-    #     raise HTTPException(status_code=422, detail=str(e))
+    controller = get_controller(index)
+    _es_res = await controller.search_documents(index, _req)
 
     _res = _Response.parse_obj(_req.dict())
-    _es_res = await search_documents(index, _req.query)
     _res.data = {"items": _es_res}
     _res.msg_status = "success"
 

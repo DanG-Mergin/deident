@@ -15,9 +15,11 @@ async def get_i2b2(subdirectory: str = "train"):
     for filename in os.listdir(directory_path):
         if filename.endswith(".json"):
 
-            with open(os.path.join(directory_path, filename), "r") as json_file:
+            with open(
+                os.path.join(directory_path, filename), "r", encoding="UTF-8"
+            ) as json_file:
                 _doc = json.load(json_file)
-                _doc["entities"] = await label_svc.get_labels_by_props(
+                _doc["entities"] = await label_svc.set_labels_by_props(
                     _doc["annotations"]
                 )
                 _doc.pop("annotations", None)

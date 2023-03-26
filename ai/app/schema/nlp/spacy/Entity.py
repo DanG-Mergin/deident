@@ -3,7 +3,6 @@ from pydantic import BaseModel, Extra, Field, ValidationError, validator, root_v
 
 # from uuid import uuid4
 from ...base.entities._Entity import _Entity
-from ....services import label as label_svc
 
 
 class EntityLabel(BaseModel):
@@ -12,6 +11,7 @@ class EntityLabel(BaseModel):
     tag: str
 
 
+# TODO: should probably just rely on the data server to handle this ish
 # For training spaCy
 class NER_Entity(BaseModel, extra=Extra.ignore):
     start_char: int
@@ -23,8 +23,10 @@ class NER_Entity(BaseModel, extra=Extra.ignore):
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
+        _label_id = values.get("label_id", None)
         _category = values.get("category", None)
         _tag = values.get("tag", None)
+
         if _category and _tag is None:
             values["tag"] = _category
 

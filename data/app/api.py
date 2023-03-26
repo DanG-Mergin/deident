@@ -1,6 +1,7 @@
 import logging
 from fastapi import FastAPI, Request, APIRouter
 from fastapi.responses import Response, JSONResponse
+from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
 import os, sys
 
@@ -54,13 +55,20 @@ def read_root():
     return {"Hello": "From data_api"}
 
 
-@app.get("/i2b2")
-async def i2b2():
-    _res = await i2b2_svc.get_i2b2()
+@app.get("/i2b2/{subdirectory}")
+async def i2b2(subdirectory: Optional[str] = None):
+    if subdirectory is None:
+        # return both train and test
+        train = await i2b2_svc.get_i2b2("train")
+        test = await i2b2_svc.get_i2b2("test")
+        docs = train + test
+    else:
+        docs = await i2b2_svc.get_i2b2(subdirectory)
+
     res = _Response(
         msg_action="read",
         msg_status="success",
-        data={"items": _res},
+        data={"items": docs},
     )
     return res
 

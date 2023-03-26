@@ -2,83 +2,92 @@ from .utils import cast_to_class
 import copy
 from .elastic import request as request_svc
 from typing import List, Dict
-from ..schema.base.messages._ElasticRequest import _ElasticRequest
-from ..schema.base.messages._Response import _Response
-from ..schema.base.messages._MessageEnums import (
-    MsgEntity,
-    MsgEntity_Type,
-    MsgAction,
-    MsgTask,
-    MsgType,
-)
+
 from ..schema.base.entities._Label import _Label
 
 
-_labels = None
-# _labels_by_id = None
+class LabelStore:
+    _instance = None
+    _labels = None
+    _labels_by_id = None
+    _label_map = None
+
+    # singleton instance
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    async def get_labels(self):
+        if not self._labels:
+            _res = await request_svc.get_index("label")
+            # TODO: proper error handling
+            self._labels = [_Label(**r["_source"]) for r in _res]
+
+        return self._labels
+        # return _res["data"]["items"]
+
+    async def get_label_map(self):
+        if not self._label_map:
+            label_map = {}
+            for label in await self.get_labels():
+                # category = label.get("category")
+                category = label.category.upper()
+                # sub_category = label.get("subcategory")
+                # uuid = label.get("uuid")
+
+                if category not in label_map:
+                    label_map[category] = {}
+
+                label_map[category][label.subcategory.upper()] = label.uuid
+
+            self._label_map = label_map
+
+        return self._label_map
+
+    async def get_label_by_id(self, label_id):
+        if not self._labels_by_id:
+            _lab_by_id = {}
+            for label in await self.get_labels():
+                _lab_by_id[label.uuid] = label
+            self._labels_by_id = _lab_by_id
+
+        return self._labels_by_id.get(label_id, None)
 
 
-async def get_labels():
-    if not _labels:
-
-        # _req = _ElasticRequest(
-        #     msg_entity=MsgEntity.label,
-        #     msg_entity_type=MsgEntity_Type.dictionary,
-        #     msg_action=MsgAction.read,
-        #     msg_task=MsgTask.deid,
-        #     msg_type=MsgType.data,
-        # )
-        _res = await request_svc.get_index("label")
-
-    # TODO: proper error handling
-    return [r["_source"] for r in _res]
-    # return _res["data"]["items"]
+label_store = LabelStore()
 
 
-def get_label_map(labels):
-    label_map = {}
-    for label in labels:
-        # category = label.get("category")
-        category = label["category"].upper()
-        # sub_category = label.get("subcategory")
-        # uuid = label.get("uuid")
-
-        if category not in label_map:
-            label_map[category] = {}
-
-        label_map[category][label["subcategory"].upper()] = label
-
-    return label_map
+async def get_label_by_id(label_id):
+    return await label_store.get_label_by_id(label_id)
 
 
-# async def get_label_by_id(label_id):
-#     if _labels_by_id is None:
-#         for label in get_labels():
-#             _labels_by_id = {label["uuid"]: label}
+async def get_label_id_by_props(category, subcategory=None):
+    label_map = await label_store.get_label_map()
+    category = category.upper()
+    if subcategory is None:
+        subcategory = category
+    else:
+        subcategory = subcategory.upper()
 
-#     return _labels_by_id.get(label_id, None)
+    if category in label_map and subcategory in label_map[category]:
+        return label_map[category][subcategory]
+    elif category in label_map:
+        return label_map[category][category]
+
+    return label_map["ENTITY"]["ENTITY"]
 
 
 # expects category and subcategory
-async def get_labels_by_props(span_array: List[Dict]):
-    # get all labels from db
-    labels = await get_labels()
-    label_map = get_label_map(labels)
-
+async def set_labels_by_props(span_array: List[Dict]):
     _sp_arr = copy.deepcopy(span_array)
 
     for span in _sp_arr:
-        category = span["category"].upper()
-        subcategory = span["subcategory"].upper()
-        if category in label_map and subcategory in label_map[category]:
-            label = label_map[category][subcategory]
-        elif category in label_map:
-            label = label_map[category][category]
-        else:
-            label = label_map["ENTITY"]["ENTITY"]
-
-        span["label_id"] = label["uuid"]
-        span["category"] = label["category"]
-        span["subcategory"] = label["subcategory"]
+        span["label_id"] = await get_label_id_by_props(
+            span["category"], span["subcategory"]
+        )
+        label = await get_label_by_id(span["label_id"])
+        span["category"] = label.category
+        span["subcategory"] = label.subcategory
 
     return _sp_arr

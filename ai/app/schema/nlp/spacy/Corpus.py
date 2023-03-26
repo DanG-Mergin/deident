@@ -43,7 +43,7 @@ class NER_Corpus(_Corpus, extra=Extra.ignore):
         self.model_name = "ner_corpus"
 
     def add_docs(self, docs: List[NER_Doc]):
-        self.docs.extend(docs)
+        self.docs.extend([NER_Doc(**d) for d in docs])
 
     def to_training_data(self):
         return [d.to_training_data() for d in self.docs]

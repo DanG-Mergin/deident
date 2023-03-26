@@ -13,10 +13,6 @@ from ..schema.base.messages._MessageEnums import (
 )
 from ..schema.base.entities._Label import _Label
 
-_labels = None
-_labels_by_id = None
-_label_map = None
-
 
 class LabelStore:
     _instance = None
@@ -65,8 +61,10 @@ class LabelStore:
 
     async def get_label_by_id(self, label_id):
         if not self._labels_by_id:
+            _lab_by_id = {}
             for label in await self.get_labels():
-                self._labels_by_id[label.uuid] = label
+                _lab_by_id[label.uuid] = label
+            self._labels_by_id = _lab_by_id
 
         return self._labels_by_id.get(label_id, None)
 

@@ -2,7 +2,15 @@ from uuid import uuid4
 from datetime import datetime
 from dateutil.parser import isoparse
 from typing import Any, Dict, Optional, Type, List
-from pydantic import BaseModel, Field, Json, ValidationError, validator, root_validator
+from pydantic import (
+    BaseModel,
+    Extra,
+    Field,
+    Json,
+    ValidationError,
+    validator,
+    root_validator,
+)
 from ._Token import _Token
 from ._Entity import _Entity
 from ._EntityEnums import DocType, PatientClass
@@ -20,11 +28,11 @@ class _Doc(BaseModel):
     doc_types: Optional[List[str]]
     patient_classes: Optional[List[str]]
 
-    @property
-    def label_ids(self):
-        return list(
-            set(label_id for entity in self.entities for label_id in entity.label_id)
-        )
+    # @property
+    # def label_ids(self):
+    #     return list(
+    #         set(label_id for entity in self.entities for label_id in entity.label_id)
+    #     )
 
     @validator("created_at")
     def iso8601_date(cls, v):
@@ -46,8 +54,10 @@ class _Doc(BaseModel):
             return None
         return [PatientClass[p.lower()].value for p in v]
 
-    # def dict(self, *args, **kwargs):
-    #     json_out = super().dict(*args, **kwargs)
-    #     # json_out["label_ids"] = self.label_ids
-    #     json_out.pop("label_ids", None)
-    #     return json_out
+
+# class NER_Doc(_Doc, extra=Extra.ignore):
+#     def __init__(self, **kwargs):
+#         if kwargs.get("entities", None):
+#             kwargs["entities"] = [NER_Entity(**e) for e in kwargs["entities"]]
+#         super().__init__(**kwargs)
+#         self.model_name = "ner_doc"

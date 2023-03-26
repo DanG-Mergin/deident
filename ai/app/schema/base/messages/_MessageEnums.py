@@ -69,6 +69,7 @@ class ElasticIndexes(str, Enum):
     docs = "doc"
     annotation = "annotation"
     annotations = "annotation"
+    corpus = "corpus"
 
 
 # maps MsgTask to the corresponding Elasticsearch type
