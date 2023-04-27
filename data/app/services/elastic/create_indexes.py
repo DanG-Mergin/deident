@@ -37,6 +37,7 @@ async def create_labels_index(es=_es):
                     "kb_id": {"type": "keyword"},
                     "types": {"type": "keyword"},
                     "tasks": {"type": "keyword"},
+                    "synonyms": {"type": "keyword"},
                     "substitutionId": {"type": "keyword"},
                     "category": {"type": "keyword"},
                     "subcategory": {"type": "keyword"},

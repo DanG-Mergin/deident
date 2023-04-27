@@ -1,8 +1,9 @@
 import os
 from typing import List
+
 from ..emitter import ee
 
-from ..services import spacy as spacy_s
+from ..services.spacy import spacy as spacy_s
 from ..services.utils import cast_to_class
 from ..services import request
 from ..schema.base.messages._Observable import _Observable

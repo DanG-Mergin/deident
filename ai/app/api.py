@@ -8,15 +8,15 @@ sys.path.append(".")
 from .schema.base.messages._Request import _Request
 from .schema.base.messages._Response import _Response
 
+# from .emitter import ee, emitter
 from .controllers import document as document_c
-from .controllers import train as train_c
+
+# from .controllers import train as train_c
 
 # from .services.utils import cast_to_class
-# from .emitter import emitter
-# from pyee import EventEmitter
 
 app = FastAPI()
-# ee = emitter
+
 log = logging.getLogger(__name__)
 
 # ---------------------------------------------------#
@@ -40,24 +40,6 @@ if os.environ["ENV"] == "DEV":
 # END DEV
 # ---------------------------------------------------#
 
-# from fastapi_websocket_pubsub import PubSubClient
-# import asyncio
-
-
-# async def on_events(data, topic):
-#     print(f"running callback for {topic}!")
-
-
-# async def _init():
-
-#     # await document_c.subscribe()
-#     return True
-
-
-# @app.on_event("startup")
-# async def startup():
-#     await _init()
-
 
 @app.get("/")
 def read_root():
@@ -66,19 +48,20 @@ def read_root():
 
 @app.get("/testTraining")
 async def test_training():
-    _res = await train_c.train_ner()
-    return _res
+    # _res = await train_c.train_ner()
+    # _res = await train_c.train_from_scratch()
+    # return _res
     return {"message": "hello from testTraining"}
 
 
 # TODO: log the round trip on this server
-@app.post("/deID", response_class=JSONResponse)
-async def deID(req: Request):
-    req_data = await req.json()
-    _req = _Request.parse_obj(req_data)
-    res = await document_c.deID(_req)
+# @app.post("/deID", response_class=JSONResponse)
+# async def deID(req: Request):
+#     req_data = await req.json()
+#     _req = _Request.parse_obj(req_data)
+#     res = await document_c.deID(_req)
 
-    return res
+#     return res
 
 
 # no longer supported.  Handled with websockets

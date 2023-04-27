@@ -1,7 +1,13 @@
 # App
 ai/data/
+ai/app/assets/
+ai/app/services/spacy/deid/
 /ignore-*
 *secret*
+*.spacy
+private/
+i2b2/
+private/i2b2
 
 # IDE
 .idea/

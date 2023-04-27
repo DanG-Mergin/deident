@@ -20,6 +20,7 @@ class _Label(BaseModel):
     substitutionId: Union[str, None] = None
     badgeName: Union[str, None] = None
     icon: Union[str, None] = None
+    synonyms: List[str] = []
 
     @validator("tasks")
     def map_task(cls, tasks):

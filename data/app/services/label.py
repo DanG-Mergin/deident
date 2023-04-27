@@ -28,6 +28,8 @@ class LabelStore:
         # return _res["data"]["items"]
 
     async def get_label_map(self):
+        # TODO: this is silly... I should be simply returning
+        # - a list of subcategories as keys with ids as values
         if not self._label_map:
             label_map = {}
             for label in await self.get_labels():
@@ -40,6 +42,12 @@ class LabelStore:
                     label_map[category] = {}
 
                 label_map[category][label.subcategory.upper()] = label.uuid
+
+                # NOTE: this means at present you can't recover the original label.
+                # this all maps back to a category at the moment
+                if len(label.synonyms) > 0:
+                    for syn in label.synonyms:
+                        label_map[category][syn.upper()] = label.uuid
 
             self._label_map = label_map
 
@@ -62,6 +70,8 @@ async def get_label_by_id(label_id):
     return await label_store.get_label_by_id(label_id)
 
 
+# TODO: this is silly... I should be simply using
+# - a list of subcategories as keys with ids as values
 async def get_label_id_by_props(category, subcategory=None):
     label_map = await label_store.get_label_map()
     category = category.upper()
@@ -72,8 +82,19 @@ async def get_label_id_by_props(category, subcategory=None):
 
     if category in label_map and subcategory in label_map[category]:
         return label_map[category][subcategory]
-    elif category in label_map:
+
+    for k, v in label_map.items():
+        if subcategory in v:
+            return v[subcategory]
+
+    if category in label_map:
+        # returns a generic label for the category like [Date][Date]
         return label_map[category][category]
+
+    # else:
+    #     for k, v in label_map.items():
+    #         if subcategory in v:
+    #             return v[subcategory]
 
     return label_map["ENTITY"]["ENTITY"]
 

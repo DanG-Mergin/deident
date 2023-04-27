@@ -72,6 +72,15 @@ class LabelStore:
 label_store = LabelStore()
 
 
+async def get_labels():
+    return await label_store.get_labels()
+
+
+async def get_categories():
+    labels = await label_store.get_labels()
+    return list(set([l.category for l in labels]))
+
+
 async def get_label_by_id(label_id):
     return await label_store.get_label_by_id(label_id)
 

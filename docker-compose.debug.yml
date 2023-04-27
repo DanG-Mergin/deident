@@ -5,87 +5,6 @@ volumes:
 
 
 services:
-  web-service:
-    env_file:
-      - ${PWD:-.}/.env.dev
-      - ${PWD:-.}/.env.secret.dev
-      - ${PWD:-.}/.env
-    image: web
-    build:
-      context: ${PWD:-.}/web
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - deidentdata:/code/web/volume
-    command:
-      [
-        "sh",
-        "-c",
-        "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3003 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"
-      ]
-    environment:
-      - APP_MESSAGE=Hello debugger
-    networks:
-      medi-net:
-        aliases:
-          - deID-web-service
-    ports:
-      - "8081:8081"
-      - "3003:3003"
-
-  data-service:
-    env_file:
-      - ${PWD:-.}/.env.dev
-      - ${PWD:-.}/.env.secret.dev
-      - ${PWD:-.}/.env
-    image: data
-    build:
-      context: ${PWD:-.}/data
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - deidentdata:/code/data/volume
-    command:
-      [
-        "sh",
-        "-c",
-        "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3002 -m uvicorn app.api:app --host 0.0.0.0 --port 8082 --reload"
-      ]
-    environment:
-      - APP_MESSAGE=Hello debugger
-    networks:
-      medi-net:
-        aliases:
-          - deID-data-service
-    ports:
-      - "8082:8082"
-      - "3002:3002"
-
-  ai-service:
-    image: ai
-    env_file:
-      - ${PWD:-.}/.env.dev
-      - ${PWD:-.}/.env.secret.dev
-      - ${PWD:-.}/.env
-    build:
-      context: ${PWD:-.}/ai
-      dockerfile: ./Dockerfile.dev
-    volumes:
-      - deidentdata:/code/ai/volume
-    command:
-      [
-        "sh",
-        "-c",
-        "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8083 --reload"
-      ]
-    environment:
-      - APP_MESSAGE=Hello debugger
-    networks:
-      medi-net:
-        aliases:
-          - deID-ai-service
-    ports:
-      - "8083:8083"
-      - "5678:5678"
-
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
     environment:
@@ -112,6 +31,88 @@ services:
       medi-net:
         aliases:
           - kibana
+
+  web-service:
+    env_file:
+      - ${PWD:-.}/.env.dev
+      - ${PWD:-.}/.env.secret.dev
+      - ${PWD:-.}/.env
+    image: web
+    build:
+      context: ${PWD:-.}/web
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ${PWD:-.}/web/app/assets/data:/code/web/app/assets/data
+    command:
+      [
+        "sh",
+        "-c",
+        "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3003 -m uvicorn app.api:app --host 0.0.0.0 --port 8081 --reload"
+      ]
+    environment:
+      - APP_MESSAGE=Hello debugger
+    networks:
+      medi-net:
+        aliases:
+          - deID-web-service
+    ports:
+      - "8081:8081"
+      - "3003:3003"
+
+  data-service:
+    env_file:
+      - ${PWD:-.}/.env.dev
+      - ${PWD:-.}/.env.secret.dev
+      - ${PWD:-.}/.env
+    image: data
+    build:
+      context: ${PWD:-.}/data
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ${PWD:-.}/data/app/assets/data:/code/data/app/assets/data
+    command:
+      [
+        "sh",
+        "-c",
+        "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:3002 -m uvicorn app.api:app --host 0.0.0.0 --port 8082 --reload"
+      ]
+    environment:
+      - APP_MESSAGE=Hello debugger
+    networks:
+      medi-net:
+        aliases:
+          - deID-data-service
+    ports:
+      - "8082:8082"
+      - "3002:3002"
+
+  ai-service:
+    image: ai
+    env_file:
+      - ${PWD:-.}/.env.dev
+      - ${PWD:-.}/.env.secret.dev
+      - ${PWD:-.}/.env
+    build:
+      context: ${PWD:-.}/ai
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ${PWD:-.}/ai/app/assets:/code/ai/app/assets
+    command:
+      [
+        "sh",
+        "-c",
+        "pip install debugpy -t /tmp && python /tmp/debugpy --listen 0.0.0.0:5678 -m uvicorn app.api:app --host 0.0.0.0 --port 8083 --reload"
+      ]
+    environment:
+      - APP_MESSAGE=Hello debugger
+    networks:
+      medi-net:
+        aliases:
+          - deID-ai-service
+    ports:
+      - "8083:8083"
+      - "5678:5678"
+
 networks:
   medi-net:
     driver: bridge

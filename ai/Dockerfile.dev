@@ -19,10 +19,31 @@ RUN pip install --no-cache-dir --upgrade -r /code/ai/requirements.txt
 # # -------------------------------------------------------------------------#
 
 # # TODO: make a prod docker file
-RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_sm-0.5.1.tar.gz 
+# RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_sm-0.5.1.tar.gz 
 
 # # -------------------------------------------------------------------------#
 # # END DEV MODE
+# # -------------------------------------------------------------------------#
+
+
+# # -------------------------------------------------------------------------#
+# # SpaCy DeID init
+# # -------------------------------------------------------------------------#
+
+# WORKDIR /code/ai/app/services/spacy/deid
+# COPY ./app/services/spacy/ /code/ai/app/services/spacy/
+# RUN ls -la
+# RUN pip install -r requirements.txt
+# # download the prebuilt vectors for the other components
+# RUN python -m spacy project assets
+# # download the pretrained model NOTE: this should be commented out after our first training 
+# # see project.yml
+# RUN python -m spacy project run download
+# RUN python -m spacy project run all
+
+# WORKDIR /code/ai
+# # -------------------------------------------------------------------------#
+# # END SpaCy DeID init
 # # -------------------------------------------------------------------------#
 
 COPY . .

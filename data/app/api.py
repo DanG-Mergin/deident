@@ -1,9 +1,8 @@
-import logging
 from fastapi import FastAPI, Request, APIRouter
 from fastapi.responses import Response, JSONResponse
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
-import os, sys
+import os, sys, logging
 
 sys.path.append(".")
 

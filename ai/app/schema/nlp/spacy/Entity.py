@@ -14,6 +14,7 @@ class EntityLabel(BaseModel):
 # TODO: should probably just rely on the data server to handle this ish
 # For training spaCy
 class NER_Entity(BaseModel, extra=Extra.ignore):
+    model_name = "ner_entity"
     start_char: int
     end_char: int
     tag: str
@@ -23,7 +24,7 @@ class NER_Entity(BaseModel, extra=Extra.ignore):
 
     @root_validator(pre=True)
     def convert_fields(cls, values):
-        _label_id = values.get("label_id", None)
+        # _label_id = values.get("label_id", None)
         _category = values.get("category", None)
         _tag = values.get("tag", None)
 

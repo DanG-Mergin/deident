@@ -23,6 +23,9 @@ class _Emitter:
         # ee.emit("doc_create", message)
         ee.emit(message.msg_entity, message)
         ee.emit(f"{message.msg_entity}_{message.msg_action}", message)
+        print(
+            f"\n\n entity_action_task: {message.msg_entity}_{message.msg_action}_{message.msg_task}\n\n"
+        )
         ee.emit(f"{message.msg_entity}_{message.msg_task}", message)
         ee.emit(
             f"{message.msg_entity}_{message.msg_action}_{message.msg_task}", message

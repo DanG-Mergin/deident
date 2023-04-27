@@ -15,6 +15,8 @@ COPY ./requirements.txt /code/ai/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/ai/requirements.txt
 
+RUN python3 -m spacy download en_core_web_trf
+
 COPY . .
 
 CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8083", "--log-level", "debug"]

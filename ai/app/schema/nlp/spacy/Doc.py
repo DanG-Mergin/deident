@@ -28,73 +28,23 @@ class NER_Doc(BaseModel, extra=Extra.ignore):
     tokens: Optional[List[_Token]]
 
     def __init__(self, **kwargs):
-        # _ents = []
-        # _model_name = kwargs.get("model_name", None)
-
-        # if _model_name and _model_name == "doc":
-        #     # need to map labels to e
-        #     _ents = self._map_labels_to_ents(kwargs["entities"])
-
-        #     kwargs["entities"] = [NER_Entity(**e) for e in _ents]
-
-        #  _entities = kwargs.get("entities", [])
-        # elif _entities and len(_entities) > 0:
-        #     for
-        #     kwargs["entities"] = [NER_Entity(**e) for e in kwargs["entities"]]
         if kwargs.get("entities", None):
             kwargs["entities"] = [NER_Entity(**e) for e in kwargs["entities"]]
 
         super().__init__(**kwargs)
 
-    # def _map_tokens_to_ents(self, tokens: List[_Token], ents: List[_Entity]):
-    #     _ents = []
-    #     _sorted_tokens = sorted(tokens, key=lambda t: t.start_char)
-
-    #     for e in ents:
-    #         new_e = {
-    #             "start_char": None,
-    #             "end_char": None,
-    #             "tag": None,
-    #             "label_id": e.label_id,
-    #         }
-    #         for t in _sorted_tokens:
-    #             if e.start_index == t.index:
-    #                 new_e["start_char"] = t["start_char"]
-    #             if e.end_index == t.index:
-    #                 new_e["end_char"] = t["end_char"]
-    #                 break
-    #             elif e.end_index > t.index:
-    #                 break
-    #         _ents.append(new_e)
-
-    #     return _ents
-
     # TODO: if this is going to be used, it needs to be a static method because of pydantic
-    def _map_labels_to_ents(self, ents: List[Dict]):
-        for e in ents:
-            if e["tag"] is None:
-                if e["label_id"]:
-                    lbl = asyncio.run(label_svc.get_label_by_id(e["label_id"]))
-                    e["tag"] = lbl["category"]
+    # def _map_labels_to_ents(self, ents: List[Dict]):
+    #     for e in ents:
+    #         if e["tag"] is None:
+    #             if e["label_id"]:
+    #                 lbl = asyncio.run(label_svc.get_label_by_id(e["label_id"]))
+    #                 e["tag"] = lbl["category"]
 
-        return ents
+    #     return ents
 
     def to_training_data(self):
-        return (self.text, [e.to_training_data() for e in self.entities])
-
-    # def to_doc_bin(self):
-    #     nlp = spacy.blank("en")
-    #     db = DocBin()
-    #     training_data = (self.doc, self.ents)
-    #     for text, annotations in training_data:
-    #         doc = nlp(text)
-    #         ents = []
-    #         for start, end, label in annotations:
-    #             span = doc.char_span(start, end, label=label)
-    #             ents.append(span)
-    #         doc.ents = ents
-    #         db.add(doc)
-    # return DocBin().from_bytes(self.json().encode("utf8"))
+        return (self.text, {"entities": [e.to_training_data() for e in self.entities]})
 
 
 class Doc(_Doc, extra=Extra.ignore):
