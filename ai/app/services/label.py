@@ -28,7 +28,6 @@ class LabelStore:
 
     async def get_labels(self):
         if not self._labels:
-
             _req = _ElasticRequest(
                 msg_entity=MsgEntity.label,
                 msg_entity_type=MsgEntity_Type.dictionary,
@@ -79,6 +78,11 @@ async def get_labels():
 async def get_categories():
     labels = await label_store.get_labels()
     return list(set([l.category for l in labels]))
+
+
+async def get_subcat_by_cat(categories):
+    labels = await label_store.get_labels()
+    return list(set([l.subcategory for l in labels if l.category in categories]))
 
 
 async def get_label_by_id(label_id):

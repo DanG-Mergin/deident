@@ -34,3 +34,33 @@ class NER_Entity(BaseModel, extra=Extra.ignore):
             "tag": tag,
         }
         return NER_Entity(**ner_ent)
+
+
+# TODO: atow the subcategory vs category difference is the only one between
+# this and NER_Entity.  Should be able to refactor to use one class.
+class DRUG_Entity(BaseModel, extra=Extra.ignore):
+    start_char: int
+    end_char: int
+    tag: str
+
+    @root_validator(pre=True)
+    def convert_fields(cls, values):
+        _subcategory = values.get("subcategory", None)
+        _tag = values.get("tag", None)
+
+        if _subcategory and _tag is None:
+            values["tag"] = _subcategory
+
+        return values
+
+    @staticmethod
+    async def convert_from_base(e: _Entity):
+        label = await label_svc.get_label_by_id(e.label_id)
+        tag = label.tag
+        ner_ent = {
+            "uuid": e.uuid,
+            "start_char": e.start_char,
+            "end_char": e.end_char,
+            "tag": tag,
+        }
+        return DRUG_Entity(**ner_ent)

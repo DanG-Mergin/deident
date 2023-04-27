@@ -1,3 +1,6 @@
 [submodule "private/i2b2"]
 	path = private/i2b2
 	url = https://github.com/dlonergan-harvard/i2b2_2014_data.git
+[submodule "private/n2c2_2018"]
+	path = private/n2c2_2018
+	url = git@github.com:dlonergan-harvard/n2c2_2018_data.git

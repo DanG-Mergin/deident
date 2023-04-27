@@ -11,7 +11,7 @@ from .schema.base.messages._Response import _Response
 # from .emitter import ee, emitter
 from .controllers import document as document_c
 
-# from .controllers import train as train_c
+from .controllers import train as train_c
 
 # from .services.utils import cast_to_class
 
@@ -52,6 +52,12 @@ async def test_training():
     # _res = await train_c.train_from_scratch()
     # return _res
     return {"message": "hello from testTraining"}
+
+
+@app.get("/testMedTraining")
+async def test_med_training():
+    _res = await train_c.train_med_ner()
+    return _res
 
 
 # TODO: log the round trip on this server

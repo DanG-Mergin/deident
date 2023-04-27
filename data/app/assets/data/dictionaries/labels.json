@@ -842,5 +842,205 @@
         "instructions": "Highlight the entire ID number",
         "substitutionId": "537f1720-947c-4d2e-9b1b-0e78392e3e91",
         "badgeName": "bull_two"
+    },
+    {
+        "icon": "Pill",
+        "category": "Medication",
+        "subcategory": "Medication",
+        "types": [
+            "ner"
+        ],
+        "tag": "MEDICATION",
+        "tasks": [
+            "drug"
+        ],
+        "kb_id": null,
+        "uuid": "ey6d7dj1-01hd-3cff-bef1-1c2d353c2f32",
+        "short_description": "Anything having to do with a medication",
+        "description": "Anything having to do with a medication.",
+        "text": "Medication related",
+        "instructions": "Highlight the name of all text relevant to a medication.",
+        "substitutionId": "gu1d8d64-0077-4c91-990d-61b15bb2n95b",
+        "badgeName": "bull_two"
+    },
+    {
+        "icon": "RememberMeOutlined",
+        "category": "Medication",
+        "subcategory": "Drug",
+        "types": [
+            "ner"
+        ],
+        "tag": "DRUG",
+        "tasks": [
+            "drug"
+        ],
+        "kb_id": null,
+        "uuid": "a2d51ff8-7560-4ccf-bef1-3c3d4d4c2f32",
+        "short_description": "Pharmaceutical Name",
+        "description": "This is the name of a pharmaceutical drug.",
+        "text": "Drug name",
+        "instructions": "Highlight the name of the drug itself.",
+        "substitutionId": "ee1d8d61-007d-4c92-9d04-51a15bb2a95b",
+        "badgeName": "bull_two"
+    },
+    {
+        "icon": "ClockCircleOutlined",
+        "category": "Medication",
+        "subcategory": "Frequency",
+        "types": [
+            "ner"
+        ],
+        "tag": "FREQUENCY",
+        "tasks": [
+            "drug"
+        ],
+        "kb_id": null,
+        "uuid": "64f1c937-1d72-40a8-86fb-b36e5f98b5fc",
+        "short_description": "Frequency",
+        "description": "This is the number of times a medication is taken within a specific period of time.",
+        "text": "Frequency",
+        "instructions": "Highlight the frequency of medication use.",
+        "substitutionId": "78c0b1a9-5808-4bcf-a836-c49be2d2e7cb",
+        "badgeName": "bull_two"
+    },
+    {
+        "icon": "CalendarOutlined",
+        "category": "Medication",
+        "subcategory": "Duration",
+        "types": [
+            "ner"
+        ],
+        "tag": "DURATION",
+        "tasks": [
+            "drug"
+        ],
+        "kb_id": null,
+        "uuid": "1b0d3f03-1a3a-4fb3-9442-c2d708b7d8e1",
+        "short_description": "Duration",
+        "description": "This is the length of time a medication should be taken.",
+        "text": "Duration",
+        "instructions": "Highlight the duration of medication use.",
+        "substitutionId": "f5e33fa5-71a2-4f88-a267-6d14c48f89a8",
+        "badgeName": "bull_two"
+    },
+    {
+        "icon": "FileOutlined",
+        "category": "Medication",
+        "subcategory": "Reason",
+        "types": [
+            "ner"
+        ],
+        "tag": "REASON",
+        "tasks": [
+            "drug"
+        ],
+        "kb_id": null,
+        "uuid": "6568b19c-24c1-4961-bfa7-af8b2c554dfc",
+        "short_description": "Reason",
+        "description": "This is the medical condition or symptom for which the medication is prescribed.",
+        "text": "Reason for medication",
+        "instructions": "Highlight the reason for medication use.",
+        "substitutionId": "5c5b5f5b-e1d4-4e29-a099-3f4404abaf1c",
+        "badgeName": "bull_two"
+    },
+    {
+        "icon": "EnvironmentOutlined",
+        "category": "Medication",
+        "subcategory": "Route",
+        "types": [
+            "ner"
+        ],
+        "tag": "ROUTE",
+        "tasks": [
+            "drug"
+        ],
+        "kb_id": null,
+        "uuid": "f53b4c38-4f10-4ce4-a4e4-8ec57c67d12f",
+        "short_description": "Route",
+        "description": "This is the method by which the medication is taken or administered.",
+        "text": "Route of administration",
+        "instructions": "Highlight the route of administration for the medication.",
+        "substitutionId": "aa8b361e-bf99-4de1-a166-1b9c60bfe10c",
+        "badgeName": "bull_two"
+    },
+    {
+        "icon": "AlertOutlined",
+        "category": "Medication",
+        "subcategory": "Adverse Event",
+        "types": [
+            "ner"
+        ],
+        "tag": "ADE",
+        "tasks": [
+            "drug"
+        ],
+        "kb_id": null,
+        "uuid": "422f49e4-41c4-4d53-9c0b-1d4814e1cf2f",
+        "short_description": "Adverse Event",
+        "description": "This is a negative or unintended reaction to a medication.",
+        "text": "Adverse event",
+        "instructions": "Highlight the negative or unintended reaction to the medication.",
+        "substitutionId": "98b832c8-95eb-42c2-b48a-3690b5969da3",
+        "badgeName": "bull_two"
+    },
+    {
+        "icon": "ExperimentOutlined",
+        "category": "Medication",
+        "subcategory": "Form",
+        "types": [
+            "ner"
+        ],
+        "tag": "FORM",
+        "tasks": [
+            "drug"
+        ],
+        "kb_id": null,
+        "uuid": "a7a69d9c-bf7d-4e60-bd7b-b46dfb8a7eb1",
+        "short_description": "Form",
+        "description": "This is the physical form in which the medication is available.",
+        "text": "Form of medication",
+        "instructions": "Highlight the physical form in which the medication is available.",
+        "substitutionId": "c92527af-3e2b-4647-9f9d-c6a3c6bfa959",
+        "badgeName": "bull_two"
+    },
+    {
+        "icon": "LineHeightOutlined",
+        "category": "Medication",
+        "subcategory": "Strength",
+        "types": [
+            "ner"
+        ],
+        "tag": "STRENGTH",
+        "tasks": [
+            "drug"
+        ],
+        "kb_id": null,
+        "uuid": "e311f714-59e5-47a5-8c5d-6c92f6a5345e",
+        "short_description": "Strength",
+        "description": "This is the amount or concentration of the active ingredient in the medication.",
+        "text": "Strength of medication",
+        "instructions": "Highlight the amount or concentration of the active ingredient in the medication.",
+        "substitutionId": "3f2b3e56-f695-4d22-bf17-8ecb26c4d810",
+        "badgeName": "bull_two"
+    },
+    {
+        "icon": "LineHeightOutlined",
+        "category": "Medication",
+        "subcategory": "Dosage",
+        "types": [
+            "ner"
+        ],
+        "tag": "DOSAGE",
+        "tasks": [
+            "drug"
+        ],
+        "kb_id": null,
+        "uuid": "d46t1f714-59e5-47a5-8c5d-6c9286ai345e",
+        "short_description": "Strength",
+        "description": "This is the amount of the medication.",
+        "text": "Dosage of medication",
+        "instructions": "Highlight the amount or concentration of the active ingredient in the medication.",
+        "substitutionId": "gf2bge56-f695-4d22-bf17-8ecb26c88990",
+        "badgeName": "bull_two"
     }
 ]

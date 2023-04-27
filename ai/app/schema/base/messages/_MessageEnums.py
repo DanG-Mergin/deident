@@ -26,6 +26,7 @@ class MsgType(str, Enum):
 
 class MsgTask(str, Enum):
     deid = "deID"
+    drug = "drug"
 
 
 class MsgEntity(str, Enum):
@@ -42,6 +43,7 @@ class MsgEntity(str, Enum):
 class MsgEntity_Type(str, Enum):
     ner = "ner"
     deid = "deID"
+    drug = "drug"
     dictionary = "dictionary"
 
 

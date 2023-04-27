@@ -73,7 +73,9 @@ async def get_external_docs() -> NER_Corpus:
     return i2b2
 
 
-async def get_internal_corpus(doc_types: List[str], tasks: List[str]) -> NER_Corpus:
+async def get_internal_corpus(
+    doc_types: List[str], tasks: List[str], entity_type: MsgEntity_Type, **kwargs
+) -> NER_Corpus:
     _doc_query = {
         "query": {
             "bool": {
@@ -87,17 +89,46 @@ async def get_internal_corpus(doc_types: List[str], tasks: List[str]) -> NER_Cor
     # 1. get all documents that match the doc_types and tasks
     _docs_req = _ElasticRequest(
         msg_entity=MsgEntity.corpus,
-        msg_entity_type=MsgEntity_Type.deid,
+        msg_entity_type=entity_type,
         msg_action=MsgAction.search,
         query=_doc_query,
+        data={**kwargs},
     )
     _docs_res = await request.make_request(_docs_req, res_cls=_Response, timeout=60)
     return NER_Corpus(**_docs_res.data.items[0])
 
 
+# TODO: refactor all teh things... this file is a horrendous mess
+async def get_drugs_corpus(
+    doc_types: List[str], tasks: List[str], entity_type: MsgEntity_Type, **kwargs
+):
+    _doc_query = {
+        "query": {
+            "bool": {
+                "must": [
+                    {"terms": {"doc_types": doc_types}},
+                    # {"terms": {"tasks": ["ner", "deid"]}},
+                ]
+            }
+        }
+    }
+    # 1. get all documents that match the doc_types and tasks
+    _docs_req = _ElasticRequest(
+        msg_entity=MsgEntity.corpus,
+        msg_entity_type=entity_type,
+        msg_action=MsgAction.search,
+        query=_doc_query,
+        data={**kwargs},
+    )
+    _docs_res = await request.make_request(_docs_req, res_cls=_Response, timeout=60)
+    return _docs_res.data.items[0]["docs"]
+
+
 # TODO: this should be a service?
-async def get_corpus(doc_types: List[str], tasks: List[str]):
-    _corpus = await get_internal_corpus(doc_types, tasks)
+async def get_corpus(
+    doc_types: List[str], tasks: List[str], entity_type: MsgEntity_Type, **kwargs
+):
+    _corpus = await get_internal_corpus(doc_types, tasks, entity_type, **kwargs)
 
     # _corpus = await get_external_docs()
 
@@ -108,10 +139,14 @@ async def get_corpus(doc_types: List[str], tasks: List[str]):
     return _corpus
 
 
-async def _add_labels_to_model(model):
+async def _add_labels_to_model(model, categories: List[str]):
     # TODO: this should be model and component specific
     # TODO: we're currently only using the "category" label
-    labels = await label_svc.get_categories()
+    if not categories:
+        labels = await label_svc.get_categories()
+    else:
+        labels = await label_svc.get_subcat_by_cat(categories)
+
     ner_comp = model.get_pipe("ner")
     ner_labels_in_model = list(ner_comp.labels)
     labels_to_add = [l for l in labels if l not in ner_labels_in_model]
@@ -232,7 +267,7 @@ def evaluate(nlp, test_data):
 import string
 
 
-def check_annotations(examples):
+def check_annotations(examples, punct=string.punctuation):
     whitespace_rejects = []
     punctuation_rejects = []
     for text, annotations in examples:
@@ -244,10 +279,7 @@ def check_annotations(examples):
             ):
                 # print(f"Entity '{entity_text}' has leading or trailing whitespace.")
                 whitespace_rejects.append((start, end, label))
-            if (
-                entity_text[0] in string.punctuation
-                or entity_text[-1] in string.punctuation
-            ):
+            if entity_text[0] in punct or entity_text[-1] in punct:
                 # print(f"Entity '{entity_text}' has leading or trailing punctuation.")
                 punctuation_rejects.append((start, end, label))
 
@@ -256,8 +288,9 @@ def check_annotations(examples):
     )
 
 
-def trim_annotations(examples):
+def trim_annotations(examples, punct=string.punctuation):
     new_examples = []
+
     # TODO: this label check doesn't belong here:
     label_set = set()
     for text, annotations in examples:
@@ -265,16 +298,17 @@ def trim_annotations(examples):
         for start, end, label in annotations["entities"]:
             label_set.add(label)
             entity_text = text[start:end]
-            if (
-                entity_text[0] in string.whitespace
-                or entity_text[0] in string.punctuation
-            ):
+            if entity_text[0] in string.whitespace or entity_text[0] in punct:
                 start = start + 1
-            if (
-                entity_text[-1] in string.whitespace
-                or entity_text[-1] in string.punctuation
-            ):
+            if entity_text[-1] in string.whitespace or entity_text[-1] in punct:
                 end = end - 1
+
+            if end - start < 1:
+                # NOTE: there are instances of single periods being listed
+                # as 'Route"s etc.
+                continue
+            # if end - start < 2:
+            #     continue
             new_annotations.append((start, end, label))
         new_examples.append((text, {"entities": new_annotations}))
 
@@ -327,12 +361,81 @@ def convert(examples):
                 msg = f"Skipping entity [{start}, {end}, {label}] in the following text because the character span '{doc.text[start:end]}' does not align with token boundaries:\n\n{repr(text)}\n"
                 print(msg)
             else:
-                ents.append(span)
-        doc.ents = ents
-        db.add(doc)
+                try:
+                    ents.append(span)
+                except Exception as e:
+                    blep = doc.text[start:end]
+                    print(blep)
+                    print(e)
+        try:
+            doc.ents = ents
+            db.add(doc)
+        except Exception as e:
+            print(e)
     return db
     # db.to_disk(output_path)
     # save_doc_bin(db)
+
+
+from collections import OrderedDict
+
+
+def get_overlapping_entities(annotations):
+    # # Convert annotations to tuples: (start_char, end_char, text)
+    # annotations = [(int(x["start_char"]), int(x["end_char"]), x["text"]) for x in annotations]
+
+    sorted_annotations = sorted(annotations, key=lambda x: x[0])
+    groups = OrderedDict()
+    max_end = float("-inf")
+    current_group = []
+    overlapping = []
+
+    for i, obj in enumerate(sorted_annotations):
+        if obj[1] > max_end:
+            max_end = obj[1]
+
+        if i == len(sorted_annotations) - 1 or max_end < sorted_annotations[i + 1][0]:
+            # If the current object doesn't overlap with the next object, add the current group to the groups map
+            current_group.append(obj)
+            group_start = current_group[0][0]
+            groups[current_group[0][0]] = {
+                "annotations": current_group,
+                "start_char": current_group[0][0],
+                "end_char": max_end,
+            }
+            current_group = []
+            max_end = float("-inf")
+        else:
+            # If the current object overlaps with the next object, add it to the current group
+            current_group.append(obj)
+            overlapping.append(group_start)
+
+    return [groups[x] for x in overlapping]
+
+
+# TODO: use span_cat or train separate models per label
+# def handle_overlaps(examples):
+#     grouped = []
+#     for text, annotations in examples:
+#         overlapped = get_overlapping_entities(annotations["entities"])
+#         if len(overlapped):
+#             grouped.append((text, {"entities": overlapped}))
+#     # grouped = [get_overlapping_entities(e["entities"]) for text, e in examples]
+#     # overlap_dict = get_overlapping_entities(examples.annotations)
+#     whitespace_rejects = []
+#     punctuation_rejects = []
+#     for text, annotations in examples:
+#         for start, end, label in annotations["entities"]:
+#             entity_text = text[start:end]
+#             if (
+#                 entity_text[0] in string.whitespace
+#                 or entity_text[-1] in string.whitespace
+#             ):
+#                 # print(f"Entity '{entity_text}' has leading or trailing whitespace.")
+#                 whitespace_rejects.append((start, end, label))
+#             if entity_text[0] in punct or entity_text[-1] in punct:
+#                 # print(f"Entity '{entity_text}' has leading or trailing punctuation.")
+#                 punctuation_rejects.append((start, end, label))
 
 
 async def train_from_scratch():
@@ -343,7 +446,9 @@ async def train_from_scratch():
     # await _add_labels_to_model(nlp)
 
     corpus = await get_corpus(
-        ["discharge_notes", "discharge_summary", "admission_notes"], ["ner"]
+        ["discharge_notes", "discharge_summary", "admission_notes"],
+        ["ner"],
+        MsgEntity_Type.deid,
     )
     corpus_docs = corpus.to_training_data()
 
@@ -363,28 +468,57 @@ async def train_from_scratch():
     test_db = convert(test_data)
     save_doc_bin(test_db, "de-id-test")
 
-    # train_examples = [
-    #     Example.from_dict(nlp(text), annotations) for text, annotations in train_data
-    # ]
-    # test_examples = [
-    #     Example.from_dict(nlp(text), annotations) for text, annotations in test_data
-    # ]
 
-    # optimizer = nlp.begin_training()
-    # for i in range(n_epochs):
-    #     random.shuffle(train_examples)
-    #     batches = minibatch(train_examples, size=compounding(4.0, 32.0, 1.001))
-    #     losses = {}
-    #     for batch in batches:
-    #         texts, annotations = zip(*batch)
-    #         nlp.update(texts, annotations, sgd=optimizer, drop=0.35, losses=losses)
+async def train_med_ner():
+    labels = [
+        "drug",
+        "frequency",
+        "duration",
+        "reason",
+        "route",
+        "ade",
+        "form",
+        "strength",
+        "dosage",
+    ]
+    nlp = spacy.blank("en")
 
-    #     print(f"Losses at iteration {i}: {losses}")
+    nlp.add_pipe("ner", last=True)
+    # await _add_labels_to_model(nlp, "Medication")
+    nlp = spacy.blank("en")
 
-    # # nlp.to_disk("/path/to/your/model")
+    corpora_by_labels = await get_drugs_corpus(
+        ["discharge_notes", "discharge_summary", "admission_notes"],
+        ["ner"],
+        MsgEntity_Type.drug,
+        labels=labels,
+    )
+    punct = string.punctuation
+    punct = punct.replace("()", "")
+    punct = punct.replace("%", "")
+    punct = punct.replace("]", "")
+    punct = punct.replace("[", "")
 
-    # ner_scores = evaluate(nlp, test_examples)
-    # print(ner_scores)
+    for label in labels:
+        corpus = corpora_by_labels[label]
+        corpus = NER_Corpus(docs=corpora_by_labels[label]["docs"])
+        corpus_docs = corpus.to_training_data()
+
+        cleaned_docs = trim_annotations(corpus_docs, punct)
+        check_annotations(cleaned_docs, punct)
+        cleaned_docs = filter_annotations(cleaned_docs)
+        check_annotations(cleaned_docs, punct)
+
+        # TODO: use span_cat or train separate models per label
+        # handle_overlaps(cleaned_docs)
+
+        train_data, test_data = _split_data(corpus_docs, split=0.8)
+
+        train_db = convert(train_data)
+        save_doc_bin(train_db, f"{label}/train")
+
+        test_db = convert(test_data)
+        save_doc_bin(test_db, f"{label}/test")
 
 
 # TODO: should be able to get spacy docbins and add to them
