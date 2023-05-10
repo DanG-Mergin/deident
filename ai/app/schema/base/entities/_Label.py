@@ -2,6 +2,7 @@ from typing import List, Optional, Union
 from uuid import UUID, uuid4
 from pydantic import BaseModel, Field
 
+
 # TODO: this is really a UI Label, not a base Label
 class _Label(BaseModel):
     model_name: str = "label"
@@ -11,7 +12,7 @@ class _Label(BaseModel):
     text: str
     types: List[str]
     tasks: List[str]
-    substitutionId: UUID
+    substitutionId: Union[str, None] = None
     category: str
     subcategory: str
     tag: str

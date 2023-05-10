@@ -7,7 +7,7 @@ ai/app/services/spacy/deid/
 *.spacy
 private/
 i2b2/
-private/i2b2
+private/*
 n2c2_2018/
 
 # IDE

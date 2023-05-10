@@ -19,12 +19,19 @@ _es = get_elasticsearch_client()
 async def init_indexes(es=_es):
     return (
         await create_labels_index(es),
-        await create_substitutions_index(es),
-        await create_corpus_index(es),
         await create_doc_index(es),
         await create_annotation_index(es),
         await init_data(es),
     )
+    # TODO: currently an issue with the substitution index init
+    # return (
+    #     await create_labels_index(es),
+    #     await create_substitutions_index(es),
+    #     await create_corpus_index(es),
+    #     await create_doc_index(es),
+    #     await create_annotation_index(es),
+    #     await init_data(es),
+    # )
 
 
 # labels index mapping
@@ -192,16 +199,16 @@ async def init_data(es=_es):
     if labels_count["count"] == 0:
         await _create_labels(es)
     # Check if any documents exist in the "substitution" index
-    substitution_count = await es.count(index="substitution")
-    if substitution_count["count"] == 0:
-        # If no documents are found, initialize the index
-        await asyncio.gather(
-            _create_contacts(es),
-            _create_ids(es),
-            _create_locations(es),
-            _create_names(es),
-            _create_professions(es),
-        )
+    # substitution_count = await es.count(index="substitution")
+    # if substitution_count["count"] == 0:
+    #     # If no documents are found, initialize the index
+    #     await asyncio.gather(
+    #         _create_contacts(es),
+    #         _create_ids(es),
+    #         _create_locations(es),
+    #         _create_names(es),
+    #         _create_professions(es),
+    #     )
     return None
 
 

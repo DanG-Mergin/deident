@@ -1,7 +1,7 @@
 [
     {
         "icon": "DataObject",
-        "uuid": "44cecac2-f305-44b3-9627-4f7d6c12db3b",
+        "uuid": "fa36745d-c7c7-4727-9905-0940320ef782",
         "kb_id": "0",
         "description": "This is a fake label for generic Entities",
         "text": "Entity",
@@ -32,7 +32,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "d0b5a46b-e5f7-4d77-9d13-d137e875adc2",
+        "uuid": "a4635b16-4f2c-45bf-90df-ab4ef942b937",
         "short_description": "Date of birth",
         "description": "This represents the day someone was born",
         "text": "D.O.B.",
@@ -53,7 +53,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "a8b5a46b-e5f7-4d77-9d13-d137e875adc2",
+        "uuid": "5dc2e225-6648-482c-968c-598286cd87e2",
         "short_description": "Age of the patient",
         "description": "This represents the day someone was born",
         "text": "D.O.B.",
@@ -74,7 +74,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "e0b5a46b-e5f7-4d77-9d13-d137e875adc2",
+        "uuid": "1bf5f74c-64e3-473b-9d8f-9a12ab4fe812",
         "short_description": "Death date",
         "description": "This represents the day someone passed away",
         "text": "D.O.D.",
@@ -95,7 +95,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "f0b5a46b-e5f7-4d77-9d13-d137e875adc2",
+        "uuid": "f21336dc-17cf-4b27-94e8-4885bd0d86e2",
         "short_description": "Admission date",
         "description": "This represents the day someone was admitted to a facility",
         "text": "D.O.A.",
@@ -116,7 +116,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "49b5a46b-e5f7-4d77-9d13-d137e875adc2",
+        "uuid": "37b6cf94-70e9-4b42-b742-d598734b5b45",
         "short_description": "Generic date",
         "description": "This is a date",
         "text": "Date",
@@ -137,7 +137,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "10b5a46b-e5f7-4d77-9d13-d137e875adc2",
+        "uuid": "8ef18f82-5d36-416e-bd27-6d3da777258a",
         "short_description": "Discharge date",
         "description": "This represents the day someone was discharged from a facility",
         "text": "Discharge date",
@@ -158,7 +158,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "30b5a46b-e5f7-4d77-9d13-d137e875adc2",
+        "uuid": "a7523bb7-e238-4f29-94e5-406580f9a7a9",
         "short_description": "Encounter date",
         "description": "This represents the day an encounter occurred",
         "text": "Encounter date",
@@ -179,7 +179,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "40b5a46b-e5f7-4d77-9d13-d137e875adc2",
+        "uuid": "259ab686-f616-484f-8e54-63e9cba7430c",
         "short_description": "Onset date",
         "description": "This represents the day an onset of a condition occurred",
         "text": "Onset date",
@@ -200,7 +200,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "50b5a46b-e5f7-4d77-9d13-d137e875adc2",
+        "uuid": "0be15c16-8b8b-4f75-93e3-002b6a38cfa6",
         "short_description": "End date",
         "description": "This represents the end date of a condition or event",
         "text": "End date",
@@ -221,7 +221,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "7cf57950-0feb-41cc-ab60-d270e1a3f6e9",
+        "uuid": "3932b18e-2bcb-4580-8336-bd2a56af0dc0",
         "short_description": "Patient name",
         "description": "This represents the name of a patient",
         "text": "Patient name",
@@ -242,7 +242,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "151fc6a4-495a-4c90-8845-03a3aeccb3c7",
+        "uuid": "612127e2-4b15-4ade-9dfd-8b40be2f220b",
         "short_description": "Other name",
         "description": "For use when no more appropriate category exists",
         "text": "Name",
@@ -263,7 +263,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "969fc6a4-495a-4c90-8845-03a3aeccb3c7",
+        "uuid": "d9670ed7-58e0-43a5-aac5-afd41e9e5517",
         "short_description": "Provider name",
         "description": "This represents the name of a provider",
         "text": "Provider name",
@@ -289,7 +289,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "1a247450-1747-437c-a25e-4a569927cb4c",
+        "uuid": "b33fd756-abf1-4481-9dae-c11cf21f5491",
         "short_description": "Username",
         "description": "This represents a username",
         "text": "Username",
@@ -310,7 +310,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "b661b6e3-0872-42b7-8337-d8cf80c5608f",
+        "uuid": "dadf4d1f-dc89-452f-a3e2-4de3da5ff3bb",
         "short_description": "Profession",
         "description": "This represents a profession",
         "text": "Profession",
@@ -331,7 +331,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "169fc6a4-495a-4c90-8845-03a3aeccb3c7",
+        "uuid": "9adfb7b7-332e-43bd-82ed-ec5802ea1e8d",
         "short_description": "Other location",
         "description": "For use when no more appropriate category exists",
         "text": "Location",
@@ -352,7 +352,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "0b0be22c-dd25-4e92-9501-0193730b2e2a",
+        "uuid": "89b14c1c-5217-448e-81d4-2796b9cf6cf4",
         "short_description": "Room",
         "description": "This represents a room number",
         "text": "Room",
@@ -373,7 +373,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "e85b6604-fb88-46c0-8da9-b60e429b67d2",
+        "uuid": "75ad0a68-5ec4-43b6-a83d-9edd65e5e1e8",
         "short_description": "Department",
         "description": "This represents a department name",
         "text": "Department",
@@ -394,7 +394,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "890fbeaf-ac2c-4666-b2c6-da08d33b90bb",
+        "uuid": "0e4ae99a-3746-4dbf-b394-23c3fc546c61",
         "short_description": "Hospital",
         "description": "This represents a hospital name",
         "text": "Hospital",
@@ -415,7 +415,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "3c89f4dc-54b3-4364-874a-62235262e852",
+        "uuid": "54f2fed0-382e-4691-9f42-f82a65de2172",
         "short_description": "Organization",
         "description": "This represents an organization name",
         "text": "Organization",
@@ -436,7 +436,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "a43128da-ca21-498a-bc7e-3c79c61066c0",
+        "uuid": "7382f243-4d86-44b9-946f-233aa4343598",
         "short_description": "Street",
         "description": "This represents a street name",
         "text": "Street",
@@ -457,7 +457,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "d47e51df-3f2d-4dc8-a0a7-46ab775a4dec",
+        "uuid": "b8a39f2d-e40e-4f2f-83b7-839a609398b4",
         "short_description": "City",
         "description": "This represents a city name",
         "text": "City",
@@ -478,7 +478,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "971b3569-48b5-4156-a172-d0968ad3d5a4",
+        "uuid": "14d473e5-61b8-4b73-ad73-02f0cadb1b33",
         "short_description": "State",
         "description": "This represents a state name",
         "text": "State",
@@ -499,7 +499,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "b9dc1cc4-1182-4196-882c-38546d950419",
+        "uuid": "d9e142ce-ab9a-4f75-ac8e-45f85de47764",
         "short_description": "Country",
         "description": "This represents a country name",
         "text": "Country",
@@ -520,7 +520,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "289af975-5366-4d01-ac04-0d394d44fdf6",
+        "uuid": "843c07b4-b14a-41e8-9117-d73d6b0da57a",
         "short_description": "Zip code",
         "description": "This represents a zip code",
         "text": "Zip code",
@@ -541,7 +541,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "7613eaf4-7613-4e9f-9b8d-bba653a4e970",
+        "uuid": "137e824e-017a-40a8-8b3d-0d60f3ac00b8",
         "short_description": "Other contact",
         "description": "This represents a generic unspecified contact",
         "text": "Other contact",
@@ -562,7 +562,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "b8d6eaf4-7613-4e9f-9b8d-bba653a4e970",
+        "uuid": "57301940-7d01-4420-a884-6fd2d56fa264",
         "short_description": "Phone number",
         "description": "This represents a phone number",
         "text": "Phone number",
@@ -583,7 +583,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "0ddc3377-b63a-415e-afb4-e4cee8335468",
+        "uuid": "3ec6c2bf-46ff-4791-910c-3b847847fd05",
         "short_description": "Email",
         "description": "This represents an email address",
         "text": "Email",
@@ -604,7 +604,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "c426b5f0-6d77-491d-8d1f-59bad7496c11",
+        "uuid": "bb424a70-ca11-499e-9aa9-61fc0c92ed4a",
         "short_description": "URL",
         "description": "This represents a URL",
         "text": "URL",
@@ -625,7 +625,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "ad989a4c-6f42-460f-9dbc-73923a8cf2d2",
+        "uuid": "5d336dc4-8818-4efd-8cd6-a73c5aaeef65",
         "short_description": "IP address",
         "description": "This represents an IP address",
         "text": "IP address",
@@ -646,7 +646,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "c42381eb-3baf-4df9-9f83-8d34a2c7e631",
+        "uuid": "79b32dd8-fb8d-4e19-95ec-aa5dde44d1e8",
         "short_description": "Other ID",
         "description": "This represents an ID that isn't otherwise specified",
         "text": "Other ID",
@@ -667,7 +667,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "554f15a1-908b-4761-98ea-d184a79cceb4",
+        "uuid": "16563025-5491-4015-bfee-8b8e09361fcd",
         "short_description": "Social Security Number",
         "description": "This represents a Social Security Number",
         "text": "Social Security Number",
@@ -688,7 +688,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "ed12dcd7-c94b-4319-b742-fbfcbbd3ed94",
+        "uuid": "d76b2d05-12ad-4df2-bbc5-085bf6f586fc",
         "short_description": "Medical record number",
         "description": "This represents a medical record number",
         "text": "Medical record number",
@@ -709,7 +709,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "6e209a68-8ebd-4589-b409-1b75e3c959da",
+        "uuid": "c40cbcac-25de-4dbe-b617-9e6334b58f72",
         "short_description": "Health plan number",
         "description": "This represents a health plan number",
         "text": "Health plan number",
@@ -731,7 +731,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "3425b926-5472-4469-80d9-8a8143b5fa35",
+        "uuid": "350de02f-d4f5-424d-98cb-a6e157a59a69",
         "short_description": "Account number",
         "description": "This represents an account number",
         "instructions": "Highlight the entire account number",
@@ -751,7 +751,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "68985b26-1ad0-4a90-b550-3f15b96d3130",
+        "uuid": "65a35d92-5abe-41a2-a257-40d6ef7cd560",
         "short_description": "License number",
         "description": "This represents a license number",
         "text": "License number",
@@ -772,7 +772,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "1f5ed142-1a4a-46e0-bf2b-6aed46cc4a8c",
+        "uuid": "76310d2a-b730-475d-b4d5-b125c31b2eae",
         "short_description": "Vehicle number",
         "description": "This represents a vehicle number",
         "text": "Vehicle number",
@@ -793,7 +793,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "41eeb658-4306-411e-ae47-4d8adf3580e2",
+        "uuid": "26e1714c-ceb1-4735-98ea-7da77d2026a9",
         "short_description": "Device ID",
         "description": "This represents a device ID",
         "text": "Device ID",
@@ -814,7 +814,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "f829c62c-4a83-4e09-adb8-5ef76deb6334",
+        "uuid": "43701bfd-3895-4e5d-bbd1-30477ff3e37e",
         "short_description": "Biometric ID",
         "description": "This represents a biometric ID",
         "text": "Biometric ID",
@@ -835,7 +835,7 @@
             "deID"
         ],
         "kb_id": null,
-        "uuid": "64d5194b-d2ac-4b74-b21c-d95e75b8546a",
+        "uuid": "d701fedb-8d15-446b-8ac6-0d516f349cd0",
         "short_description": "ID number",
         "description": "This represents an ID number",
         "text": "ID number",
@@ -845,8 +845,8 @@
     },
     {
         "icon": "Pill",
-        "category": "Medication",
-        "subcategory": "Medication",
+        "category": "MEDICATION",
+        "subcategory": "MEDICATION",
         "types": [
             "ner"
         ],
@@ -855,18 +855,18 @@
             "drug"
         ],
         "kb_id": null,
-        "uuid": "ey6d7dj1-01hd-3cff-bef1-1c2d353c2f32",
+        "uuid": "4aa5bb89-486d-44fa-a206-f747a0c9ac74",
         "short_description": "Anything having to do with a medication",
         "description": "Anything having to do with a medication.",
         "text": "Medication related",
         "instructions": "Highlight the name of all text relevant to a medication.",
-        "substitutionId": "gu1d8d64-0077-4c91-990d-61b15bb2n95b",
+        "substitutionId": "373a4f0b-a578-4ef0-8868-c652933e79ff",
         "badgeName": "bull_two"
     },
     {
-        "icon": "RememberMeOutlined",
-        "category": "Medication",
-        "subcategory": "Drug",
+        "icon": "Pill",
+        "category": "DRUG",
+        "subcategory": "DRUG",
         "types": [
             "ner"
         ],
@@ -875,18 +875,18 @@
             "drug"
         ],
         "kb_id": null,
-        "uuid": "a2d51ff8-7560-4ccf-bef1-3c3d4d4c2f32",
+        "uuid": "2fd196e7-8ea5-4c16-b672-988e78d6b936",
         "short_description": "Pharmaceutical Name",
         "description": "This is the name of a pharmaceutical drug.",
         "text": "Drug name",
         "instructions": "Highlight the name of the drug itself.",
-        "substitutionId": "ee1d8d61-007d-4c92-9d04-51a15bb2a95b",
+        "substitutionId": "2eeb594b-3218-4ddf-b340-9ee796e9ccd9",
         "badgeName": "bull_two"
     },
     {
         "icon": "ClockCircleOutlined",
-        "category": "Medication",
-        "subcategory": "Frequency",
+        "category": "MEDICATION",
+        "subcategory": "FREQUENCY",
         "types": [
             "ner"
         ],
@@ -895,18 +895,18 @@
             "drug"
         ],
         "kb_id": null,
-        "uuid": "64f1c937-1d72-40a8-86fb-b36e5f98b5fc",
+        "uuid": "a23cd22d-48fa-407e-95e8-964514a0ade2",
         "short_description": "Frequency",
         "description": "This is the number of times a medication is taken within a specific period of time.",
         "text": "Frequency",
         "instructions": "Highlight the frequency of medication use.",
-        "substitutionId": "78c0b1a9-5808-4bcf-a836-c49be2d2e7cb",
+        "substitutionId": "f51583ed-484a-4d10-bdac-861d07af7bdb",
         "badgeName": "bull_two"
     },
     {
         "icon": "CalendarOutlined",
-        "category": "Medication",
-        "subcategory": "Duration",
+        "category": "MEDICATION",
+        "subcategory": "DURATION",
         "types": [
             "ner"
         ],
@@ -915,18 +915,18 @@
             "drug"
         ],
         "kb_id": null,
-        "uuid": "1b0d3f03-1a3a-4fb3-9442-c2d708b7d8e1",
+        "uuid": "75e83ff0-be99-4889-928a-aef84497009a",
         "short_description": "Duration",
         "description": "This is the length of time a medication should be taken.",
         "text": "Duration",
         "instructions": "Highlight the duration of medication use.",
-        "substitutionId": "f5e33fa5-71a2-4f88-a267-6d14c48f89a8",
+        "substitutionId": "281cba33-d471-483d-ba5c-6f81499f9282",
         "badgeName": "bull_two"
     },
     {
         "icon": "FileOutlined",
-        "category": "Medication",
-        "subcategory": "Reason",
+        "category": "MEDICATION",
+        "subcategory": "REASON",
         "types": [
             "ner"
         ],
@@ -935,18 +935,18 @@
             "drug"
         ],
         "kb_id": null,
-        "uuid": "6568b19c-24c1-4961-bfa7-af8b2c554dfc",
+        "uuid": "87dcfdca-7eb7-426d-b9ab-95bab64a9ee7",
         "short_description": "Reason",
         "description": "This is the medical condition or symptom for which the medication is prescribed.",
         "text": "Reason for medication",
         "instructions": "Highlight the reason for medication use.",
-        "substitutionId": "5c5b5f5b-e1d4-4e29-a099-3f4404abaf1c",
+        "substitutionId": "cbfb242b-518a-4d5f-a9a7-eef473751c9d",
         "badgeName": "bull_two"
     },
     {
         "icon": "EnvironmentOutlined",
-        "category": "Medication",
-        "subcategory": "Route",
+        "category": "MEDICATION",
+        "subcategory": "ROUTE",
         "types": [
             "ner"
         ],
@@ -955,18 +955,18 @@
             "drug"
         ],
         "kb_id": null,
-        "uuid": "f53b4c38-4f10-4ce4-a4e4-8ec57c67d12f",
+        "uuid": "ab119561-c83b-484b-8fe5-5af06089bb0a",
         "short_description": "Route",
         "description": "This is the method by which the medication is taken or administered.",
         "text": "Route of administration",
         "instructions": "Highlight the route of administration for the medication.",
-        "substitutionId": "aa8b361e-bf99-4de1-a166-1b9c60bfe10c",
+        "substitutionId": "27acc493-1e32-4c87-8d32-8190b6bdcc31",
         "badgeName": "bull_two"
     },
     {
         "icon": "AlertOutlined",
-        "category": "Medication",
-        "subcategory": "Adverse Event",
+        "category": "MEDICATION",
+        "subcategory": "ADVERSE EVENT",
         "types": [
             "ner"
         ],
@@ -975,18 +975,18 @@
             "drug"
         ],
         "kb_id": null,
-        "uuid": "422f49e4-41c4-4d53-9c0b-1d4814e1cf2f",
+        "uuid": "ba9ea012-08ed-45e5-9cb3-3139ecfe01fa",
         "short_description": "Adverse Event",
         "description": "This is a negative or unintended reaction to a medication.",
         "text": "Adverse event",
         "instructions": "Highlight the negative or unintended reaction to the medication.",
-        "substitutionId": "98b832c8-95eb-42c2-b48a-3690b5969da3",
+        "substitutionId": "bd167deb-0bff-49a1-addd-8fd6e5166b0f",
         "badgeName": "bull_two"
     },
     {
         "icon": "ExperimentOutlined",
-        "category": "Medication",
-        "subcategory": "Form",
+        "category": "MEDICATION",
+        "subcategory": "FORM",
         "types": [
             "ner"
         ],
@@ -995,18 +995,18 @@
             "drug"
         ],
         "kb_id": null,
-        "uuid": "a7a69d9c-bf7d-4e60-bd7b-b46dfb8a7eb1",
+        "uuid": "b7eb9839-8f46-4bec-b343-bf4293f528f0",
         "short_description": "Form",
         "description": "This is the physical form in which the medication is available.",
         "text": "Form of medication",
         "instructions": "Highlight the physical form in which the medication is available.",
-        "substitutionId": "c92527af-3e2b-4647-9f9d-c6a3c6bfa959",
+        "substitutionId": "82c72932-86d4-4521-816b-be79b8ee967d",
         "badgeName": "bull_two"
     },
     {
         "icon": "LineHeightOutlined",
-        "category": "Medication",
-        "subcategory": "Strength",
+        "category": "MEDICATION",
+        "subcategory": "STRENGTH",
         "types": [
             "ner"
         ],
@@ -1015,18 +1015,18 @@
             "drug"
         ],
         "kb_id": null,
-        "uuid": "e311f714-59e5-47a5-8c5d-6c92f6a5345e",
+        "uuid": "de0abada-0c94-4a40-888c-ae44ab880080",
         "short_description": "Strength",
         "description": "This is the amount or concentration of the active ingredient in the medication.",
         "text": "Strength of medication",
         "instructions": "Highlight the amount or concentration of the active ingredient in the medication.",
-        "substitutionId": "3f2b3e56-f695-4d22-bf17-8ecb26c4d810",
+        "substitutionId": "c179d46e-722d-49fb-9016-d85f18c502c9",
         "badgeName": "bull_two"
     },
     {
         "icon": "LineHeightOutlined",
-        "category": "Medication",
-        "subcategory": "Dosage",
+        "category": "MEDICATION",
+        "subcategory": "DOSAGE",
         "types": [
             "ner"
         ],
@@ -1035,12 +1035,12 @@
             "drug"
         ],
         "kb_id": null,
-        "uuid": "d46t1f714-59e5-47a5-8c5d-6c9286ai345e",
+        "uuid": "edb1784f-15c6-4b3f-964c-4bc4552f8f87",
         "short_description": "Strength",
         "description": "This is the amount of the medication.",
         "text": "Dosage of medication",
         "instructions": "Highlight the amount or concentration of the active ingredient in the medication.",
-        "substitutionId": "gf2bge56-f695-4d22-bf17-8ecb26c88990",
+        "substitutionId": "59993fd5-4b91-4843-aa36-c5e9a08975c2",
         "badgeName": "bull_two"
     }
 ]

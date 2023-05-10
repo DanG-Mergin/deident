@@ -77,3 +77,4 @@ class ElasticIndexes(str, Enum):
 # maps MsgTask to the corresponding Elasticsearch type
 class ElasticTasks(str, Enum):
     deid = "deID"
+    drug = "drug"

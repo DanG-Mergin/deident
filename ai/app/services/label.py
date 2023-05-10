@@ -26,13 +26,14 @@ class LabelStore:
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    async def get_labels(self):
+    async def get_labels(self, task: str = MsgTask.deid):
         if not self._labels:
+            # TODO: refactor for "all" queries
             _req = _ElasticRequest(
                 msg_entity=MsgEntity.label,
                 msg_entity_type=MsgEntity_Type.dictionary,
                 msg_action=MsgAction.read,
-                msg_task=MsgTask.deid,
+                msg_task=task,
                 msg_type=MsgType.data,
             )
             _res = await request.make_request(_req, res_cls=_Response)
@@ -44,10 +45,7 @@ class LabelStore:
         if not self._label_map:
             label_map = {}
             for label in await self.get_labels():
-                # category = label.get("category")
                 category = label.category.upper()
-                # sub_category = label.get("subcategory")
-                # uuid = label.get("uuid")
 
                 if category not in label_map:
                     label_map[category] = {}

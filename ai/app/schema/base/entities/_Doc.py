@@ -30,3 +30,8 @@ class _Doc(BaseModel):
         if v is None:
             return None
         return [PatientClass[p.lower()].value for p in v]
+
+    @root_validator(pre=True)
+    def convert_fields(cls, values):
+        print("hi")
+        return values

@@ -11,6 +11,7 @@ from ..schema.base.messages._ElasticRequest import _ElasticRequest
 from ..schema.base.messages._Request import _Request
 from ..schema.base.messages._Response import _Response
 from ..schema.base.entities._Doc import _Doc
+
 from ..schema.base.messages._MessageEnums import (
     MsgEntity,
     MsgEntity_Type,
@@ -27,7 +28,7 @@ async def deID(req: _Request) -> _Response:
 
     if _res:
         # If the save was successful we can annotate the text
-        annotations = await spacy_s.deID(req.data.items)
+        annotations = await spacy_s.annotate_deID(req.data.items)
 
         res = cast_to_class(req, _Response, data={"items": annotations})
     return res
@@ -46,18 +47,29 @@ async def handle_doc_created(message: _Observable):
 
     print(message)
     doc_id = message.data.item_ids[0]
-    # doc_id = message.data.get("item_ids", [])[0]
 
-    annotated_doc = await annotate_document(doc_id)
-    await save_annotations(annotated_doc[0])
-    return annotated_doc
+    annotated_docs = await annotate_document(doc_id)
+
+    # TODO: for now all annotations are saved to the same document.
+    # We haven't implemented sessions, etc, as of yet
+    # So I'm just combining the annotations of each to be saved on a document
+    # and filtering in the UI, etc
+
+    await save_annotations(annotated_docs)
+    return annotated_docs
 
 
-async def annotate_document(doc_id: str) -> _Response:
+async def annotate_document(
+    doc_id: str, tasks: List[MsgTask] = [MsgTask.deid, MsgTask.drug]
+) -> _Response:
     _res = await get_document(doc_id)
-    annotations = await spacy_s.deID(_res.data.items)
+    annotations = []
 
-    # res = cast_to_class(req, _Response, data={"items": annotations})
+    if MsgTask.deid in tasks:
+        annotations.extend(await spacy_s.annotate_deID(_res.data.items))
+    if MsgTask.drug in tasks:
+        annotations.extend(await spacy_s.annotate_drugs(_res.data.items))
+
     return annotations
 
 
@@ -135,11 +147,26 @@ async def save_entities(doc_id, entities, msg_task, msg_entity_type) -> _Respons
         return e
 
 
-async def save_annotations(annotated_doc, msg_task="deID", msg_entity_type="deID"):
+async def save_annotations(annotated_docs, msg_task="deID", msg_entity_type="deID"):
+    # TODO: decouple all of this from assumptions re deID
+    # TODO: for now all annotations are saved to the same document.
+    # We haven't implemented sessions, etc, as of yet
+    # So I'm just combining the annotations of each to be saved on a document
+    # and filtering in the UI, etc
+
+    doc = _Doc(
+        created_at=annotated_docs[0].created_at,
+        uuid=annotated_docs[0].uuid,
+        text=annotated_docs[0].text,
+        title=annotated_docs[0].title,
+        tokens=annotated_docs[0].tokens + annotated_docs[1].tokens,
+        entities=annotated_docs[0].entities + annotated_docs[1].entities,
+    )
+
     try:
-        _token_res = await save_tokens(annotated_doc, msg_task, msg_entity_type)
+        _token_res = await save_tokens(doc, msg_task, msg_entity_type)
         _entities_res = await save_entities(
-            annotated_doc.uuid, annotated_doc.entities, msg_task, msg_entity_type
+            doc.uuid, doc.entities, msg_task, msg_entity_type
         )
         return _token_res, _entities_res
 

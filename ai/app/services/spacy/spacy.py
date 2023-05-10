@@ -6,6 +6,13 @@ from pathlib import Path
 from ...schema.base.entities._Doc import _Doc
 from ...schema.nlp.spacy.Doc import Doc as SpacyDoc
 from ...schema.nlp.Doc import Doc
+from ...schema.base.messages._MessageEnums import (
+    MsgEntity,
+    MsgEntity_Type,
+    MsgAction,
+    MsgTask,
+    MsgType,
+)
 from .. import label as label_svc
 from typing import List, Type
 
@@ -22,9 +29,34 @@ def _get_model_path():
     return os.path.join(model_dir, "assets", "models")
 
 
-async def deID(docs: List[Type[_Doc]]) -> List[Type[Doc]]:
+async def annotate_deID(docs: List[Type[_Doc]]) -> List[Type[Doc]]:
     model_path = _get_model_path()
     nlp = spacy.load(f"{model_path}/en_deid_ner-0.0.0/en_deid_ner/en_deid_ner-0.0.0")
+
+    annotated = []
+
+    for doc in docs:
+        # TODO: handle failure conditions.  One is text with no entities
+        _doc = nlp(doc["text"])
+
+        s_doc = SpacyDoc(
+            ents=_doc.doc.ents,
+            text=_doc.doc.text,
+            tokens=[token for token in _doc],
+            uuid=doc["uuid"],
+        )
+        # mapping labels from db to spacy output
+        s_doc.entities = await s_doc.map_labels(s_doc.entities)
+        print("s_doc uuid is ", s_doc.uuid)
+        b_doc = cast_to_class(s_doc, Doc)
+        print("b_doc uuid is ", b_doc.uuid)
+        annotated.append(b_doc)
+    return annotated
+
+
+async def annotate_drugs(docs: List[Type[_Doc]]) -> List[Type[Doc]]:
+    model_path = _get_model_path()
+    nlp = spacy.load(f"{model_path}/en_drug_ner/en_drug_ner-0.0.0")
 
     annotated = []
 
